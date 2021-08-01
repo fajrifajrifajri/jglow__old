@@ -31,13 +31,6 @@ const konsultasiRouter = require('./routes/konsultasi');
 const orderRouter = require('./routes/order');
 const usersRouter = require('./routes/users');
 
-// MKDIR public
-try {
-  fs.mkdirSync(path.join(__dirname, '/public/'))
-} catch (err) {
-  if (err.code !== 'EEXIST') throw err
-}
-
 app.use('/konsultasi', konsultasiRouter);
 app.use('/order', orderRouter);
 app.use('/users', usersRouter);
