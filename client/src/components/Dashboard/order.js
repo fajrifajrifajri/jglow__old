@@ -95,7 +95,7 @@ class Order extends Component {
 			  'success'
 			)
 		
-			axios.delete('http://localhost:5000/order/'+id)
+			axios.delete('/order/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -106,9 +106,9 @@ class Order extends Component {
 			try {
 			  await axios.all([
 			  axios
-				.get("http://localhost:5000/order/"),
+				.get("/order/"),
 			  axios
-				.get("http://localhost:5000/konsultasi/")
+				.get("/konsultasi/")
 			  ])
 			  .then(axios.spread((res1, res2) => {
 				  // check if there's any update or data empty

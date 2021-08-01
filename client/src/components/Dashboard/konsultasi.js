@@ -31,7 +31,7 @@ class Konsultasi extends Component {
 		
 		this.deleteData = this.deleteData.bind(this);
 		
-		this.serverBaseURI = 'http://localhost:5000';
+		this.serverBaseURI = 'https://jglow.herokuapp.com';
 		
 		this.columns = [
 		{
@@ -118,7 +118,7 @@ class Konsultasi extends Component {
 			  'success'
 			)
 		
-			axios.delete('http://localhost:5000/konsultasi/'+id)
+			axios.delete('/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -129,9 +129,9 @@ class Konsultasi extends Component {
 			try {
 			  await axios.all([
 			  axios
-				.get("http://localhost:5000/konsultasi/"),
+				.get("/konsultasi/"),
 			  axios
-				.get("http://localhost:5000/order/")
+				.get("/order/")
 			  ])
 			  .then(axios.spread((res1, res2) => {
 				  // check if there's any update or data empty

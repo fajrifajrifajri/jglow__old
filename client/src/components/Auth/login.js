@@ -60,7 +60,7 @@ class Login extends Component {
 		const password = this.state.password;
 		try{
 			const loginUser = {email, password};
-			const loginResponse = await axios.post("http://localhost:5000/users/masuk", loginUser);
+			const loginResponse = await axios.post("/users/masuk", loginUser);
 			this.setState({
 				token: loginResponse.data.token,
 				user: loginResponse.data.user

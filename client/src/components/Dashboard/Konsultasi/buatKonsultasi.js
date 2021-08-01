@@ -177,7 +177,7 @@ export default class CreateKonsultasi extends Component {
 		
 		const MySwal = withReactContent(Swal);
 		
-		axios.post('http://localhost:5000/konsultasi/add', formData, config).then((res)  => { 
+		axios.post('/konsultasi/add', formData, config).then((res)  => { 
 			console.log(res.data);
 		
 			MySwal.fire(  

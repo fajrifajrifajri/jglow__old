@@ -106,7 +106,7 @@ export default class CreateOrder extends Component {
 			noAgent: this.state.noAgent,
 		}
 		
-		axios.post('http://localhost:5000/order/add', order).then((res)  => { 
+		axios.post('/order/add', order).then((res)  => { 
 		console.log(res.data);
 		
 			Swal.fire(  

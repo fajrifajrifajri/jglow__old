@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { useTable } from 'react-table';
-import axios from 'axios';
 
 // Styling
 import '../../../Assets/css/index.css';
