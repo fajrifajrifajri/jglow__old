@@ -1,0 +1,41 @@
+/* Roboto: Regular & Bold */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom */
+html {
+	font-family: "Roboto", sans-serif;
+}
+
+table tr:nth-child(even){
+	@apply bg-gray-200;
+}
+
+table tr:hover {
+	@apply bg-gray-300;
+}
+
+table th {
+	@apply py-8 text-left;
+}
+
+table td {
+	@apply bg-gray-100;
+}
+
+.form-group {
+	@apply pb-5;
+}
+
+.form-group small {
+	@apply text-gray-300;
+}
+
+.form-control {
+	@apply block w-full border p-3;
+}
