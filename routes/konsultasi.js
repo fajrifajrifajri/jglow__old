@@ -2,6 +2,7 @@ const router = require('express').Router();
 const path = require("path");
 let Konsultasi = require('../models/konsultasi.model');
 const multer = require("multer");
+const fs = require('fs-extra');
 
 router.route('/').get((req, res) => {
 	Konsultasi.find()
@@ -11,8 +12,11 @@ router.route('/').get((req, res) => {
 
 // File Foto
 const storage = multer.diskStorage({
-   destination: "../public/",
-   filename: function(req, file, cb){
+   destination: function (req, file, cb) {
+	let path = "../public/";
+	fs.mkdirsSync(path);
+	},
+	filename: function(req, file, cb){
       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
    }
 });
