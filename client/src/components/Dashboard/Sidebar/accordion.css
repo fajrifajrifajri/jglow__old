@@ -8,7 +8,8 @@
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
-  color: #444;
+  font-family: 'Playfair Display', serif;
+  @apply text-white;
   cursor: pointer;
   padding: 10px 24px 10px 14px;
   display: flex;
@@ -33,7 +34,7 @@
 
 /* Style the accordion content title */
 .accordion__title {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 600;
   font-size: 14px;
 }

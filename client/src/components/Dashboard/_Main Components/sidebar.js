@@ -11,6 +11,7 @@ import UserContext from "../../Auth/userContext";
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faTruck, faBoxOpen, faUserSecret, faUsersCog, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { FaUserCircle } from 'react-icons/fa';
 
 // Styling
 import '../../../Assets/css/index.css';
@@ -18,7 +19,6 @@ import "../Sidebar/accordion.css";
 
 // Assets & Components include
 import logo from '../../../Assets/img/Logo_JGLOW-removebg-preview.png';
-import user from '../../../Assets/img/0c3b3adb1a7530892e55ef36d3be6cb8.png';
 import Accordion from "../Sidebar/accordion";
 
 class Sidebar extends Component {
@@ -57,20 +57,17 @@ class Sidebar extends Component {
 		
   render() {
     return (
-    <div id="sidebar" className="h-full bg-gray-500 py-4 text-lg">
+    <div id="sidebar" className="h-full bg-pink-400 text-lg text-white">
 		<Link to="/beranda">
-			<img src={logo} alt="logo" className="block m-auto px-4 bg-pink-200 py-4 shadow"/>
+			<img src={logo} alt="logo" className="block m-auto px-4 bg-white py-4"/>
 		</Link>
-		<div className="flex p-6 grid grid-cols-12 text-xs gap-2">
+		<div className="flex px-6 grid grid-cols-12 text-xs gap-2">
 			<div className="col-span-3 flex">
-				<img src={user} alt="user" className="inline-block m-auto"/>
+				<FaUserCircle size={70}/>
 			</div>
-			<div className="m-auto col-span-6">
-				<p className="font-italic font-bold">sample</p>
-				<p className="font-light font-italic">sample@email.com</p>
-			</div>
-			<div className="col-span-3">
-				
+			<div className="m-auto col-span-9">
+				<p className="font-bold text-xl">sample</p>
+				<p className="font-light font-italic text-sm">sample@email.com</p>
 			</div>
 		</div>
 		<div className="divide-y-2 divide-gray-400 divide-dashed">
