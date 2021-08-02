@@ -55,7 +55,7 @@
 }
 
 .accordion__text li {
-  @apply bg-pink-200 py-3;
+  @apply bg-pink-200 py-2;
 }
 
 .accordion__text li:hover,

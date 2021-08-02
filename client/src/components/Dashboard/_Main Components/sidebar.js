@@ -59,15 +59,15 @@ class Sidebar extends Component {
     return (
     <div id="sidebar" className="h-full bg-pink-400 text-lg text-white">
 		<Link to="/beranda">
-			<img src={logo} alt="logo" className="block m-auto px-4 bg-white py-4 shadow-md mb-4"/>
+			<img src={logo} alt="logo" className="block m-auto px-4 bg-white py-4 shadow-md"/>
 		</Link>
-		<div className="flex px-6 grid grid-cols-12 text-xs gap-2">
+		<div className="flex px-6 py-2 grid grid-cols-12 text-xs gap-2 bg-pink-500">
 			<div className="col-span-3 flex">
 				<FaUserCircle size={70}/>
 			</div>
-			<div className="m-auto col-span-9">
-				<p className="font-bold text-xl">sample</p>
-				<p className="font-light font-italic text-sm">sample@email.com</p>
+			<div className="m-auto ml-1 col-span-9">
+				<p className="font-bold text-xl leading-5">JGLow Admin</p>
+				<p className="font-light font-italic text-sm">admin@jglow.com</p>
 			</div>
 		</div>
 		<div className="divide-y-2 divide-gray-400 divide-dashed">
