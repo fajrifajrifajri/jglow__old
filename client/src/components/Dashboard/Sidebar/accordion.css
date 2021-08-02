@@ -8,11 +8,9 @@
 
 /* Style the buttons that are used to open and close the accordion panel */
 .accordion {
+  @apply flex text-white focus:outline-none cursor-pointer;
   font-family: 'Playfair Display', serif;
-  @apply text-white;
-  cursor: pointer;
   padding: 10px 24px 10px 14px;
-  display: flex;
   align-items: center;
   border: none;
   outline: none;
@@ -30,13 +28,6 @@
 #test234 {
 	border-left: 0 !important;
 	border-right: 0 !important;
-}
-
-/* Style the accordion content title */
-.accordion__title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  font-size: 14px;
 }
 
 /* Style the accordion chevron icon */
@@ -64,15 +55,16 @@
 }
 
 .accordion__text li {
-  @apply bg-gray-100;
+  @apply bg-pink-200 py-3;
 }
 
 .accordion__text li:hover,
 .accordion__text li:active {
-  @apply bg-gray-400 text-white;
+  @apply bg-pink-300 text-white;
 }
 
 .accordion__text li a {
   @apply block w-full;
+  font-family: 'Playfair Display', serif;
   padding: 0 32px;
 }

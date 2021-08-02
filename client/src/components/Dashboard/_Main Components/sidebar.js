@@ -59,7 +59,7 @@ class Sidebar extends Component {
     return (
     <div id="sidebar" className="h-full bg-pink-400 text-lg text-white">
 		<Link to="/beranda">
-			<img src={logo} alt="logo" className="block m-auto px-4 bg-white py-4"/>
+			<img src={logo} alt="logo" className="block m-auto px-4 bg-white py-4 shadow-md mb-4"/>
 		</Link>
 		<div className="flex px-6 grid grid-cols-12 text-xs gap-2">
 			<div className="col-span-3 flex">
