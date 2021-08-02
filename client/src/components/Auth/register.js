@@ -131,7 +131,7 @@ class Register extends Component {
 			<form onSubmit={this.onSubmit} className="bg-white border rounded-lg p-6 shadow-md">
 				<div className="flex-col">
 					<img src={logo} alt="logo" className="block m-auto"/>
-					<h1 className="block m-auto text-center text-xl font-bold">PT. JGLOW BEAUTYCARE</h1>
+					<h1 className="block m-auto text-center text-2xl font-bold">PT. JGLOW BEAUTYCARE</h1>
 				</div>
 				
 				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${emailError || userError && 'border border-red-200'}`}>
@@ -161,7 +161,7 @@ class Register extends Component {
 				{passwordCheckRequired && <ErrorNotice message={"Password Re-enter Must be Filled"} clearError={() => this.clearError(false)} />}
 				{passwordMismatch && <ErrorNotice message={"Password Doesn't Match"} clearError={() => this.clearError(false)} />}
 				
-				<input type="submit" value="Daftar" className="block bg-green-300 text-center text-white w-full py-2 cursor-pointer"/>
+				<input type="submit" value="Daftar" className="jglow-button"/>
 			</form>
 			<Link to="/" className="text-white text-sm mt-3 font-semibold"><FontAwesomeIcon icon={faArrowLeft} className="mr-1" />Kembali ke login</Link>
 		</div>

@@ -10,8 +10,9 @@ import UserContext from "../../Auth/userContext";
 
 // FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faTruck, faBoxOpen, faUserSecret, faUsersCog, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import { faTruck, faBoxOpen, faUserSecret, faUsersCog, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { FaUserCircle } from 'react-icons/fa';
+import { AiFillHome } from 'react-icons/ai';
 
 // Styling
 import '../../../Assets/css/index.css';
@@ -73,7 +74,7 @@ class Sidebar extends Component {
 		<div className="divide-y-2 divide-gray-400 divide-dashed">
 			<Link to="/beranda" className='accordion w-full' id="test123">
 				<div className='flex px-4'>
-					<FontAwesomeIcon icon={faHome} className='m-auto fa-sm mr-3' />
+					<AiFillHome size={20} className='m-auto fa-sm mr-3' />
 					<p className="font-bold">Beranda</p>
 				</div>
 			</Link>

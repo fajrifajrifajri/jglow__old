@@ -100,7 +100,7 @@ class Login extends Component {
 			<form onSubmit={this.onSubmit} className="bg-white border rounded-lg p-6 shadow-md">
 				<div className="flex-col">
 					<img src={logo} alt="logo" className="block m-auto"/>
-					<h1 className="block m-auto text-center mb-4 text-xl font-bold">PT. JGLOW BEAUTYCARE</h1>
+					<h1 className="block m-auto text-center mb-4 text-2xl font-bold">PT. JGLOW BEAUTYCARE</h1>
 				</div>
 				{emailInvalid && <ErrorNotice message={"Email Invalid"} clearError={() => this.clearError(false)} />}
 				{emailRequired && <ErrorNotice message={"Email Required"} clearError={() => this.clearError(false)} />}
@@ -116,7 +116,7 @@ class Login extends Component {
 					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				
-				<input type="submit" value="Log in" className="block mt-4 bg-green-300 text-center text-white w-full py-2 cursor-pointer"/>
+				<input type="submit" value="Log in" className="jglow-button"/>
 			</form>
 			<Link to="/daftar" className="text-white text-sm ml-auto mt-3 font-semibold">Daftar Sebagai Agent<FontAwesomeIcon icon={faArrowRight} className="ml-1" /></Link>
 			<Link to="/konsultasi-konsumer" className="text-white text-sm ml-auto mt-3 font-semibold">Form Konsultasi<FontAwesomeIcon icon={faArrowRight} className="ml-1" /></Link>
