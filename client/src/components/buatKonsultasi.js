@@ -202,8 +202,8 @@ export default class CreateKonsultasi extends Component {
 				</Link>
 				<p className="text-pink-dark text-center mb-8">Silahkan mengisi formulir konsultasi secara lengkap dan terperinci. Informasi anda akan kami gunakan sebagai keperluan konsultasi dan rekam medis.</p>
 			</div>
-			<div className="bg-white min-h-screen rounded-tl-lg ml-12 p-12">
-				<form className="p-5 px-40 mt-10" onSubmit={this.onSubmit}>
+			<div className="bg-white min-h-screen rounded-tl-lg mx-72 p-12">
+				<form onSubmit={this.onSubmit}>
 					<label className="block mb-2">Nama Lengkap: </label>
 					<div className="form-group grid grid-cols-12 gap-2">
 						<div className="col-span-6">

@@ -92,6 +92,7 @@ class Login extends Component {
 	let emailUnregistered = errorArray.some(obj => obj.user === "unregistered");
 	let passwordRequired = errorArray.some(obj => obj.password === "required");
 	let passwordWrong = errorArray.some(obj => obj.password === "wrong");
+	
     return (
     <div id="login" className="flex bg-pink-light h-screen">
 		<div className="m-auto flex flex-col">

@@ -29,6 +29,11 @@ function App() {
   });
   
   useEffect(() => {
+	
+	// Set Axios Default URL
+	var port = 5000;
+	axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+	  
 	const checkLoggedIn = async () => {
 		let token = localStorage.getItem("auth-token");
 		if(token === null){
