@@ -12,7 +12,11 @@ router.route('/').get((req, res) => {
 
 // File Foto
 const storage = multer.diskStorage({
-   destination: "../public/",
+// destination: "../public/",
+   destination: function (req, file, cb) {
+	let path = "../public/";
+	fs.mkdirsSync(path);
+	},
 	filename: function(req, file, cb){
       cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
    }
