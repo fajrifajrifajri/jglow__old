@@ -10,9 +10,8 @@ import ErrorNotice from "./errorNotice";
 // Styling
 import '../../Assets/css/index.css';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaUser, FaLock, FaArrowRight } from 'react-icons/fa';
 
 // Assets include
 import logo from '../../Assets/img/Logo JGLOW.png';
@@ -106,20 +105,20 @@ class Login extends Component {
 				{emailRequired && <ErrorNotice message={"Email Required"} clearError={() => this.clearError(false)} />}
 				{emailUnregistered && <ErrorNotice message={"Email Unregistered"} clearError={() => this.clearError(false)} />}
 				<div className={`flex bg-gray-100 rounded-t text-sm ${emailError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faUser} className="text-gray-400 p-3 fa-3x" />
+					<FaUser size={40} className="text-gray-400 p-3" />
 					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				{passwordWrong && <ErrorNotice message={"Password Wrong"} clearError={() => this.clearError(false)} />}
 				<div className={`flex bg-gray-100 rounded-t text-sm ${passwordError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faLock} className="text-gray-400 p-3 fa-3x" />
+					<FaLock size={40} className="text-gray-400 p-3" />
 					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				
-				<input type="submit" value="Log in" className="jglow-button"/>
+				<input type="submit" value="Log in" className="button"/>
 			</form>
-			<Link to="/daftar" className="text-white text-sm ml-auto mt-3 font-semibold">Daftar Sebagai Agent<FontAwesomeIcon icon={faArrowRight} className="ml-1" /></Link>
-			<Link to="/konsultasi-konsumer" className="text-white text-sm ml-auto mt-3 font-semibold">Form Konsultasi<FontAwesomeIcon icon={faArrowRight} className="ml-1" /></Link>
+			<Link to="/daftar" className="text-white ml-auto mt-3 font-semibold">Daftar Sebagai Agent<FaArrowRight className="inline-block ml-2" /></Link>
+			<Link to="/konsultasi-konsumer" className="text-white ml-auto mt-3 font-semibold">Form Konsultasi<FaArrowRight className="inline-block ml-2" /></Link>
 		</div>
 		
       <UserContext.Provider value={{

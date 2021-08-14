@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { useTable } from 'react-table';
+import { useTable, useBlockLayout } from 'react-table';
 
 // Styling
 import '../../../Assets/css/index.css';
 
 export const Table = (props) => {
-	const [ hapus, setHapus ] = useState(0);
+	// const [ hapus, setHapus ] = useState(0);
 	
 	// Access props.columns
 	const cols = useMemo(() => props.columns, [])
@@ -13,9 +13,11 @@ export const Table = (props) => {
 	// Access props.data
 	const data = props.data;
 	
-	const tableInstance = useTable({ columns: cols, data })
+	const tableInstance = useTable({ columns: cols, data }, useBlockLayout);
 	
 	const {
+		// getHeaderProps,
+		// getCellProps,
 		getTableProps,
 		getTableBodyProps,
 		headerGroups,
@@ -24,12 +26,14 @@ export const Table = (props) => {
 	} = tableInstance
 	
 	return (
-		<table {...getTableProps()} className="w-full border border-black border-collapse">
+		<table {...getTableProps()}>
 			<thead>
 			{headerGroups.map((headerGroup) => (
 				<tr {...headerGroup.getHeaderGroupProps()}>
 					{headerGroup.headers.map((column) => (
-						<th {...column.getHeaderProps ()} className="border border-black p-4">{column.render('Header')}</th>
+						<th {...column.getHeaderProps ({
+							className: column.custom  ? 'border border-gray-100 p-2' : 'border border-gray-100 p-4',
+						})}>{column.render('Header')}</th>
 					))}
 				</tr>
 			))}
@@ -40,7 +44,9 @@ export const Table = (props) => {
 					return (
 						<tr {...row.getRowProps()}>
 							{row.cells.map( (cell) => {
-								return <td {...cell.getCellProps()} className="border border-black p-4">{cell.render('Cell')}</td>
+								return <td {...cell.getCellProps({
+									className: cell.column.custom  ? 'border border-gray-100 p-2' : 'border border-gray-100 p-4',
+								})}>{cell.render('Cell')}</td>
 							})}
 						</tr>
 					)

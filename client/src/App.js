@@ -12,6 +12,14 @@ import {
 import Login from './components/Auth/login';
 import Register from './components/Auth/register';
 import Dashboard from './components/Dashboard/dashboard';
+import Produk from './components/Dashboard/produk';
+import BuatProduk from './components/Dashboard/Produk/buatProduk';
+import Agent from './components/Dashboard/agent';
+import BuatAgent from './components/Dashboard/Agent/buatAgent';
+import User from './components/Dashboard/user';
+import BuatUser from './components/Dashboard/User/buatUser';
+import ReportingProduk from './components/Dashboard/reportingProduk';
+import ReportingAgent from './components/Dashboard/reportingAgent';
 import Konsultasi from './components/Dashboard/konsultasi';
 import BuatKonsultasi from './components/Dashboard/Konsultasi/buatKonsultasi';
 import Order from './components/Dashboard/order';
@@ -31,8 +39,8 @@ function App() {
   useEffect(() => {
 	
 	// Set Axios Default URL
-	// var port = 5000;
-	// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+	var port = 5000;
+	axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 	  
 	const checkLoggedIn = async () => {
 		let token = localStorage.getItem("auth-token");
@@ -67,6 +75,30 @@ function App() {
 				</Route>
 				<Route path="/beranda">
 				  <Dashboard />
+				</Route>
+				<Route exact path="/produk">
+				  <Produk />
+				</Route>
+				<Route exact path="/produk/buat-produk">
+				  <BuatProduk />
+				</Route>
+				<Route exact path="/agent">
+				  <Agent />
+				</Route>
+				<Route exact path="/agent/buat-agent">
+				  <BuatAgent />
+				</Route>
+				<Route exact path="/user">
+				  <User />
+				</Route>
+				<Route exact path="/user/buat-user">
+				  <BuatUser />
+				</Route>
+				<Route exact path="/laporan-produk">
+				  <ReportingProduk />
+				</Route>
+				<Route exact path="/laporan-agent">
+				  <ReportingAgent />
 				</Route>
 				<Route exact path="/konsultasi">
 				  <Konsultasi />

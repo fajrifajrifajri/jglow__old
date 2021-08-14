@@ -7,9 +7,6 @@ import {
 // Styling
 import "./accordion.css";
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Components include
 import Chevron from "./chevron";
 
@@ -26,12 +23,14 @@ function Accordion(props) {
 	setRotateState(setActive === "active" ? "accordion__icon" : "accordion__icon rotate");
 	console.log(content.current.scrollHeight);
  }
-	
+ 
+ const TheIcon = props.fontAwesome;
+ 
  return (
    <div className="accordion__section">
      <button className={`accordion ${setActive}`} onClick={toggleAccordion} disabled={props.isDisabled === true ? true : false}>
 		<div className='flex px-4'>
-			<FontAwesomeIcon icon={props.fontAwesome} className={`m-auto fa-sm mr-3 ${props.additionalClass}`} />
+			<TheIcon className={`m-auto mr-3 ${props.additionalClass}`} />
 			<p className={props.additionalClass}>{props.title}</p>
 		</div>
 	   <Chevron className={`${setRotate} ${props.additionalClass}`} width={10} fill={"#777"} />

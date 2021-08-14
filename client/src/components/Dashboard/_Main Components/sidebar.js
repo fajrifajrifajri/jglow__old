@@ -8,10 +8,8 @@ import {
 // Auth
 import UserContext from "../../Auth/userContext";
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTruck, faBoxOpen, faUserSecret, faUsersCog, faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
-import { FaUserCircle } from 'react-icons/fa';
+// Icons
+import { FaUserCircle, FaTruck, FaBoxOpen, FaUserSecret, FaUsersCog, FaArrowAltCircleLeft } from 'react-icons/fa';
 import { AiFillHome } from 'react-icons/ai';
 
 // Styling
@@ -79,30 +77,30 @@ class Sidebar extends Component {
 				</div>
 			</Link>
 			<Accordion
-			   fontAwesome={faTruck}
+			   fontAwesome={FaTruck}
 			   title="Order"
 			/>
 			<Accordion
-			   fontAwesome={faBoxOpen}
+			   fontAwesome={FaBoxOpen}
 			   additionalClass="text-gray-200"
 			   isDisabled={true}
 			   title="Produk"
 			/>
 			<Accordion
-			   fontAwesome={faUserSecret}
+			   fontAwesome={FaUserSecret}
 			   additionalClass="text-gray-200"
 			   isDisabled={true}
 			   title="Agent"
 			/>
 			<Accordion
-			   fontAwesome={faUsersCog}
+			   fontAwesome={FaUsersCog}
 			   additionalClass="text-gray-200"
 			   isDisabled={true}
 			   title="Kelola User"
 			/>
 			<button onClick={this.onLogout} className='accordion w-full' id="test234">
 				<div className='flex px-4'>
-					<FontAwesomeIcon icon={faArrowAltCircleLeft} className='m-auto fa-sm mr-3' />
+					<FaArrowAltCircleLeft className='m-auto mr-3' />
 					<p className="font-bold">Keluar</p>
 				</div>
 			</button>

@@ -16,7 +16,9 @@ const konsultasiSchema = new Schema({
 	kondisiKeluhan: { type: String, required: true },
 	penggunaanKe: { type: String, required: true },
 	fotoAgent: { type: String, required: true },
-	fotoKulit: { type: String, required: true },
+	fotoKulitWajahDepan: { type: String, required: true },
+	fotoKulitWajahKiri: { type: String, required: true },
+	fotoKulitWajahKanan: { type: String, required: true },
 	noAgent: { type: String, required: true },
 },  
 	{

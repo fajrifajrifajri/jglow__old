@@ -10,11 +10,9 @@ import axios from 'axios';
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
-import { Header } from '../_Main Components/header';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaChevronLeft } from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -42,7 +40,9 @@ export default class CreateKonsultasi extends Component {
 		
 		// Foto
 		this.fotoAgent = React.createRef();
-		this.fotoKulit = React.createRef();
+		this.fotoKulitWajahDepan = React.createRef();
+		this.fotoKulitWajahKiri = React.createRef();
+		this.fotoKulitWajahKanan = React.createRef();
 		
 		this.state = {
 			namaDepan: '',
@@ -166,7 +166,9 @@ export default class CreateKonsultasi extends Component {
 		formData.append('kondisiKeluhan',this.state.kondisiKeluhan);
 		formData.append('penggunaanKe',this.state.penggunaanKe);
 		formData.append('fotoAgent',this.fotoAgent.current.files[0]);
-		formData.append('fotoKulit',this.fotoKulit.current.files[0]);
+		formData.append('fotoKulitWajahDepan',this.fotoKulitWajahDepan.current.files[0]);
+		formData.append('fotoKulitWajahKiri',this.fotoKulitWajahKiri.current.files[0]);
+		formData.append('fotoKulitWajahKanan',this.fotoKulitWajahKanan.current.files[0]);
 		formData.append('noAgent',this.state.noAgent);
 		
 		const config = {
@@ -194,39 +196,37 @@ export default class CreateKonsultasi extends Component {
 	
 	render() {
 		return (
-    <div className="grid grid-cols-12">
-		<div className="col-span-2">
+    <div className="all__container">
+		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
-		<div className="bg-layout col-span-10 bg-gray-100">
-			<Header/>
-			<div className="bg-white min-h-screen rounded-tl-lg ml-12 p-12">
+		<div className="body__container">
+			<div className="body__second__container">
 			<div className="flex">
-				<Link to="/konsultasi" className="bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-full">
-					<FontAwesomeIcon icon={faChevronLeft} className='fa-lg w-16 mr-2' />
+				<Link to="/konsultasi" className="button--back">
+					<FaChevronLeft size={20} className="inline-block mr-2"/>
 					<span className="font-bold">
 						Tabel Konsultasi
 					</span>
 				</Link>
-				<h1 className="m-auto ml-4 inline-block text-4xl">FORMULIR KONSULTASI [ADMIN]</h1>
 			</div>
 				<form className="mt-10" onSubmit={this.onSubmit}>
 					<label className="block mb-2">Nama Lengkap: </label>
-					<div className="form-group grid grid-cols-12 gap-2">
+					<div className="form__group grid grid-cols-12 gap-2">
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
+							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
 							placeholder="Nama Depan"/>
 							<small>Nama Depan</small>
 						</div>
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
+							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
 							<small>Nama Belakang</small>
 						</div>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Tanggal Lahir: </label>
 						<DatePicker
-							className="form-control text-gray-400"
+							className="form__control text-gray-400"
 							selected={this.state.tanggalLahir}
 							onChange={this.onChangeTanggalLahir}
 							peekNextMonth
@@ -235,7 +235,7 @@ export default class CreateKonsultasi extends Component {
 							dropdownMode="select"
 						/>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">Kelamin </label>
 						<label className="block mb-1">
 							<input type="radio" value="Perempuan" 
@@ -250,15 +250,15 @@ export default class CreateKonsultasi extends Component {
 							name="kelamin" /> Laki-laki
 						</label>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Alamat: </label>
-						<textarea className="form-control" value={this.state.alamat} onChange={this.onChangeAlamat}/>
+						<textarea className="form__control" value={this.state.alamat} onChange={this.onChangeAlamat}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">No Telp: </label>
-						<input type="text" className="form-control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
+						<input type="text" className="form__control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Jenis Kulit:
 						</label>
@@ -291,7 +291,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeJenisKulit} /> Normal
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Kulit Sensitif? (mudah memerah jika terkena sinar matahari atau bahan yang mengandung alkohol)
 						</label>
@@ -310,7 +310,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeKulitSensitif} /> Tidak
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Mudah Iritasi? (Kulit terasa gatal, perih atau mudah mengelupas) 
 						</label>
@@ -329,7 +329,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeMudahIritasi} /> Tidak
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Pasien dalam keadaan Hamil / Menyusui
 						</label>
@@ -348,67 +348,110 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeHamilDanMenyusui} /> Tidak
 						</label>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Riwayat Skincare : </label>
-						<textarea className="form-control" value={this.state.riwayatSkincare} onChange={this.onChangeRiwayatSkincare}/>
+						<textarea className="form__control" value={this.state.riwayatSkincare} onChange={this.onChangeRiwayatSkincare}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Kondisi dan keluhan saat ini : </label>
-						<textarea className="form-control" value={this.state.kondisiKeluhan} onChange={this.onChangeKondisiKeluhan}/>
+						<textarea className="form__control" value={this.state.kondisiKeluhan} onChange={this.onChangeKondisiKeluhan}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Penggunaan produk J Glow ke-: </label>
-						<input className="form-control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe}/>
+						<input className="form__control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe}/>
 					</div>
 					
-					<div className="form-group">
+					<div className="form__group">
 					  <label className="block mb-2">
-						Foto Agent: 
+						Upload Bukti Screenshoot dengan Beauty Consultant
 					  </label>
-					  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+					  <div className="form__upload">
 						<div className="space-y-1 text-center">
-						  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+						  <svg className="form__upload--img" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
 							<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 						  </svg>
-						  <div className="flex text-sm text-gray-600">
-							<label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-							  <input type="file" className="form-control" ref={this.fotoAgent} name="fotoAgent"/>
+						  <div className="form__upload--file">
+							<label htmlFor="file-upload">
+							  <input type="file" className="form__control" ref={this.fotoAgent} name="fotoAgent"/>
 							</label>
 						  </div>
 						  <p className="text-xs text-gray-500">
-							PNG, JPG, GIF up to 10MB
+							PNG, JPG, JPEG up to 10MB
 						  </p>
 						</div>
 					  </div>
 					</div>
 					
 					
-					<div className="form-group">
+					<div className="form__group">
 					  <label className="block mb-2">
-						Foto Kulit: 
+						Foto kondisi kulit wajah tampak depan
 					  </label>
-					  <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+					  <div className="form__upload">
 						<div className="space-y-1 text-center">
-						  <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+						  <svg className="form__upload--img" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
 							<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 						  </svg>
-						  <div className="flex text-sm text-gray-600">
-							<label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-							  <input type="file" className="form-control" ref={this.fotoKulit} name="fotoKulit"/>
+						  <div className="form__upload--file">
+							<label htmlFor="file-upload"  >
+							  <input type="file" className="form__control" ref={this.fotoKulitWajahDepan} name="fotoKulitWajahDepan"/>
 							</label>
 						  </div>
 						  <p className="text-xs text-gray-500">
-							PNG, JPG, GIF up to 10MB
+							PNG, JPG, JPEG up to 10MB
 						  </p>
 						</div>
 					  </div>
 					</div>
-					<div className="form-group">
+					
+					<div className="form__group">
+					  <label className="block mb-2">
+						Foto kondisi kulit wajah tampak samping kiri
+					  </label>
+					  <div className="form__upload">
+						<div className="space-y-1 text-center">
+						  <svg className="form__upload--img" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+							<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+						  </svg>
+						  <div className="form__upload--file">
+							<label htmlFor="file-upload"  >
+							  <input type="file" className="form__control" ref={this.fotoKulitWajahKiri} name="fotoKulitWajahKiri"/>
+							</label>
+						  </div>
+						  <p className="text-xs text-gray-500">
+							PNG, JPG, JPEG up to 10MB
+						  </p>
+						</div>
+					  </div>
+					</div>
+					
+					<div className="form__group">
+					  <label className="block mb-2">
+						Foto kondisi kulit wajah tampak samping kanan
+					  </label>
+					  <div className="form__upload">
+						<div className="space-y-1 text-center">
+						  <svg className="form__upload--img" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+							<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+						  </svg>
+						  <div className="form__upload--file">
+							<label htmlFor="file-upload">
+							  <input type="file" className="form__control" ref={this.fotoKulitWajahKanan} name="fotoKulitWajahKanan"/>
+							</label>
+						  </div>
+						  <p className="text-xs text-gray-500">
+							PNG, JPG, JPEG up to 10MB
+						  </p>
+						</div>
+					  </div>
+					</div>
+					
+					<div className="form__group">
 						<label className="block mb-2">No Agent: </label>
-						<input type="text" className="form-control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+						<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
 					</div>
-					<div className="form-group">
-						<input type="submit" value="Buat konsultasi" className="hover:bg-green-700 bg-green-300 text-white w-full py-4 cursor-pointer duration-500"/>
+					<div className="form__group">
+						<input type="submit" value="Buat konsultasi" className="button"/>
 					</div>
 				</form>
 			</div>

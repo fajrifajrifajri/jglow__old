@@ -4,15 +4,12 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 
-
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
-import { Header } from '../_Main Components/header';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaChevronLeft } from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -107,64 +104,30 @@ export default class CreateOrder extends Component {
 		}
 		
 		axios.post('/order/add', order).then((res)  => { 
-		console.log(res.data);
+			console.log(res.data);
 		
 			Swal.fire(  
-			'Konsultasi telah dibuat!',
+			'Order telah dibuat!',
 			'Tinggal, tunggu distributor memproses ya!',
 			'success'
 			);
 		}).catch((err) => {
 			console.log(err.response.data);
 		});
-		
-		/*
-		const formData = new FormData();
-		
-		formData.append('nama',nama);
-		formData.append('alamat',this.state.alamat);
-		formData.append('noTelp',this.state.noTelp);
-		formData.append('orderProduct',this.state.orderProduct);
-		formData.append('jumlahOrder',this.state.jumlahOrder);
-		formData.append('optionPengiriman',this.state.optionPengiriman);
-		formData.append('noAgent',this.state.noAgent);
-		
-		const config = {
-			headers: {
-				'content-type': 'multipart/form-data'
-			}
-		};
-		
-		
-		axios.post('http://localhost:5000/order/add', formData, config).then((res)  => { 
-		console.log(res.data);
-		
-			Swal.fire(  
-			'Konsultasi telah dibuat!',
-			'Tinggal, tunggu distributor memproses ya!',
-			'success'
-			);
-		}).catch((err) => {
-			console.log(err.response.data);
-		});
-		
-		console.log(formData.get("nama"));
-		*/
 	}
 	
 	render() {
 		return (
 		
-    <div className="grid grid-cols-12">
-		<div className="col-span-2">
+    <div className="all__container">
+		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
-		<div className="bg-layout col-span-10 bg-gray-100">
-			<Header/>
-			<div className="bg-white min-h-screen rounded-tl-lg ml-12 p-12">
+		<div className="body__container">
+			<div className="body__second__container">
 			<div className="flex">
-				<Link to="/order" className="bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-full">
-					<FontAwesomeIcon icon={faChevronLeft} className='fa-lg w-16 mr-2' />
+				<Link to="/order" className="button--back">
+					<FaChevronLeft size={30} className="m-auto inline-block mr-2"/>
 					<span className="font-bold">
 						Tabel Order
 					</span>
@@ -173,43 +136,43 @@ export default class CreateOrder extends Component {
 			</div>
 			<form className="mt-10" onSubmit={this.onSubmit}>
 				<label className="block mb-2">Nama Lengkap: </label>
-					<div className="form-group grid grid-cols-12 gap-2">
+					<div className="form__group grid grid-cols-12 gap-2">
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
+							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
 							placeholder="Nama Depan"/>
 							<small>Nama Depan</small>
 						</div>
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
+							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
 							<small>Nama Belakang</small>
 						</div>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">Alamat: </label>
-					<input type="text" className="form-control" value={this.state.alamat} onChange={this.onChangeAlamat} placeholder="Alamat"/>
+					<input type="text" className="form__control" value={this.state.alamat} onChange={this.onChangeAlamat} placeholder="Alamat"/>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">No Telp: </label>
-					<input type="text" className="form-control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
+					<input type="text" className="form__control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">No Agent: </label>
-					<input type="text" className="form-control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+					<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">Order Product: </label>
-					<input type="text" className="form-control" value={this.state.orderProduct} onChange={this.onChangeOrderProduct}/>
+					<input type="text" className="form__control" value={this.state.orderProduct} onChange={this.onChangeOrderProduct}/>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">Jumlah Order: </label>
-					<input type="text" className="form-control" value={this.state.jumlahOrder} onChange={this.onChangeJumlahOrder}/>
+					<input type="text" className="form__control" value={this.state.jumlahOrder} onChange={this.onChangeJumlahOrder}/>
 				</div>
-				<div className="form-group">
+				<div className="form__group">
 					<label className="block mb-2">Option Pengiriman: </label>
-					<input type="text" className="form-control" value={this.state.optionPengiriman} onChange={this.onChangeOptionPengiriman}/>
+					<input type="text" className="form__control" value={this.state.optionPengiriman} onChange={this.onChangeOptionPengiriman}/>
 				</div>
-				<div className="form-group">
-					<input type="submit" value="Buat order" className="hover:bg-green-700 bg-green-300 text-white w-full py-4 cursor-pointer duration-500"/>
+				<div className="form__group">
+					<input type="submit" value="Buat order" className="button"/>
 				</div>
 			</form>
 		</div>

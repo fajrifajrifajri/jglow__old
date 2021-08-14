@@ -8,6 +8,7 @@ import axios from 'axios';
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
+import { Header } from './_Main Components/header';
 import { Table } from './_Main Components/table';
 
 // Icons
@@ -29,40 +30,30 @@ class Konsultasi extends Component {
 		
 		this.deleteData = this.deleteData.bind(this);
 		
-		this.serverBaseURI = 'http://localhost:5000';
+		this.serverBaseURI = 'https://jglow.herokuapp.com';
 		
 		this.columns = [
 		{
-			Header: '',
-			id: 'index',
-			accessor: (_row: any, i : number) => i + 1,
-			maxWidth: 40
-		},
-		{
 			Header: 'Nama',
-			accessor: 'nama',
-			maxWidth: 100
+			accessor: 'nama'
 		},
 		{
 			Header: 'Alamat',
-			accessor: 'alamat',
-			minWidth: 150
+			accessor: 'alamat'
 		},
 		{
 			Header: 'No Telp & No Agent',
 			accessor: 'noTelp',
-			maxWidth: 100,
 			Cell: cell => (
 				<div>
-					<p className="truncate">{cell.row.original.noTelp}</p>
-					<p className="truncate font-bold">[{cell.row.original.noAgent}]</p>
+					<p>{cell.row.original.noTelp}</p>
+					<p className="font-bold">[{cell.row.original.noAgent}]</p>
 				</div>
 			  )
 		},
 		{
 			Header: 'Spesifikasi Kulit',
 			accessor: 'jenisKulit',
-			minWidth: 200,
 			Cell: cell => (
 				<div>
 					<p><span className="font-bold">Jenis Kulit: </span>{cell.row.original.jenisKulit}</p>
@@ -81,36 +72,27 @@ class Konsultasi extends Component {
 					<p><span className="font-bold">Kondisi dan Keluhan: </span>{cell.row.original.kondisiKeluhan}</p>
 					<p><span className="font-bold">Pengunaan ke- </span>{cell.row.original.penggunaanKe}</p>
 				</div>
-			  ),
+			  )
 		},
 		{
 			Header: 'Foto Agent',
 			accessor: 'fotoAgent',
-			maxWidth: 80,
-			custom: true,
 			Cell: ({ cell }) => (
-				<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoAgent}`} alt={cell.row.original.fotoAgent}/>
-			  )
-		  },
-		  {
-			Header: 'Foto Kulit',
-			accessor: 'fotoKulitWajahDepan',
-			maxWidth: 80,
-			custom: true,
-			Cell: ({ cell }) => (
-				<>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahDepan}`} alt={cell.row.original.fotoKulitWajahDepan} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahKiri}`} alt={cell.row.original.fotoKulitWajahKiri} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahKanan}`} alt={cell.row.original.fotoKulitWajahKanan} className='mb-2'/>
-				</>
+				<img src={`${this.serverBaseURI}/public/${cell.row.values.fotoAgent}`} alt={cell.row.values.fotoAgent}/>
 			  )
 		},
 		{
-		  Header: "Aksi",
+			Header: 'Foto Kulit',
+			accessor: 'fotoKulit',
+			Cell: ({ cell }) => (
+				<img src={`${this.serverBaseURI}/public/${cell.row.values.fotoKulit}`} alt={cell.row.values.fotoKulit}/>
+			  )
+		},
+		{
+		  Header: "Cancel (Tolak)",
 		  accessor: "_id",
-		  maxWidth: 95,
 		  Cell: ({ cell }) => (
-			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
+			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
 			  <FaTimes />
 			</button>
 		  )
@@ -119,11 +101,6 @@ class Konsultasi extends Component {
 	
 	
 	deleteData = (id) => {
-		
-		// Set Axios Default URL
-		var port = 5000;
-		axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-		
 		Swal.fire({
 		  title: 'Hapus data ini?',
 		  text: "Data akan terhapus.",
@@ -140,7 +117,7 @@ class Konsultasi extends Component {
 			  'success'
 			)
 		
-			axios.delete('/konsultasi/'+id)
+			axios.delete('/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -148,11 +125,6 @@ class Konsultasi extends Component {
 	
 	// Load table data
 	async getData(prevState) {
-		
-		// Set Axios Default URL
-		var port = 5000;
-		axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-		
 			try {
 			  await axios.all([
 			  axios
@@ -198,25 +170,26 @@ class Konsultasi extends Component {
 	
   render() {
     return (
-    <div className="all__container">
+    <div className="grid grid-cols-12">
 		<div className="col-span-2">
 			<Sidebar/>
 		</div>
-		<div className="body__container">
-			<div className="body__second__container">
-				<div className="grid grid-cols-12 mb-12">
+		<div className="bg-layout col-span-10 bg-gray-100">
+			<Header/>
+			<div className="bg-white min-h-screen rounded-tl-lg ml-12 py-4 px-12">
+				<div className="grid grid-cols-12 mb-8">
 					<div className="col-start-8 col-span-4 mb-4">
 						<h5 className="text-center">Konsultasi minggu ini</h5>
 					</div>
 					<div className="col-span-6">
-						<Link to="/beranda" className="button--back">
-							<FaChevronLeft className='inline-block mr-2' />
+						<Link to="/beranda" className="inline-block bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-l">
+							<FaChevronLeft className='mr-2' />
 							<span className="font-bold">
 								Konsultasi
 							</span>
 						</Link>
-						<Link to="/konsultasi/buat-konsultasi" className="button--input">
-							<FaPlusSquare className='inline-block mr-2' />
+						<Link to="/konsultasi/buat-konsultasi" className="inline-block bg-green-600 text-white text-xl py-2 pl-4 pr-6 rounded-r">
+							<FaPlusSquare className='mr-2' />
 							<span className="font-bold">
 								Input
 							</span>

@@ -12,13 +12,18 @@ router.route('/').get((req, res) => {
 
 // File Foto
 const storage = multer.diskStorage({
-// destination: "../public/",
-   destination: function (req, file, cb) {
-	let path = "../public/";
-	fs.mkdirsSync(path);
-	},
+	destination: "./client/public/",
+	
+	/*
+	destination: function (req, file, cb) {
+		let path = "./client/public/";
+		fs.mkdirsSync(path);
+	}, 
+	*/
+
 	filename: function(req, file, cb){
-      cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+		cb(null,"IMAGE-" + uniqueSuffix + path.extname(file.originalname));
    }
 });
 
@@ -27,7 +32,7 @@ const uploadFoto = multer({
    limits:{fileSize: 1000000}
 })
 
-router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { name: 'fotoKulit', maxCount:1 }]), (req, res) => {
+router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { name: 'fotoKulitWajahDepan', maxCount:1 }, { name: 'fotoKulitWajahKiri', maxCount:1 }, { name: 'fotoKulitWajahKanan', maxCount:1 }]), (req, res) => {
 	   
 	//console.log("Request ---", req.body);
 	console.log("Request file ---", req.files);//Here you get file.
@@ -45,7 +50,9 @@ router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 	const kondisiKeluhan = req.body.kondisiKeluhan;
 	const penggunaanKe = req.body.penggunaanKe;
 	const fotoAgent = req.files.fotoAgent[0].filename;
-	const fotoKulit = req.files.fotoKulit[0].filename;
+	const fotoKulitWajahDepan = req.files.fotoKulitWajahDepan[0].filename;
+	const fotoKulitWajahKiri = req.files.fotoKulitWajahKiri[0].filename;
+	const fotoKulitWajahKanan = req.files.fotoKulitWajahKanan[0].filename;
 	const noAgent = req.body.noAgent;
 	
 	console.log(fotoAgent);
@@ -65,7 +72,9 @@ router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 		penggunaanKe,
 		noAgent,
 		fotoAgent,
-		fotoKulit,
+		fotoKulitWajahDepan,
+		fotoKulitWajahKiri,
+		fotoKulitWajahKanan,
 	});
 	
 	//console.log(newKonsultasi);
@@ -98,7 +107,9 @@ router.route('/update/:id').post((req, res) => {
 		konsultasi.spesifikasiKulit = req.body.spesifikasiKulit;
 		konsultasi.kondisi = req.body.kondisi;
 		konsultasi.fotoAgent = req.body.fotoAgent;
-		konsultasi.fotoKulit = req.body.fotoKulit;
+		konsultasi.fotoKulitWajahDepan = req.body.fotoKulitWajahDepan;
+		konsultasi.fotoKulitWajahKiri = req.body.fotoKulitWajahKiri;
+		konsultasi.fotoKulitWajahKanan = req.body.fotoKulitWajahKanan;
 		
 	konsultasi.save()
 		.then(() => res.json('Konsultasi telah diupdate!'))

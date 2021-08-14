@@ -8,12 +8,10 @@ import axios from 'axios';
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
-import { Header } from './_Main Components/header';
 import { Table } from './_Main Components/table';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faPlusSquare, faTimes } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaChevronLeft, FaPlusSquare, FaTimes }  from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -70,7 +68,7 @@ class Order extends Component {
 		  accessor: "_id",
 		  Cell: ({ cell }) => (
 			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
-			  <FontAwesomeIcon icon={faTimes} className='fa-lg w-16' />
+			  <FaTimes />
 			</button>
 		  )
 		}
@@ -148,26 +146,25 @@ class Order extends Component {
 	
   render() {
     return (
-    <div className="grid grid-cols-12">
-		<div className="col-span-2">
+    <div className="all__container">
+		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
-		<div className="bg-layout col-span-10 bg-gray-100">
-			<Header/>
-			<div className="bg-white min-h-screen rounded-tl-lg ml-12 py-4 px-12">
+		<div className="body__container">
+			<div className="body__second__container">
 				<div className="grid grid-cols-12 mb-8">
 					<div className="col-start-8 col-span-4 mb-4">
 						<h5 className="text-center">Order minggu ini</h5>
 					</div>
 					<div className="col-span-6">
-						<Link to="/beranda" className="inline-block bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-l">
-							<FontAwesomeIcon icon={faChevronLeft} className='fa-lg w-16 mr-2' />
+						<Link to="/beranda" className="button--back">
+							<FaChevronLeft size={20} className='inline-block mr-2' />
 							<span className="font-bold">
 								Order
 							</span>
 						</Link>
 						<Link to="/order/buat-order" className="inline-block bg-green-600 text-white text-xl py-2 pl-4 pr-6 rounded-r">
-							<FontAwesomeIcon icon={faPlusSquare} className='fa-lg w-16 mr-2' />
+							<FaPlusSquare size={20} className='inline-block mr-2' />
 							<span className="font-bold">
 								Input
 							</span>

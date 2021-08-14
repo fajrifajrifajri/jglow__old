@@ -1,12 +1,11 @@
 // Import React & Required libs
-import React, { Component } from 'react';
+import React from 'react';
 
 // Assets & Components include
 import '../../../Assets/css/index.css';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAddressCard, faChevronDown, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaAddressCard, FaChevronDown } from 'react-icons/fa';
 
 export const Header = () => {
 	return (
@@ -14,12 +13,12 @@ export const Header = () => {
 				<div className="col-start-9 col-span-3 text-right">
 					<h5 className="text-sm">Masuk sebagai</h5>
 					<button>
-						<FontAwesomeIcon icon={faChevronDown} className='fa-lg w-16 mr-4' />
+						<FaChevronDown className='mr-4' />
 						<span className="text-3xl font-bold underline">DISTRIBUTOR</span>
 					</button>
 				</div>
 				<div className="col-span-1">
-					<FontAwesomeIcon icon={faAddressCard} className="fa-3x" />
+					<FaAddressCard />
 				</div>
 			</div>
 	)

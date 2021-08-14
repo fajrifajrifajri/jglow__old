@@ -26,14 +26,18 @@ connection.once('open', () => {
 // Access Foto
 app.use('/public', express.static(path.join(__dirname, "./client/public/")));
 
-// CRUD Konsultasi, Order, Users
+// CRUD Konsultasi, Order, Users, Produk, Agent
 const konsultasiRouter = require('./routes/konsultasi');
 const orderRouter = require('./routes/order');
 const usersRouter = require('./routes/users');
+const produkRouter = require('./routes/produk');
+const agentRouter = require('./routes/agent');
 
 app.use('/konsultasi', konsultasiRouter);
 app.use('/order', orderRouter);
 app.use('/users', usersRouter);
+app.use('/produk', produkRouter);
+app.use('/agent', agentRouter);
 
 // Port:5000
 const port = process.env.PORT || 5000;

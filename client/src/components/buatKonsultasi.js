@@ -10,9 +10,8 @@ import axios from 'axios';
 // Assets & Components include
 import '../Assets/css/index.css';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaChevronLeft } from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -196,7 +195,7 @@ export default class CreateKonsultasi extends Component {
 			<div className="container px-80">
 				<Link to="/" className="flex text-pink-dark text-2xl font-bold m-auto mt-8 mb-4">
 					<div className="m-auto flex">
-						<FontAwesomeIcon icon={faChevronLeft} className='m-auto inline-block fa-lg w-16 mr-2'/>
+						<FaChevronLeft size={30} className="m-auto inline-block mr-2"/>
 						<h1 className="ml-4 inline-block text-4xl">Formulir Konsultasi Konsumer</h1>
 					</div>
 				</Link>
@@ -205,21 +204,21 @@ export default class CreateKonsultasi extends Component {
 			<div className="bg-white min-h-screen rounded-tl-lg mx-72 p-12">
 				<form onSubmit={this.onSubmit}>
 					<label className="block mb-2">Nama Lengkap: </label>
-					<div className="form-group grid grid-cols-12 gap-2">
+					<div className="form__group grid grid-cols-12 gap-2">
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
+							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
 							placeholder="Nama Depan"/>
 							<small>Nama Depan</small>
 						</div>
 						<div className="col-span-6">
-							<input type="text" className="form-control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
+							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
 							<small>Nama Belakang</small>
 						</div>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Tanggal Lahir: </label>
 						<DatePicker
-							className="form-control text-gray-400"
+							className="form__control text-gray-400"
 							selected={this.state.tanggalLahir}
 							onChange={this.onChangeTanggalLahir}
 							peekNextMonth
@@ -228,7 +227,7 @@ export default class CreateKonsultasi extends Component {
 							dropdownMode="select"
 						/>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">Kelamin </label>
 						<label className="block mb-1">
 							<input type="radio" value="Perempuan" 
@@ -243,15 +242,15 @@ export default class CreateKonsultasi extends Component {
 							name="kelamin" /> Laki-laki
 						</label>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Alamat: </label>
-						<textarea className="form-control" value={this.state.alamat} onChange={this.onChangeAlamat}/>
+						<textarea className="form__control" value={this.state.alamat} onChange={this.onChangeAlamat}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">No Telp: </label>
-						<input type="text" className="form-control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
+						<input type="text" className="form__control" value={this.state.noTelp} onChange={this.onChangeNoTelp}/>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Jenis Kulit:
 						</label>
@@ -284,7 +283,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeJenisKulit} /> Normal
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Kulit Sensitif? (mudah memerah jika terkena sinar matahari atau bahan yang mengandung alkohol)
 						</label>
@@ -303,7 +302,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeKulitSensitif} /> Tidak
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Mudah Iritasi? (Kulit terasa gatal, perih atau mudah mengelupas) 
 						</label>
@@ -322,7 +321,7 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeMudahIritasi} /> Tidak
 						</label>
 					</div>
-					<div className="form-group"> 
+					<div className="form__group"> 
 						<label className="block mb-2">
 							Pasien dalam keadaan Hamil / Menyusui
 						</label>
@@ -341,20 +340,20 @@ export default class CreateKonsultasi extends Component {
 								onChange={this.onChangeHamilDanMenyusui} /> Tidak
 						</label>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Riwayat Skincare : </label>
-						<textarea className="form-control" value={this.state.riwayatSkincare} onChange={this.onChangeRiwayatSkincare}/>
+						<textarea className="form__control" value={this.state.riwayatSkincare} onChange={this.onChangeRiwayatSkincare}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Kondisi dan keluhan saat ini : </label>
-						<textarea className="form-control" value={this.state.kondisiKeluhan} onChange={this.onChangeKondisiKeluhan}/>
+						<textarea className="form__control" value={this.state.kondisiKeluhan} onChange={this.onChangeKondisiKeluhan}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">Penggunaan produk J Glow ke-: </label>
-						<input className="form-control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe}/>
+						<input className="form__control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe}/>
 					</div>
 					
-					<div className="form-group">
+					<div className="form__group">
 					  <label className="block mb-2">
 						Foto Agent: 
 					  </label>
@@ -365,7 +364,7 @@ export default class CreateKonsultasi extends Component {
 						  </svg>
 						  <div className="flex text-sm text-gray-600">
 							<label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-							  <input type="file" className="form-control" ref={this.fotoAgent} name="fotoAgent"/>
+							  <input type="file" className="form__control" ref={this.fotoAgent} name="fotoAgent"/>
 							</label>
 						  </div>
 						  <p className="text-xs text-gray-500">
@@ -376,7 +375,7 @@ export default class CreateKonsultasi extends Component {
 					</div>
 					
 					
-					<div className="form-group">
+					<div className="form__group">
 					  <label className="block mb-2">
 						Foto Kulit: 
 					  </label>
@@ -387,7 +386,7 @@ export default class CreateKonsultasi extends Component {
 						  </svg>
 						  <div className="flex text-sm text-gray-600">
 							<label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-							  <input type="file" className="form-control" ref={this.fotoKulit} name="fotoKulit"/>
+							  <input type="file" className="form__control" ref={this.fotoKulit} name="fotoKulit"/>
 							</label>
 						  </div>
 						  <p className="text-xs text-gray-500">
@@ -396,11 +395,11 @@ export default class CreateKonsultasi extends Component {
 						</div>
 					  </div>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<label className="block mb-2">No Agent: </label>
-						<input type="text" className="form-control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+						<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
 					</div>
-					<div className="form-group">
+					<div className="form__group">
 						<input type="submit" value="Buat konsultasi" className="hover:bg-green-700 bg-green-300 text-white w-full py-4 cursor-pointer duration-500"/>
 					</div>
 				</form>

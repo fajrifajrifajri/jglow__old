@@ -7,25 +7,57 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom */
-html {
-	font-family: 'Source Sans Pro', sans-serif;
-}
-
-.form-group {
-	@apply pb-5;
-}
-
-.form-group small {
-	@apply text-gray-300;
-}
-
-.form-control {
-	@apply block w-full border p-3;
+/* Base */
+@layer base {
+  @font-face {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
 }
 
 /* BEM Naming conventions */
-.jglow-button {
+/* Utilities */
+.button {
 	@apply block mt-4 bg-green-300 hover:bg-green-400 transition delay-150 
-	text-center text-white w-full py-2 cursor-pointer ;
+	text-center text-white w-full py-2 cursor-pointer;
+}
+.button--back {
+	@apply bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-l;
+}
+.button--input {
+	@apply button--back bg-pink-dark rounded-r;
+}
+
+/* Dashboard */
+.all__container {
+	@apply grid grid-cols-12;
+}
+.sidebar__container {
+	@apply col-span-2;
+}
+.body__container {
+	@apply bg-layout col-span-10 bg-gray-100;
+}
+.body__second__container {
+	@apply block bg-white min-h-screen rounded-tl-lg mt-24 ml-12 p-10 overflow-x-scroll;
+}
+.form__group {
+	@apply pb-5;
+}
+.form__group small {
+	@apply text-gray-300;
+}
+.form__control {
+	@apply block w-full border p-3;
+}
+.form__upload {
+	@apply mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md;
+}
+.form__upload--img {
+	@apply mx-auto h-12 w-12 text-gray-400;
+}
+.form__upload--file {
+	@apply flex text-sm text-gray-600;
+}
+.form__upload--file label {
+	@appply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
 }

@@ -10,9 +10,8 @@ import ErrorNotice from "./errorNotice";
 // Styling
 import '../../Assets/css/index.css';
 
-// FontAwesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock, faUnlock, faAt, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+// Icons
+import { FaUser, FaLock, FaUnlock, FaAt, FaArrowLeft } from 'react-icons/fa';
 
 // Assets include
 import logo from '../../Assets/img/Logo JGLOW.png';
@@ -25,6 +24,13 @@ class Register extends Component {
 	constructor(props) {
 		super(props);
 		
+		this.onChangeEmail = this.onChangeEmail.bind(this);
+		this.onChangeUsername = this.onChangeUsername.bind(this);
+		this.onChangePassword = this.onChangePassword.bind(this);
+		this.onChangePasswordCheck = this.onChangePasswordCheck.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
+		this.clearError = this.clearError.bind(this);
+		
 		this.state = {
 			email: '',
 			username: '',
@@ -36,13 +42,6 @@ class Register extends Component {
 			token: undefined,
 			user: undefined
 		}
-		
-		this.onChangeEmail = this.onChangeEmail.bind(this);
-		this.onChangeUsername = this.onChangeUsername.bind(this);
-		this.onChangePassword = this.onChangePassword.bind(this);
-		this.onChangePasswordCheck = this.onChangePasswordCheck.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
-		this.clearError = this.clearError.bind(this);
 	}
 	
 	onChangeEmail(e) {
@@ -134,8 +133,8 @@ class Register extends Component {
 					<h1 className="block m-auto text-center text-2xl font-bold">PT. JGLOW BEAUTYCARE</h1>
 				</div>
 				
-				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${emailError || userError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faAt} className="text-gray-400 p-3 fa-3x" />
+				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${(emailError || userError) && 'border border-red-200'}`}>
+					<FaAt size={42} className="text-gray-400 p-3" />
 					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				{userRegistered && <ErrorNotice message={"Email Has Been Registered"} clearError={() => this.clearError(false)} />}
@@ -143,27 +142,27 @@ class Register extends Component {
 				{emailRequired && <ErrorNotice message={"Email Required"} clearError={() => this.clearError(false)} />}
 				
 				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${usernameError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faUser} className="text-gray-400 p-3 fa-3x" />
+					<FaUser size={42} className="text-gray-400 p-3" />
 					<input type="text" name="username" value={this.state.username} onChange={this.onChangeUsername} placeholder="Username" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				{usernameRequired && <ErrorNotice message={"Username Required"} clearError={() => this.clearError(false)} />}
 				
 				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${passwordError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faLock} className="text-gray-400 p-3 fa-3x" />
+					<FaLock size={42} className="text-gray-400 p-3" />
 					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				
 				<div className={`flex bg-gray-100 my-4 rounded-t text-sm ${passwordCheckError && 'border border-red-200'}`}>
-					<FontAwesomeIcon icon={faUnlock} className="text-gray-400 p-3 fa-3x" />
+					<FaUnlock size={42} className="text-gray-400 p-3" />
 					<input type="password" name="passwordCheck" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password" className="bg-gray-100 pl-2 w-full"/>
 				</div>
 				{passwordCheckRequired && <ErrorNotice message={"Password Re-enter Must be Filled"} clearError={() => this.clearError(false)} />}
 				{passwordMismatch && <ErrorNotice message={"Password Doesn't Match"} clearError={() => this.clearError(false)} />}
 				
-				<input type="submit" value="Daftar" className="jglow-button"/>
+				<input type="submit" value="Daftar" className="button"/>
 			</form>
-			<Link to="/" className="text-white text-sm mt-3 font-semibold"><FontAwesomeIcon icon={faArrowLeft} className="mr-1" />Kembali ke login</Link>
+			<Link to="/" className="text-white mt-3 font-semibold"><FaArrowLeft className="inline-block mr-2" />Kembali ke login</Link>
 		</div>
 		
 		
