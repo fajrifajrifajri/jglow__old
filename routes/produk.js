@@ -3,7 +3,7 @@ const path = require("path");
 let Produk = require('../models/produk.model');
 let ProdukKategori = require('../models/produkKategori.model');
 const multer = require("multer");
-const multerS3 = require("multer-S3");
+const multerS3 = require("multer-s3");
 // AWS
 const aws = require('aws-sdk');
 
