@@ -152,8 +152,8 @@ class Konsultasi extends Component {
 	async getData(prevState) {
 		
 		// Set Axios Default URL
-		var port = 5000;
-		axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+		// var port = 5000;
+		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
 			try {
 			  await axios.all([
