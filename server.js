@@ -39,11 +39,13 @@ app.use('/backend/users', usersRouter);
 app.use('/backend/produk', produkRouter);
 app.use('/backend/agent', agentRouter);
 
+/*
 // Port:5000
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
 	console.log(`Server is running on port: ${port}`);
 });
+*/
 
 // Heroku
 // https://dev.to/hawacodes/deploying-a-mern-app-with-heroku-3km7
