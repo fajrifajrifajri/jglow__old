@@ -55,7 +55,7 @@ export default class CreateProduk extends Component {
 		// var port = 5000;
 		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
-		const res = await axios.get('/produk/kategori');
+		const res = await axios.get('/backend/produk/kategori');
 		const data = res.data;
 		
 		const options = data.map(d => ({
@@ -85,7 +85,7 @@ export default class CreateProduk extends Component {
 				namaKategori: inputValue
 			}
 			  
-			axios.post('/produk/add-kategori', produk).then((res)  => { 
+			axios.post('/backend/produk/add-kategori', produk).then((res)  => { 
 				// Value kategori baru dan ID nya
 				const newOption = createOption(inputValue, res.data.id);
 				
@@ -146,7 +146,7 @@ export default class CreateProduk extends Component {
 		
 		const MySwal = withReactContent(Swal);
 		
-		axios.post('/produk/add', formData, config).then((res)  => { 
+		axios.post('/backend/produk/add', formData, config).then((res)  => { 
 			console.log(res.data);
 		
 			MySwal.fire(  

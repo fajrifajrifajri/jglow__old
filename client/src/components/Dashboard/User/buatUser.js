@@ -81,7 +81,7 @@ export default class CreateUser extends Component {
 		
 		console.log(newUser);
 		
-		axios.post("/users/daftar", newUser).then((res) => {
+		axios.post("/backend/users/daftar", newUser).then((res) => {
 		  console.log(res.data);
 	
 		  MySwal.fire(  

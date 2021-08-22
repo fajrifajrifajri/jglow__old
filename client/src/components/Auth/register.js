@@ -75,8 +75,8 @@ class Register extends Component {
 				passwordCheck,
 				role
 			};
-			await axios.post("/users/daftar", newUser);
-			const loginResponse = await axios.post("/users/masuk", {
+			await axios.post("/backend/users/daftar", newUser);
+			const loginResponse = await axios.post("/backend/users/masuk", {
 				email, password
 			});
 			this.setState({

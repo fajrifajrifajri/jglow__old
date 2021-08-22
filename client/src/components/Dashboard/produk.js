@@ -86,7 +86,7 @@ class Konsultasi extends Component {
 			  'success'
 			)
 		
-			axios.delete('/produk/'+id)
+			axios.delete('/backend/produk/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -95,7 +95,7 @@ class Konsultasi extends Component {
 	// Load table data
 	async getData(prevState) {
 			try {
-			  await axios.get("/produk/")
+			  await axios.get("/backend/produk/")
 			  .then((res) => {
 				  // check if there's any update or data empty
 				  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.

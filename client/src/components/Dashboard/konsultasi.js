@@ -142,7 +142,7 @@ class Konsultasi extends Component {
 			  'success'
 			)
 		
-			axios.delete('/konsultasi/'+id)
+			axios.delete('/backend/konsultasi/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -158,9 +158,9 @@ class Konsultasi extends Component {
 			try {
 			  await axios.all([
 			  axios
-				.get("/konsultasi/"),
+				.get("/backend/konsultasi/"),
 			  axios
-				.get("/order/")
+				.get("/backend/order/")
 			  ])
 			  .then(axios.spread((res1, res2) => {
 				  // check if there's any update or data empty

@@ -112,9 +112,9 @@ export default class CreateAgent extends Component {
 		
 		axios.all([
 		  axios
-			.post("/agent/add", agent),
+			.post("/backend/agent/add", agent),
 		  axios
-			.post("/users/daftar", user)
+			.post("/backend/users/daftar", user)
 		  ]).then(axios.spread((res1, res2) => {
 			  console.log(res1.data);
 		

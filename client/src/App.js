@@ -52,10 +52,10 @@ function App() {
 					localStorage.setItem("auth-token", "");
 					token = "";
 				}
-				const tokenResponse = await axios.post('/users/verifikasiToken', null, {headers: {"x-auth-token": token}});
+				const tokenResponse = await axios.post('/backend/users/verifikasiToken', null, {headers: {"x-auth-token": token}});
 				console.log(tokenResponse);
 				if (tokenResponse.data) {
-					const userRes = await axios.get("/users/", {
+					const userRes = await axios.get("/backend/users/", {
 						headers: { "x-auth-token": token },
 					});
 					console.log(userRes);

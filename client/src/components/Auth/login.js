@@ -59,7 +59,7 @@ class Login extends Component {
 		const password = this.state.password;
 		const loginUser = {email, password};
 		const _this = this;
-		axios.post("/users/masuk", loginUser)
+		axios.post("/backend/users/masuk", loginUser)
 		.then(function(res) {
 			console.log(res);
 			_this.setState({

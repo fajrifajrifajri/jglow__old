@@ -33,11 +33,11 @@ const usersRouter = require('./routes/users');
 const produkRouter = require('./routes/produk');
 const agentRouter = require('./routes/agent');
 
-app.use('/konsultasi', konsultasiRouter);
-app.use('/order', orderRouter);
-app.use('/users', usersRouter);
-app.use('/produk', produkRouter);
-app.use('/agent', agentRouter);
+app.use('/backend/konsultasi', konsultasiRouter);
+app.use('/backend/order', orderRouter);
+app.use('/backend/users', usersRouter);
+app.use('/backend/produk', produkRouter);
+app.use('/backend/agent', agentRouter);
 
 // Port:5000
 const port = process.env.PORT || 5000;

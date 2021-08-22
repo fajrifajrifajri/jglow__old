@@ -51,7 +51,7 @@ export default class CreateOrder extends Component {
 		// var port = 5000;
 		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
-		const res = await axios.get('/produk');
+		const res = await axios.get('/backend/produk');
 		const data = res.data;
 		
 		const products = data.map(d => ({
@@ -129,7 +129,7 @@ export default class CreateOrder extends Component {
 			noAgent: this.state.noAgent,
 		}
 		
-		axios.post('/order/add', order).then((res)  => { 
+		axios.post('/backend/order/add', order).then((res)  => { 
 			console.log(res.data);
 		
 			Swal.fire(  
