@@ -2,7 +2,7 @@ const router = require('express').Router();
 const path = require("path");
 let Konsultasi = require('../models/konsultasi.model');
 const multer = require("multer");
-const multerS3 = require("multer-S3");
+const multerS3 = require("multer-s3");
 // const fs = require('fs-extra');
 // AWS
 const aws = require('aws-sdk');
