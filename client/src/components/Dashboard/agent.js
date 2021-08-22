@@ -27,7 +27,7 @@ class Konsultasi extends Component {
 		
 		this.deleteData = this.deleteData.bind(this);
 		
-		this.serverBaseURI = 'https://jglow.herokuapp.com';
+		this.serverBaseURI = 'https://jglow.sgp1.digitaloceanspaces.com';
 		
 		this.columns = [
 		{

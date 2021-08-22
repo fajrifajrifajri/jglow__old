@@ -30,7 +30,7 @@ class Order extends Component {
 		
 		this.deleteData = this.deleteData.bind(this);
 		
-		this.serverBaseURI = 'http://localhost:5000';
+		this.serverBaseURI = 'https://jglow.sgp1.digitaloceanspaces.com';
 		
 		this.columns = [
 		{
