@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React from "react";
 import { useTable, useBlockLayout } from 'react-table';
 
 // Styling
@@ -8,7 +8,8 @@ export const Table = (props) => {
 	// const [ hapus, setHapus ] = useState(0);
 	
 	// Access props.columns
-	const cols = useMemo(() => props.columns, [])
+	// const cols = useMemo(() => props.columns, [])
+	const cols = props.columns;
 	
 	// Access props.data
 	const data = props.data;

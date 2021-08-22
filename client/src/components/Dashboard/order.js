@@ -151,21 +151,21 @@ class Order extends Component {
 			<Sidebar/>
 		</div>
 		<div className="body__container">
-			<div className="body__second__container">
+			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
 					<div className="col-start-8 col-span-4 mb-4">
 						<h5 className="text-center">Order minggu ini</h5>
 					</div>
 					<div className="col-span-6">
 						<Link to="/beranda" className="button--back">
-							<FaChevronLeft size={20} className='inline-block mr-2' />
-							<span className="font-bold">
+							<FaChevronLeft size={20} className='icon--header' />
+							<span>
 								Order
 							</span>
 						</Link>
-						<Link to="/order/buat-order" className="inline-block bg-green-600 text-white text-xl py-2 pl-4 pr-6 rounded-r">
-							<FaPlusSquare size={20} className='inline-block mr-2' />
-							<span className="font-bold">
+						<Link to="/order/buat-order" className="button--input">
+							<FaPlusSquare size={20} className='icon--header' />
+							<span>
 								Input
 							</span>
 						</Link>

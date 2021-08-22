@@ -188,28 +188,28 @@ export default class CreateKonsultasi extends Component {
 			'success'
 			);
 		}).catch((err) => {
-			console.log(err.response);
+			console.log(err.response.data.message);
 		});
 		
 		console.log(formData.get("nama"));
 	}
 	
 	render() {
-		return (
+	return (
     <div className="all__container">
 		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
 		<div className="body__container">
-			<div className="body__second__container">
-			<div className="flex">
-				<Link to="/konsultasi" className="button--back">
-					<FaChevronLeft size={20} className="inline-block mr-2"/>
-					<span className="font-bold">
-						Tabel Konsultasi
-					</span>
-				</Link>
-			</div>
+			<div className="body__form__container">
+				<div>
+					<Link to="/konsultasi" className="button--back">
+						<FaChevronLeft size={20} className="icon--header"/>
+						<span>
+							Tabel Konsultasi
+						</span>
+					</Link>
+				</div>
 				<form className="mt-10" onSubmit={this.onSubmit}>
 					<label className="block mb-2">Nama Lengkap: </label>
 					<div className="form__group grid grid-cols-12 gap-2">

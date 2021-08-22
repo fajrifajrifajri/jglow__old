@@ -52,25 +52,26 @@ class Login extends Component {
 		});
 	}
 	
-	async onSubmit(e) {
+	onSubmit(e) {
 		e.preventDefault();
 		
 		const email = this.state.email;
 		const password = this.state.password;
-		try{
-			const loginUser = {email, password};
-			const loginResponse = await axios.post("/users/masuk", loginUser);
-			this.setState({
-				token: loginResponse.data.token,
-				user: loginResponse.data.user
+		const loginUser = {email, password};
+		const _this = this;
+		axios.post("/users/masuk", loginUser)
+		.then(function(res) {
+			console.log(res);
+			_this.setState({
+				token: res.data.token,
+				user: res.data.user
 			});
-			localStorage.setItem("auth-token", loginResponse.data.token);
-			this.props.history.push("/beranda");
-		} catch(err) {
-			
+			localStorage.setItem("auth-token", res.data.token);
+			_this.props.history.push("/beranda");
+		}).catch(function (err) {
 			console.log(err.response.data.errors)
-			this.setState({error: err.response.data.errors})
-		}
+			_this.setState({error: err.response.data.errors})
+		});
 	};
 	
 	clearError() {

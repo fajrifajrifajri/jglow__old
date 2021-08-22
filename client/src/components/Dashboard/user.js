@@ -8,11 +8,10 @@ import axios from 'axios';
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
-import { Header } from './_Main Components/header';
 import { Table } from './_Main Components/table';
 
 // Icons
-import { FaChevronLeft, FaPlusSquare, FaTimes } from 'react-icons/fa';
+import { FaChevronLeft, FaPlusSquare, FaTimes, FaUserLock } from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -34,65 +33,28 @@ class Konsultasi extends Component {
 		
 		this.columns = [
 		{
-			Header: 'Nama',
-			accessor: 'nama'
+			Header: 'E-mail',
+			accessor: 'email'
 		},
 		{
-			Header: 'Alamat',
-			accessor: 'alamat'
-		},
-		{
-			Header: 'No Telp & No Agent',
-			accessor: 'noTelp',
-			Cell: cell => (
-				<div>
-					<p>{cell.row.original.noTelp}</p>
-					<p className="font-bold">[{cell.row.original.noAgent}]</p>
-				</div>
-			  )
-		},
-		{
-			Header: 'Spesifikasi Kulit',
-			accessor: 'jenisKulit',
-			Cell: cell => (
-				<div>
-					<p><span className="font-bold">Jenis Kulit: </span>{cell.row.original.jenisKulit}</p>
-					<p><span className="font-bold">Kulit Sensitif: </span>{cell.row.original.kulitSensitif}</p>
-					<p><span className="font-bold">Mudah Iritasi? </span>{cell.row.original.mudahIritasi}</p>
-					<p><span className="font-bold">Pasien dalam keadaan Hamil/ Menyusui? </span>{cell.row.original.hamilDanMenyusui}</p>
-					<p><span className="font-bold">Riwayat Skincare: </span>{cell.row.original.riwayatSkincare}</p>
-				</div>
-			  )
-		},
-		{
-			Header: 'Kondisi',
-			accessor: 'kondisiKeluhan',
+			Header: 'Password',
+			accessor: 'password',
+			className: 'text-center',
 			Cell: ({ cell }) => (
-				<div>
-					<p><span className="font-bold">Kondisi dan Keluhan: </span>{cell.row.original.kondisiKeluhan}</p>
-					<p><span className="font-bold">Pengunaan ke- </span>{cell.row.original.penggunaanKe}</p>
-				</div>
-			  )
+				<button className="p-2 px-6 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-green-600">
+				  <FaUserLock />
+				</button>
+			)
 		},
 		{
-			Header: 'Foto Agent',
-			accessor: 'fotoAgent',
-			Cell: ({ cell }) => (
-				<img src={`${this.serverBaseURI}/public/${cell.row.values.fotoAgent}`} alt={cell.row.values.fotoAgent}/>
-			  )
-		},
-		{
-			Header: 'Foto Kulit',
-			accessor: 'fotoKulit',
-			Cell: ({ cell }) => (
-				<img src={`${this.serverBaseURI}/public/${cell.row.values.fotoKulit}`} alt={cell.row.values.fotoKulit}/>
-			  )
+			Header: 'Role',
+			accessor: 'role'
 		},
 		{
 		  Header: "Cancel (Tolak)",
 		  accessor: "_id",
 		  Cell: ({ cell }) => (
-			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
+			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
 			  <FaTimes />
 			</button>
 		  )
@@ -101,6 +63,11 @@ class Konsultasi extends Component {
 	
 	
 	deleteData = (id) => {
+		
+		// Set Axios Default URL
+		// var port = 5000;
+		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+		
 		Swal.fire({
 		  title: 'Hapus data ini?',
 		  text: "Data akan terhapus.",
@@ -117,7 +84,7 @@ class Konsultasi extends Component {
 			  'success'
 			)
 		
-			axios.delete('/'+id)
+			axios.delete('/users/'+id)
 				.then(res => console.log(res.data));
 		  }
 		})
@@ -126,31 +93,21 @@ class Konsultasi extends Component {
 	// Load table data
 	async getData(prevState) {
 			try {
-			  await axios.all([
-			  axios
-				.get("/konsultasi/"),
-			  axios
-				.get("/order/")
-			  ])
-			  .then(axios.spread((res1, res2) => {
+			  await axios.get("/users/all")
+			  .then((res) => {
 				  // check if there's any update or data empty
 				  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-				  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+				  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res.data)) {
 					  console.log(this.state.data);
-					  console.log(res1.data);
-					  // count how many data
-					  const konsultasiCount = Object.keys(res1.data).length;
-					  const orderCount = Object.keys(res2.data).length;
+					  console.log(res.data);
 					  this.setState({ 
-						data: res1.data,
-						konsultasiCount: konsultasiCount,
-						orderCount: orderCount,
+						data: res.data,
 					  });
 				  }
 				  
 				  // data is loaded
 				  this.setState({ loadingData: false });
-			  }));
+			  });
 			} catch (err) {
 				console.log(err);
 			}
@@ -170,35 +127,26 @@ class Konsultasi extends Component {
 	
   render() {
     return (
-    <div className="grid grid-cols-12">
-		<div className="col-span-2">
+    <div className="all__container">
+		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
-		<div className="bg-layout col-span-10 bg-gray-100">
-			<Header/>
-			<div className="bg-white min-h-screen rounded-tl-lg ml-12 py-4 px-12">
+		<div className="body__container">
+			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
-					<div className="col-start-8 col-span-4 mb-4">
-						<h5 className="text-center">Konsultasi minggu ini</h5>
-					</div>
 					<div className="col-span-6">
-						<Link to="/beranda" className="inline-block bg-pink-dark text-white text-xl py-2 pl-4 pr-6 rounded-l">
-							<FaChevronLeft className='inline-block mr-2' />
-							<span className="font-bold">
-								Konsultasi
+						<Link to="/beranda" className="button--back">
+							<FaChevronLeft className='icon--header' />
+							<span>
+								User
 							</span>
 						</Link>
-						<Link to="/user/buat-user" className="inline-block bg-green-600 text-white text-xl py-2 pl-4 pr-6 rounded-r">
-							<FaPlusSquare className='inline-block mr-2' />
-							<span className="font-bold">
+						<Link to="/user/buat-user" className="button--input">
+							<FaPlusSquare className='icon--header' />
+							<span>
 								Input
 							</span>
 						</Link>
-					</div>
-					<div className="col-span-6 flex gap-x-1">
-						<button className="flex-1 bg-yellow-400 p-2 font-bold border-2 border-black">{this.state.konsultasiCount} KONSULTASI</button>
-						<button className="flex-1 bg-green-400 p-2 font-bold border-2 border-black">{this.state.orderCount} ORDER</button>
-						<button className="flex-1 bg-red-400 p-2 font-bold border-2 border-black">0 CANCELLED</button>
 					</div>
 				</div>
 				<Table 

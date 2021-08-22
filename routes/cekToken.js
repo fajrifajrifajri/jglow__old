@@ -13,7 +13,7 @@ const cekToken = (req, res, next) => {
 			return res.status(401).json({msg: "Token verification failed, authorization denied"});
 		}
 		
-		req.user = verified.id;
+		req.user = verified.userId;
 		next();
 		
 	} catch (err) {

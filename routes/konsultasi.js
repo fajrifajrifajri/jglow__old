@@ -2,24 +2,41 @@ const router = require('express').Router();
 const path = require("path");
 let Konsultasi = require('../models/konsultasi.model');
 const multer = require("multer");
-const fs = require('fs-extra');
+const multerS3 = require("multer-S3");
+// const fs = require('fs-extra');
+// AWS
+const aws = require('aws-sdk');
 
-router.route('/').get((req, res) => {
-	Konsultasi.find()
-		.then(konsultasi => res.json(konsultasi))
-		.catch(err => res.status(400).json('Error: ' + err));
+// Set S3 endpoint to DigitalOcean Spaces
+const spacesEndpoint = new aws.Endpoint('sgp1.digitaloceanspaces.com/');
+const s3 = new aws.S3({
+	endpoint: spacesEndpoint
 });
 
+// Change bucket property to your Space name
+const uploadFile = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'jglow',
+    acl: 'public-read',
+    key: function (request, file, cb) {
+		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+		cb(null,"Foto/IMAGE-" + uniqueSuffix + path.extname(file.originalname));
+    }
+  })
+});
+
+/*
 // File Foto
 const storage = multer.diskStorage({
 	destination: "./client/public/",
 	
-	/*
-	destination: function (req, file, cb) {
-		let path = "./client/public/";
-		fs.mkdirsSync(path);
-	}, 
-	*/
+	
+	// destination: function (req, file, cb) {
+	//	let path = "./client/public/";
+	//	fs.mkdirsSync(path);
+	//}, 
+	//
 
 	filename: function(req, file, cb){
 		const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -31,8 +48,15 @@ const uploadFoto = multer({
    storage: storage,
    limits:{fileSize: 1000000}
 })
+*/
 
-router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { name: 'fotoKulitWajahDepan', maxCount:1 }, { name: 'fotoKulitWajahKiri', maxCount:1 }, { name: 'fotoKulitWajahKanan', maxCount:1 }]), (req, res) => {
+router.route('/').get((req, res) => {
+	Konsultasi.find()
+		.then(konsultasi => res.json(konsultasi))
+		.catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.post('/add', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { name: 'fotoKulitWajahDepan', maxCount:1 }, { name: 'fotoKulitWajahKiri', maxCount:1 }, { name: 'fotoKulitWajahKanan', maxCount:1 }]), (req, res) => {
 	   
 	//console.log("Request ---", req.body);
 	console.log("Request file ---", req.files);//Here you get file.
@@ -49,10 +73,10 @@ router.post('/add', uploadFoto.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 	const riwayatSkincare = req.body.riwayatSkincare;
 	const kondisiKeluhan = req.body.kondisiKeluhan;
 	const penggunaanKe = req.body.penggunaanKe;
-	const fotoAgent = req.files.fotoAgent[0].filename;
-	const fotoKulitWajahDepan = req.files.fotoKulitWajahDepan[0].filename;
-	const fotoKulitWajahKiri = req.files.fotoKulitWajahKiri[0].filename;
-	const fotoKulitWajahKanan = req.files.fotoKulitWajahKanan[0].filename;
+	const fotoAgent = req.files.fotoAgent[0].key;
+	const fotoKulitWajahDepan = req.files.fotoKulitWajahDepan[0].key;
+	const fotoKulitWajahKiri = req.files.fotoKulitWajahKiri[0].key;
+	const fotoKulitWajahKanan = req.files.fotoKulitWajahKanan[0].key;
 	const noAgent = req.body.noAgent;
 	
 	console.log(fotoAgent);

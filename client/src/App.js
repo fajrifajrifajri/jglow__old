@@ -7,7 +7,6 @@ import {
   Switch
 } from "react-router-dom";
 
-
 // Components
 import Login from './components/Auth/login';
 import Register from './components/Auth/register';
@@ -18,54 +17,72 @@ import Agent from './components/Dashboard/agent';
 import BuatAgent from './components/Dashboard/Agent/buatAgent';
 import User from './components/Dashboard/user';
 import BuatUser from './components/Dashboard/User/buatUser';
-import ReportingProduk from './components/Dashboard/reportingProduk';
-import ReportingAgent from './components/Dashboard/reportingAgent';
 import Konsultasi from './components/Dashboard/konsultasi';
 import BuatKonsultasi from './components/Dashboard/Konsultasi/buatKonsultasi';
 import Order from './components/Dashboard/order';
 import BuatOrder from './components/Dashboard/Order/buatOrder';
 import KonsultasiKlien from './components/buatKonsultasi';
+import LaporanProduk from './components/Dashboard/Laporan/laporanProduk';
+import LaporanHarian from './components/Dashboard/Laporan/laporanHarian';
 
 // Auth
 import UserContext from './components/Auth/userContext';
 
 function App() {
-  // Auth Frontend
-  const [ userData, setUserData] = useState({
-	token: undefined,
-	user: undefined
-  });
+	// Auth Frontend
+	const [ userData, setUserData] = useState({
+		token: undefined,
+		user: undefined
+	});
+	 
+	// User Status
+	const [userStatus, setUserStatus] = useState(false)
   
-  useEffect(() => {
-	
-	// Set Axios Default URL
-	var port = 5000;
-	axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-	  
-	const checkLoggedIn = async () => {
-		let token = localStorage.getItem("auth-token");
-		if(token === null){
-			localStorage.setItem("auth-token", "");
-			token = "";
+	useEffect(() => {
+		if(!userStatus) {
+
+			// Set Axios Default URL
+			// var port = 5000;
+			// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+			  
+			const checkLoggedIn = async () => {
+				let token = localStorage.getItem("auth-token");
+				console.log('Token: '+token);
+				if(token === null){
+					localStorage.setItem("auth-token", "");
+					token = "";
+				}
+				const tokenResponse = await axios.post('/users/verifikasiToken', null, {headers: {"x-auth-token": token}});
+				console.log(tokenResponse);
+				if (tokenResponse.data) {
+					const userRes = await axios.get("/users/", {
+						headers: { "x-auth-token": token },
+					});
+					console.log(userRes);
+					setUserData({
+						token,
+						user: userRes.data,
+					});
+				} else {
+					console.log('Token either empty/expired/unverified!');
+					setUserData({
+						user: null,
+					});
+				}
+				setUserStatus(true);
+			}
+			
+			// Execute
+			setTimeout(function() {
+				checkLoggedIn();
+			}, 250);
 		}
-		const tokenResponse = await axios.post('/users/cekToken', null, {headers: {"x-auth-token": token}});
-		if (tokenResponse.data) {
-			const userRes = await axios.get("/users/", {
-			headers: { "x-auth-token": token },
-		});
-		setUserData({
-			token,
-			user: userRes.data,
-		});
-	}
-	}
-	checkLoggedIn();
-  }, []);
+	}, [userStatus]);
   
   // Routing
   return (
     <Router>
-		<UserContext.Provider value={{ userData, setUserData }}>
+		<UserContext.Provider value={{ userData, setUserData, userStatus: setUserStatus }}>
 			<Switch>
 				<Route exact path="/">
 				  <Login />
@@ -95,10 +112,10 @@ function App() {
 				  <BuatUser />
 				</Route>
 				<Route exact path="/laporan-produk">
-				  <ReportingProduk />
+				  <LaporanProduk />
 				</Route>
 				<Route exact path="/laporan-agent">
-				  <ReportingAgent />
+				  <LaporanHarian />
 				</Route>
 				<Route exact path="/konsultasi">
 				  <Konsultasi />

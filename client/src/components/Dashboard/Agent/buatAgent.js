@@ -28,6 +28,7 @@ export default class CreateAgent extends Component {
 		this.onChangeUserId = this.onChangeUserId.bind(this);
 		this.onChangeEmail = this.onChangeEmail.bind(this);
 		this.onChangePassword = this.onChangePassword.bind(this);
+		this.onChangePasswordCheck = this.onChangePasswordCheck.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		
 		this.state = {
@@ -38,6 +39,7 @@ export default class CreateAgent extends Component {
 			userId: '',
 			email: '',
 			password: '',
+			passwordCheck: '',
 		}
 	}
 	
@@ -83,6 +85,12 @@ export default class CreateAgent extends Component {
 		});
 	}
 	
+	onChangePasswordCheck(e) {
+		this.setState({
+		  passwordCheck: e.target.value
+		});
+	}
+	
 	onSubmit(e) {
 		e.preventDefault();
 		
@@ -94,19 +102,30 @@ export default class CreateAgent extends Component {
 			userId: this.state.userId
 		}
 		
+		const user = {
+			email: this.state.email,
+			password: this.state.password,
+			passwordCheck: this.state.passwordCheck,
+		}
+		
 		const MySwal = withReactContent(Swal);
 		
-		axios.post('/agent/add', agent).then((res)  => { 
-			console.log(res.data);
+		axios.all([
+		  axios
+			.post("/agent/add", agent),
+		  axios
+			.post("/users/daftar", user)
+		  ]).then(axios.spread((res1, res2) => {
+			  console.log(res1.data);
 		
-			MySwal.fire(  
-			'Agent telah ditambahkan!',
-			'Tinggal, tunggu distributor memproses ya!',
-			'success'
-			);
-		}).catch((err) => {
-			console.log(err.response);
-		});
+			  MySwal.fire(  
+				'Agent telah ditambahkan!',
+				'Tinggal, tunggu distributor memproses ya!',
+				'success'
+				);		
+			})).catch((err) => {
+				console.log(err.response);
+			});
 	}
 	
 	render() {
@@ -116,11 +135,11 @@ export default class CreateAgent extends Component {
 				<Sidebar/>
 			</div>
 			<div className="body__container">
-				<div className="body__second__container">
-				<div className="flex">
+				<div className="body__form__container">
+				<div>
 					<Link to="/agent" className="button--back">
-						<FaChevronLeft size={30} className="m-auto inline-block mr-2"/>
-						<span className="font-bold">
+						<FaChevronLeft size={20} className="icon--header"/>
+						<span>
 							Tabel Agent
 						</span>
 					</Link>
@@ -161,6 +180,11 @@ export default class CreateAgent extends Component {
 						<label className="block mb-2">Password: </label>
 						<input type="password" className="form__control" value={this.state.password} onChange={this.onChangePassword} placeholder="Password"/>
 						<small>Password</small>
+					</div>
+					<div className="form__group">
+						<label className="block mb-2">Re-enter Password: </label>
+						<input type="password" className="form__control" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password"/>
+						<small>Re-enter Password</small>
 					</div>
 					<div className="form__group">
 						<input type="submit" value="Buat agent" className="button"/>

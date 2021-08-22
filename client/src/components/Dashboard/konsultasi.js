@@ -12,6 +12,7 @@ import { Table } from './_Main Components/table';
 
 // Icons
 import { FaChevronLeft, FaPlusSquare, FaTimes } from 'react-icons/fa';
+import { RiWhatsappFill } from 'react-icons/ri';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -29,7 +30,7 @@ class Konsultasi extends Component {
 		
 		this.deleteData = this.deleteData.bind(this);
 		
-		this.serverBaseURI = 'http://localhost:5000';
+		this.serverBaseURI = 'https://jglow.sgp1.digitaloceanspaces.com';
 		
 		this.columns = [
 		{
@@ -56,6 +57,7 @@ class Konsultasi extends Component {
 				<div>
 					<p className="truncate">{cell.row.original.noTelp}</p>
 					<p className="truncate font-bold">[{cell.row.original.noAgent}]</p>
+					<a className="block" href={`https://wa.me/62${cell.row.original.noTelp.substring(1)}`}> <RiWhatsappFill size={20} className="text-green-400"/> </a>
 				</div>
 			  )
 		},
@@ -89,7 +91,7 @@ class Konsultasi extends Component {
 			maxWidth: 80,
 			custom: true,
 			Cell: ({ cell }) => (
-				<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoAgent}`} alt={cell.row.original.fotoAgent}/>
+				<img src={`${this.serverBaseURI}/${cell.row.original.fotoAgent}`} alt={cell.row.original.fotoAgent}/>
 			  )
 		  },
 		  {
@@ -99,9 +101,9 @@ class Konsultasi extends Component {
 			custom: true,
 			Cell: ({ cell }) => (
 				<>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahDepan}`} alt={cell.row.original.fotoKulitWajahDepan} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahKiri}`} alt={cell.row.original.fotoKulitWajahKiri} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/public/${cell.row.original.fotoKulitWajahKanan}`} alt={cell.row.original.fotoKulitWajahKanan} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahDepan}`} alt={cell.row.original.fotoKulitWajahDepan} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahKiri}`} alt={cell.row.original.fotoKulitWajahKiri} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahKanan}`} alt={cell.row.original.fotoKulitWajahKanan} className='mb-2'/>
 				</>
 			  )
 		},
@@ -121,8 +123,8 @@ class Konsultasi extends Component {
 	deleteData = (id) => {
 		
 		// Set Axios Default URL
-		var port = 5000;
-		axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+		// var port = 5000;
+		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
 		Swal.fire({
 		  title: 'Hapus data ini?',
@@ -199,25 +201,25 @@ class Konsultasi extends Component {
   render() {
     return (
     <div className="all__container">
-		<div className="col-span-2">
+		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
 		<div className="body__container">
-			<div className="body__second__container">
-				<div className="grid grid-cols-12 mb-12">
+			<div className="body__table__container">
+				<div className="grid grid-cols-12 mb-8">
 					<div className="col-start-8 col-span-4 mb-4">
 						<h5 className="text-center">Konsultasi minggu ini</h5>
 					</div>
 					<div className="col-span-6">
 						<Link to="/beranda" className="button--back">
-							<FaChevronLeft className='inline-block mr-2' />
-							<span className="font-bold">
+							<FaChevronLeft size={20} className='icon--header' />
+							<span>
 								Konsultasi
 							</span>
 						</Link>
 						<Link to="/konsultasi/buat-konsultasi" className="button--input">
-							<FaPlusSquare className='inline-block mr-2' />
-							<span className="font-bold">
+							<FaPlusSquare size={20} className='icon--header' />
+							<span>
 								Input
 							</span>
 						</Link>

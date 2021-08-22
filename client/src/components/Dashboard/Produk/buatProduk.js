@@ -3,11 +3,11 @@ import {
 	Link
 } from 'react-router-dom';
 import axios from 'axios';
+import CreatableSelect from 'react-select/creatable';
 
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
-import { Header } from '../_Main Components/header';
 
 // Icons
 import { FaChevronLeft } from 'react-icons/fa';
@@ -16,6 +16,12 @@ import { FaChevronLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 
+// React-select Creatable
+const createOption = (label: string, id) => ({
+  label,
+  value: id,
+});
+
 export default class CreateProduk extends Component {
 	constructor(props) {
 		super(props);
@@ -23,15 +29,84 @@ export default class CreateProduk extends Component {
 		this.onChangeNamaProduk = this.onChangeNamaProduk.bind(this);
 		this.onChangeHarga = this.onChangeHarga.bind(this);
 		this.onChangeStok = this.onChangeStok.bind(this);
-		this.onChangeKategoriId = this.onChangeKategoriId.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
+		
+		this.onHandleChange = this.onHandleChange.bind(this);
+		this.onHandleCreate = this.onHandleCreate.bind(this);
+		
+		// Foto
+		this.gambarProduk = React.createRef();
 		
 		this.state = {
 			namaProduk: '',
 			harga: '',
 			stok: '',
-			kategoriId: '',
+			
+			// React Select
+			selectOptions: [],
+			kategoriId: undefined,
+			isLoadingSelect: false,
 		}
+	}
+	
+	async getOptions() {
+		
+		// Set Axios Default URL
+		// var port = 5000;
+		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+		
+		const res = await axios.get('/produk/kategori');
+		const data = res.data;
+		
+		const options = data.map(d => ({
+			label: d.nama_kategori,
+			value: d._id
+		}))
+		
+		this.setState({ selectOptions: options })
+	}
+	
+	onHandleChange = (newValue: any, actionMeta: any) => {
+		console.group('Value Changed');
+		console.log(newValue);
+		console.log(`action: ${actionMeta.action}`);
+		console.groupEnd();
+		this.setState({ kategoriId: newValue });
+	};
+	
+	onHandleCreate = (inputValue: any) => {
+		this.setState({ isLoadingSelect: true });
+		console.group('Option created');
+		console.log('Wait a moment...');
+		setTimeout(() => {
+			const { selectOptions } = this.state;
+
+			const produk = {
+				namaKategori: inputValue
+			}
+			  
+			axios.post('/produk/add-kategori', produk).then((res)  => { 
+				// Value kategori baru dan ID nya
+				const newOption = createOption(inputValue, res.data.id);
+				
+				this.setState({
+					isLoadingSelect: false,
+					selectOptions: [...selectOptions, newOption],
+					kategoriId: inputValue,
+				});
+				
+				console.log(this.state.kategoriId)
+				
+				console.log(newOption);
+				console.groupEnd();
+			}).catch((err) => {
+				console.log(err.response);
+			});
+		}, 1000);
+	};
+	
+	componentDidMount(){
+      this.getOptions()
 	}
 	
 	onChangeNamaProduk(e) {
@@ -52,25 +127,26 @@ export default class CreateProduk extends Component {
 		});
 	}
 	
-	onChangeKategoriId(e) {
-		this.setState({
-		  kategoriId: e.target.value
-		});
-	}
-	
 	onSubmit(e) {
 		e.preventDefault();
 		
-		const produk = {
-			namaProduk: this.state.namaProduk,
-			harga: this.state.harga,
-			stok: this.state.stok,
-			kategoriId: this.state.kategoriId
-		}
+		const formData = new FormData();
+		
+		formData.append('namaProduk',this.state.namaProduk);
+		formData.append('harga',this.state.harga);
+		formData.append('stok',this.state.stok);
+		formData.append('kategoriId',this.state.kategoriId.value);
+		formData.append('gambarProduk',this.gambarProduk.current.files[0]);
+		
+		const config = {
+			headers: {
+				'content-type': 'multipart/form-data'
+			}
+		};
 		
 		const MySwal = withReactContent(Swal);
 		
-		axios.post('/produk/add', produk).then((res)  => { 
+		axios.post('/produk/add', formData, config).then((res)  => { 
 			console.log(res.data);
 		
 			MySwal.fire(  
@@ -90,38 +166,71 @@ export default class CreateProduk extends Component {
 				<Sidebar/>
 			</div>
 			<div className="body__container">
-				<Header/>
-				<div className="body__second__container">
-				<div className="flex">
+				<div className="body__form__container">
+				<div>
 					<Link to="/produk" className="button--back">
-						<FaChevronLeft size={30} className="m-auto inline-block mr-2"/>
-						<span className="font-bold">
+						<FaChevronLeft size={20} className="icon--header"/>
+						<span>
 							Tabel Produk
 						</span>
 					</Link>
 					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH PRODUK</h1>
 				</div>
 				<form className="mt-10" onSubmit={this.onSubmit}>
+				
+					<div className="form__group">
+					  <label className="block mb-2">
+						Upload Gambar Produk
+					  </label>
+					  <div className="form__upload">
+						<div className="space-y-1 text-center">
+						  <svg className="form__upload--img" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+							<path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+						  </svg>
+						  <div className="form__upload--file">
+							<label htmlFor="file-upload">
+							  <input type="file" className="form__control" ref={this.gambarProduk} name="gambarProduk"/>
+							</label>
+						  </div>
+						  <p className="text-xs text-gray-500">
+							PNG, JPG, JPEG up to 10MB
+						  </p>
+						</div>
+					  </div>
+					</div>
+				
 					<div className="form__group">
 						<label className="block mb-2">Nama Produk: </label>
 						<input type="text" className="form__control" value={this.state.namaProduk} onChange={this.onChangeNamaProduk} placeholder="Nama Produk"/>
 						<small>Nama Produk</small>
 					</div>
+					
 					<div className="form__group"> 
 						<label className="block mb-2">Kategori: </label>
-						<input type="text" className="form__control" value={this.state.kategoriId} onChange={this.onChangeKategoriId} placeholder="Kategori"/>
+						<CreatableSelect
+							isClearable
+							isDisabled={this.state.isLoadingSelect}
+							isLoading={this.state.isLoadingSelect}
+							onChange={this.onHandleChange}
+							onCreateOption={this.onHandleCreate}
+							options={this.state.selectOptions}
+							value={this.state.kategoriId}
+						  />
 						<small>Kategori</small>
 					</div>
+					
 					<div className="form__group">
 						<label className="block mb-2">Harga </label>
 						<input type="text" className="form__control" value={this.state.harga} onChange={this.onChangeHarga} placeholder="Harga"/>
 						<small>Harga</small>
 					</div>
+					
 					<div className="form__group">
 						<label className="block mb-2">Stok: </label>
 						<input type="text" className="form__control" value={this.state.stok} onChange={this.onChangeStok} placeholder="Stok"/>
 						<small>Stok</small>
 					</div>
+					
 					<div className="form__group">
 						<input type="submit" value="Buat produk" className="button"/>
 					</div>

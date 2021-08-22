@@ -7,6 +7,7 @@ const produkSchema = new Schema({
 	harga: { type: String, required: true },
 	stok: { type: String, required: true },
 	kategori_id: { type: String, required: true },
+	foto: { type: String, required: true },
 }, 
 	{
 		timestamps: true,
