@@ -64,10 +64,6 @@ class Konsultasi extends Component {
 	
 	deleteData = (id) => {
 		
-		// Set Axios Default URL
-		// var port = 5000;
-		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-		
 		Swal.fire({
 		  title: 'Hapus data ini?',
 		  text: "Data akan terhapus.",

@@ -27,7 +27,21 @@ const uploadFile = multer({
 });
 
 router.route('/').get((req, res) => {
-	Produk.find()
+	Produk.aggregate([
+	{
+		$lookup: {
+		   from: 'produkkategoris',
+		   localField: 'kategori_id',
+		   foreignField: '_id',
+		   as: 'kategori'
+		}
+	},
+	{
+		$addFields: {
+          "nama_kategori": "$kategori.nama_kategori"
+		}
+	}
+	])
 		.then(produk => res.json(produk))
 		.catch(err => res.status(400).json('Error: ' + err));
 });
@@ -36,6 +50,12 @@ router.route('/kategori').get((req, res) => {
 	ProdukKategori.find()
 		.then(produkKategori => res.json(produkKategori))
 		.catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/kategori/:id').delete((req, res) => {
+	ProdukKategori.findByIdAndDelete(req.params.id)
+	.then(() => res.json('Kategori dihapus.'))
+	.catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.post('/add', uploadFile.single('gambarProduk'), (req, res) => {

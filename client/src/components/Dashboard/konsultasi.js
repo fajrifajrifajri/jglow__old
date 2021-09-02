@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {
 	Link
 } from 'react-router-dom';
+import Modal from 'react-modal';
 import axios from 'axios';
 
 // Assets & Components include
@@ -11,11 +12,26 @@ import Sidebar from './_Main Components/sidebar';
 import { Table } from './_Main Components/table';
 
 // Icons
-import { FaChevronLeft, FaPlusSquare, FaTimes } from 'react-icons/fa';
+import { FaChevronLeft, FaPlusSquare, FaTimes, FaPencilAlt, FaTruck } from 'react-icons/fa';
 import { RiWhatsappFill } from 'react-icons/ri';
+import { BsInfo } from 'react-icons/bs';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
+
+// React-modal
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
+
+Modal.setAppElement('#root');
 
 class Konsultasi extends Component {
 	constructor(props) {
@@ -25,9 +41,13 @@ class Konsultasi extends Component {
 			data: [],
 			konsultasiCount: 0,
 			orderCount: 0,
-			loadingData: true
+			
+			loadingData: true,
+			openPopup: false
 		}
 		
+		this.editData = this.editData.bind(this);
+		this.onCloseModal = this.onCloseModal.bind(this);
 		this.deleteData = this.deleteData.bind(this);
 		
 		this.serverBaseURI = 'https://jglow.sgp1.digitaloceanspaces.com';
@@ -112,19 +132,31 @@ class Konsultasi extends Component {
 		  accessor: "_id",
 		  maxWidth: 95,
 		  Cell: ({ cell }) => (
-			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
+		  <>
+			<button onClick={ () => { this.editData(cell.row.values._id) }} className="p-3 mb-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-blue-400 rounded-full">
+			  <FaPencilAlt />
+			</button>
+			<button onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-3 mb-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
 			  <FaTimes />
 			</button>
+		  </>
 		  )
 		}];
 	}
 	
+	editData = (id) => { 
+		this.setState({
+			openPopup: true
+		})
+	}
 	
-	deleteData = (id) => {
-		
-		// Set Axios Default URL
-		// var port = 5000;
-		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+	onCloseModal() {
+		this.setState({
+			openPopup: false
+		})
+	}
+	
+	deleteData = (id) => { 
 		
 		Swal.fire({
 		  title: 'Hapus data ini?',
@@ -150,10 +182,6 @@ class Konsultasi extends Component {
 	
 	// Load table data
 	async getData(prevState) {
-		
-		// Set Axios Default URL
-		// var port = 5000;
-		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
 			try {
 			  await axios.all([
@@ -199,6 +227,7 @@ class Konsultasi extends Component {
 	
 	
   render() {
+	let { openPopup } = this.state;
     return (
     <div className="all__container">
 		<div className="sidebar__container">
@@ -234,6 +263,25 @@ class Konsultasi extends Component {
 					data={this.state.data}
 					columns ={this.columns}
 				/>
+				<div className="form__popup">
+					<Modal
+						isOpen={openPopup}
+						onAfterOpen={this.editData}
+						onRequestClose={this.onCloseModal}
+						contentLabel="Example Modal"
+					  >
+						<h2>Hello</h2>
+						<button onClick={this.onCloseModal}>close</button>
+						<div>I am a modal</div>
+						<form>
+						  <input />
+						  <button>tab navigation</button>
+						  <button>stays</button>
+						  <button>inside</button>
+						  <button>the modal</button>
+						</form>
+					  </Modal>
+				</div>
 			</div>
 		</div>
     </div>

@@ -16,10 +16,6 @@ import { FaChevronLeft, FaPlusSquare, FaTimes } from 'react-icons/fa';
 // SweetAlert 2
 import Swal from 'sweetalert2';
 
-// Set Axios Default URL
-// var port = 5000;
-// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-
 class Konsultasi extends Component {
 	constructor(props) {
 		super(props);
@@ -37,6 +33,10 @@ class Konsultasi extends Component {
 		{
 			Header: 'Nama',
 			accessor: 'nama_produk'
+		},
+		{
+			Header: 'Kategori',
+			accessor: 'nama_kategori'
 		},
 		{
 			Header: 'Harga',

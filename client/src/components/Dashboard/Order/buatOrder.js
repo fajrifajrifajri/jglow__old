@@ -47,9 +47,6 @@ export default class CreateOrder extends Component {
 	}
 	
 	async getProducts() {
-		// Set Axios Default URL
-		// var port = 5000;
-		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 		
 		const res = await axios.get('/backend/produk');
 		const data = res.data;
@@ -96,9 +93,10 @@ export default class CreateOrder extends Component {
 	}
 	
 	onChangeOrderProduct = (option) => {
-		const idProduct = option.map(a => a.value);
+		// isMulti
+		// const idProduct = option.map(a => a.value);
 		this.setState({
-			orderProduct: idProduct
+			orderProduct: option
 		});
 	}
 	
@@ -220,7 +218,6 @@ export default class CreateOrder extends Component {
 							  styles={customStyles}
 							  onChange={this.onChangeOrderProduct}
 							  options={this.state.products}
-							  isMulti
 							/>
 						</div>
 						

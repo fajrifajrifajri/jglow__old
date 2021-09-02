@@ -32,12 +32,24 @@ const orderRouter = require('./routes/order');
 const usersRouter = require('./routes/users');
 const produkRouter = require('./routes/produk');
 const agentRouter = require('./routes/agent');
+const laporanProdukRouter = require('./routes/laporanProduk');
+const laporanHarianRouter = require('./routes/laporanHarian');
+const laporanMingguanRouter = require('./routes/laporanMingguan');
+const laporanBulananRouter = require('./routes/laporanBulanan');
+const laporan3BulanRouter = require('./routes/laporan3Bulan');
+const laporanTahunanRouter = require('./routes/laporanTahunan');
 
 app.use('/backend/konsultasi', konsultasiRouter);
 app.use('/backend/order', orderRouter);
 app.use('/backend/users', usersRouter);
 app.use('/backend/produk', produkRouter);
 app.use('/backend/agent', agentRouter);
+app.use('/backend/laporan-produk', laporanProdukRouter);
+app.use('/backend/laporan-harian', laporanHarianRouter);
+app.use('/backend/laporan-mingguan', laporanMingguanRouter);
+app.use('/backend/laporan-bulanan', laporanBulananRouter);
+app.use('/backend/laporan-3bulan', laporan3BulanRouter);
+app.use('/backend/laporan-tahunan', laporanTahunanRouter);
 
 // Port:5000
 const port = process.env.PORT || 5000;

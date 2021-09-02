@@ -11,7 +11,7 @@ import ErrorNotice from "./errorNotice";
 import '../../Assets/css/index.css';
 
 // Icons
-import { FaUser, FaLock, FaArrowRight } from 'react-icons/fa';
+import { FaAt, FaLock, FaArrowRight } from 'react-icons/fa';
 
 // Assets include
 import logo from '../../Assets/img/Logo JGLOW.png';
@@ -105,15 +105,15 @@ class Login extends Component {
 				{emailInvalid && <ErrorNotice message={"Email Invalid"} clearError={() => this.clearError(false)} />}
 				{emailRequired && <ErrorNotice message={"Email Required"} clearError={() => this.clearError(false)} />}
 				{emailUnregistered && <ErrorNotice message={"Email Unregistered"} clearError={() => this.clearError(false)} />}
-				<div className={`flex bg-gray-100 rounded-t text-sm ${emailError && 'border border-red-200'}`}>
-					<FaUser size={40} className="text-gray-400 p-3" />
-					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full"/>
+				<div className={`flex bg-gray-100 rounded text-sm ${emailError && 'border border-red-200'}`}>
+					<FaAt size={42} className="text-gray-400 p-3" />
+					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full input--text"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				{passwordWrong && <ErrorNotice message={"Password Wrong"} clearError={() => this.clearError(false)} />}
-				<div className={`flex bg-gray-100 rounded-t text-sm ${passwordError && 'border border-red-200'}`}>
-					<FaLock size={40} className="text-gray-400 p-3" />
-					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full"/>
+				<div className={`flex bg-gray-100 rounded text-sm mt-2 ${passwordError && 'border border-red-200'}`}>
+					<FaLock size={42} className="text-gray-400 p-3" />
+					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full input--text"/>
 				</div>
 				
 				<input type="submit" value="Log in" className="button"/>

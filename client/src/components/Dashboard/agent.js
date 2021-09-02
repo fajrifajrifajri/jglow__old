@@ -11,7 +11,7 @@ import Sidebar from './_Main Components/sidebar';
 import { Table } from './_Main Components/table';
 
 // Icons
-import { FaChevronLeft, FaPlusSquare, FaTimes }  from 'react-icons/fa';
+import { FaChevronLeft, FaPlusSquare, FaTimes, FaPencilAlt }  from 'react-icons/fa';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -44,16 +44,20 @@ class Konsultasi extends Component {
 		},
 		{
 			Header: 'Kode Agent',
-			accessor: 'kode_agent',
+			accessor: '_id',
 		},
 		
 		{
 		  Header: "Cancel (Tolak)",
-		  accessor: "_id",
 		  Cell: ({ cell }) => (
+		  <>
+			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-green-400 rounded-full">
+			  <FaPencilAlt />
+			</button>
 			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
 			  <FaTimes />
 			</button>
+		  </>
 		  )
 		}];
 	}

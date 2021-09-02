@@ -16,7 +16,7 @@ import { RiWhatsappFill } from 'react-icons/ri';
 // SweetAlert 2
 import Swal from 'sweetalert2';
 
-class LaporanHarian extends Component {
+class Laporan3Bulan extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -213,4 +213,4 @@ class LaporanHarian extends Component {
   }
 }
 
-export default LaporanHarian;
+export default Laporan3Bulan;

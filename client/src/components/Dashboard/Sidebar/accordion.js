@@ -25,13 +25,14 @@ function Accordion(props) {
  }
  
  const TheIcon = props.fontAwesome;
+ const title = props.title;
  
  return (
    <div className="accordion__section">
      <button className={`accordion ${setActive}`} onClick={toggleAccordion} disabled={props.isDisabled === true ? true : false}>
 		<div className='flex px-4'>
 			<TheIcon className={`m-auto mr-3 ${props.additionalClass}`} />
-			<p className={props.additionalClass}>{props.title}</p>
+			<p className={props.additionalClass}>{title}</p>
 		</div>
 	   <Chevron className={`${setRotate} ${props.additionalClass}`} width={10} fill={"#777"} />
      </button>
@@ -40,8 +41,21 @@ function Accordion(props) {
          className="accordion__text list-none"
          /* dangerouslySetInnerHTML={{ __html: props.content  }} */
        >
-		   <li><Link to="/konsultasi/">Konsultasi</Link></li>
-		   <li><Link to="/order/">Order</Link></li>
+	   {title === "Order" ? ( 
+		<>
+			<li><Link to="/konsultasi/">Konsultasi</Link></li>
+			<li><Link to="/order/">Order</Link></li>
+		</>
+		) : '' 
+		}
+	   {title === "Laporan" ? ( 
+		<>
+		   <li><Link to="/laporan-produk/">Laporan Produk</Link></li>
+		   <li><Link to="/laporan-agent/">Laporan Agent</Link></li>
+		   <li><Link to="/laporan-distributor/">Laporan Distributor</Link></li>
+		</>
+		) : '' 
+		}
 	   </ul>
      </div>
    </div>

@@ -10,18 +10,16 @@ router.route('/').get((req, res) => {
 router.post('/add', (req, res) => {
 	console.log(req.body)
 	
+	const _id = req.body.kodeAgent;
 	const nama = req.body.nama;
 	const alamat = req.body.alamat;
 	const no_telp = req.body.noTelp;
-	const kode_agent = req.body.kodeAgent;
-	const user_id = req.body.userId;
 
 	const newAgent = new Agent({
+		_id,
 		nama,
 		alamat,
-		no_telp,
-		kode_agent,
-		user_id
+		no_telp
 	});
 	
 	newAgent.save()

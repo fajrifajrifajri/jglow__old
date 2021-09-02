@@ -12,6 +12,7 @@ import Sidebar from '../_Main Components/sidebar';
 
 // Icons
 import { FaChevronLeft } from 'react-icons/fa';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -24,8 +25,7 @@ export default class CreateAgent extends Component {
 		this.onChangeNama = this.onChangeNama.bind(this);
 		this.onChangeAlamat = this.onChangeAlamat.bind(this);
 		this.onChangeNoTelp = this.onChangeNoTelp.bind(this);
-		this.onChangeKodeAgent = this.onChangeKodeAgent.bind(this);
-		this.onChangeUserId = this.onChangeUserId.bind(this);
+		this.onRefreshKodeAgent = this.onRefreshKodeAgent.bind(this);
 		this.onChangeEmail = this.onChangeEmail.bind(this);
 		this.onChangePassword = this.onChangePassword.bind(this);
 		this.onChangePasswordCheck = this.onChangePasswordCheck.bind(this);
@@ -36,11 +36,21 @@ export default class CreateAgent extends Component {
 			alamat: '',
 			noTelp: '',
 			kodeAgent: '',
-			userId: '',
 			email: '',
 			password: '',
 			passwordCheck: '',
+			
+			loadingSpin: false
 		}
+	}
+	
+	componentDidMount() {
+		// https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+		const Random5DigitString = Math.random().toString(36).substr(2, 5).toUpperCase();
+		
+		this.setState({
+			kodeAgent: Random5DigitString
+		});
 	}
 	
 	onChangeNama(e) {
@@ -61,16 +71,22 @@ export default class CreateAgent extends Component {
 		});
 	}
 	
-	onChangeKodeAgent(e) {
+	onRefreshKodeAgent(e) {
+		e.preventDefault();
+		
 		this.setState({
-			kodeAgent: e.target.value
-		});
-	}
-	
-	onChangeUserId(e) {
-		this.setState({
-		  userId: e.target.value
-		});
+			loadingSpin: true
+		})
+		
+		const Random5DigitString = Math.random().toString(36).substr(2, 5).toUpperCase();
+		const _this = this;
+		
+		setTimeout(() => {
+			_this.setState({ 
+				loadingSpin: false, 
+				kodeAgent: Random5DigitString 
+			})
+        }, 500)
 	}
 	
 	onChangeEmail(e) {
@@ -99,13 +115,13 @@ export default class CreateAgent extends Component {
 			alamat: this.state.alamat,
 			noTelp: this.state.noTelp,
 			kodeAgent: this.state.kodeAgent,
-			userId: this.state.userId
 		}
 		
 		const user = {
 			email: this.state.email,
 			password: this.state.password,
 			passwordCheck: this.state.passwordCheck,
+			role: 'agent'
 		}
 		
 		const MySwal = withReactContent(Swal);
@@ -129,6 +145,7 @@ export default class CreateAgent extends Component {
 	}
 	
 	render() {
+		let { kodeAgent, loadingSpin } = this.state;
 		return (
 		<div className="all__container">
 			<div className="sidebar__container">
@@ -145,7 +162,7 @@ export default class CreateAgent extends Component {
 					</Link>
 					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH AGENT (MANUAL)</h1>
 				</div>
-				<form className="mt-10" onSubmit={this.onSubmit}>
+				<form className="mt-10" onSubmit={this.onSubmit} autoComplete="off">
 					<div className="form__group">
 						<label className="block mb-2">Nama Lengkap: </label>
 						<input type="text" className="form__control" value={this.state.nama} onChange={this.onChangeNama} placeholder="Nama Lengkap"/>
@@ -163,13 +180,17 @@ export default class CreateAgent extends Component {
 					</div>
 					<div className="form__group">
 						<label className="block mb-2">Kode Agent: </label>
-						<input type="text" className="form__control" value={this.state.kodeAgent} onChange={this.onChangeKodeAgent} placeholder="Kode. Agent"/>
+						<div className="grid grid-cols-12">
+							<div className="col-span-8">
+								<input type="text" className="form__control" value={this.state.kodeAgent} placeholder={`${kodeAgent}`} disabled/>
+							</div>
+							<div className="col-span-4">
+								<button className="form__control text-white bg-pink-700 transform focus:translate-y-0.5" onClick={this.onRefreshKodeAgent}>
+									<FiRefreshCcw className={`inline-block ${loadingSpin ? 'animate-spin' : ''}`} size={16}/> Refresh Kode Agent
+								</button>
+							</div>
+						</div>
 						<small>Kode. Agent</small>
-					</div>
-					<div className="form__group">
-						<label className="block mb-2">UserId: </label>
-						<input type="text" className="form__control" value={this.state.userId} onChange={this.onChangeUserId} placeholder="UserId"/>
-						<small>UserId</small>
 					</div>
 					<div className="form__group">
 						<label className="block mb-2">Email: </label>

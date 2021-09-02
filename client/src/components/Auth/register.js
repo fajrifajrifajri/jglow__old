@@ -124,23 +124,23 @@ class Register extends Component {
 					<h1 className="block m-auto text-center text-2xl font-bold">PT. JGLOW BEAUTYCARE</h1>
 				</div>
 				
-				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm shadow ${(emailError || userError) && 'border border-red-200'}`}>
+				<div className={`flex bg-gray-100 mt-2 rounded-t text-sm shadow ${(emailError || userError) && 'border border-red-200'}`}>
 					<FaAt size={42} className="text-gray-400 p-3" />
-					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full focus-within:ring-2 focus-within:ring-pink-dark outline-none rounded-r cursor-pointer"/>
+					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
 				</div>
 				{userRegistered && <ErrorNotice message={"Email Has Been Registered"} clearError={() => this.clearError(false)} />}
 				{emailInvalid && <ErrorNotice message={"Email Invalid"} clearError={() => this.clearError(false)} />}
 				{emailRequired && <ErrorNotice message={"Email Required"} clearError={() => this.clearError(false)} />}
 				
-				<div className={`flex bg-gray-100 mt-4 rounded-t text-sm shadow ${passwordError && 'border border-red-200'}`}>
+				<div className={`flex bg-gray-100 mt-2 rounded-t text-sm shadow ${passwordError && 'border border-red-200'}`}>
 					<FaLock size={42} className="text-gray-400 p-3" />
-					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full focus-within:ring-2 focus-within:ring-pink-dark outline-none rounded-r cursor-pointer"/>
+					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				
-				<div className={`flex bg-gray-100 my-4 rounded-t text-sm shadow ${passwordCheckError && 'border border-red-200'}`}>
+				<div className={`flex bg-gray-100 my-2 rounded-t text-sm shadow ${passwordCheckError && 'border border-red-200'}`}>
 					<FaUnlock size={42} className="text-gray-400 p-3" />
-					<input type="password" name="passwordCheck" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password" className="bg-gray-100 pl-2 w-full focus-within:ring-2 focus-within:ring-pink-dark outline-none rounded-r cursor-pointer"/>
+					<input type="password" name="passwordCheck" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
 				</div>
 				{passwordCheckRequired && <ErrorNotice message={"Password Re-enter Must be Filled"} clearError={() => this.clearError(false)} />}
 				{passwordMismatch && <ErrorNotice message={"Password Doesn't Match"} clearError={() => this.clearError(false)} />}

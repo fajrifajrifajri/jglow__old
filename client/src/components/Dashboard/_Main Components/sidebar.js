@@ -11,6 +11,7 @@ import UserContext from "../../Auth/userContext";
 // Icons
 import { FaUserCircle, FaTruck, FaBoxOpen, FaUserSecret, FaUsersCog, FaArrowAltCircleLeft } from 'react-icons/fa';
 import { AiFillHome } from 'react-icons/ai';
+import { IoStatsChartSharp } from 'react-icons/io5';
 
 // Styling
 import '../../../Assets/css/index.css';
@@ -108,9 +109,8 @@ class Sidebar extends Component {
 		  const user = this.context.userData.user;
 		  const { email } = this.state;
 		  if(!this.state.loading) {
-			  console.log(user);
+			// console.log(user);
 			if(user !== undefined) {
-				// console.log('Trying to fetch from UserContext: (delayed)')
 				if(user === null) {
 					// Set user status to 'false'
 					// So useEffect() in App.js runs again
@@ -186,24 +186,36 @@ class Sidebar extends Component {
 			   fontAwesome={FaTruck}
 			   title="Order"
 			/>
-			<Link to="/produk" className='accordion w-full' id="test123">
-				<div className='flex px-4'>
-					<FaBoxOpen size={20} className='m-auto fa-sm mr-3' />
-					<p className="font-bold">Produk</p>
-				</div>
-			</Link>
-			<Link to="/agent" className='accordion w-full' id="test123">
-				<div className='flex px-4'>
-					<FaUserSecret size={20} className='m-auto fa-sm mr-3' />
-					<p className="font-bold">Agent</p>
-				</div>
-			</Link>
-			<Link to="/user" className='accordion w-full' id="test123">
-				<div className='flex px-4'>
-					<FaUsersCog size={20} className='m-auto fa-sm mr-3' />
-					<p className="font-bold">Kelola User</p>
-				</div>
-			</Link>
+			{(role === 'klinik' || role === 'distributor') ? (
+			<>
+				<Link to="/produk" className='accordion w-full' id="test123">
+					<div className='flex px-4'>
+						<FaBoxOpen size={20} className='m-auto fa-sm mr-3' />
+						<p className="font-bold">Produk</p>
+					</div>
+				</Link>
+			</>
+			) : ''}
+			{role === 'klinik'  ? (
+			<>
+				<Link to="/agent" className='accordion w-full' id="test123">
+					<div className='flex px-4'>
+						<FaUserSecret size={20} className='m-auto fa-sm mr-3' />
+						<p className="font-bold">Agent</p>
+					</div>
+				</Link>
+				<Link to="/user" className='accordion w-full' id="test123">
+					<div className='flex px-4'>
+						<FaUsersCog size={20} className='m-auto fa-sm mr-3' />
+						<p className="font-bold">Kelola User</p>
+					</div>
+				</Link>
+				<Accordion
+				   fontAwesome={IoStatsChartSharp}
+				   title="Laporan"
+				/>
+			</>
+			) : ''}
 			{/*
 			<Accordion
 			   fontAwesome={FaBoxOpen}

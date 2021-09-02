@@ -22,6 +22,10 @@ const createOption = (label: string, id) => ({
   value: id,
 });
 
+// Set Axios Default URL
+// var port = 5000;
+// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+
 export default class CreateProduk extends Component {
 	constructor(props) {
 		super(props);
@@ -51,10 +55,6 @@ export default class CreateProduk extends Component {
 	
 	async getOptions() {
 		
-		// Set Axios Default URL
-		// var port = 5000;
-		// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
-		
 		const res = await axios.get('/backend/produk/kategori');
 		const data = res.data;
 		
@@ -71,6 +71,37 @@ export default class CreateProduk extends Component {
 		console.log(newValue);
 		console.log(`action: ${actionMeta.action}`);
 		console.groupEnd();
+		
+		// Action delete: kategori
+		if( actionMeta.action === 'clear' ) {
+			const id = this.state.kategoriId.value;
+			const options = this.state.selectOptions;
+			// Filter (delete) the selected option
+			const newOptions = options.filter(function (obj) {
+				return obj.value !== id;
+			});
+			Swal.fire({
+			  title: 'Hapus data ini?',
+			  text: "Data akan terhapus.",
+			  icon: 'warning',
+			  showCancelButton: true,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Delete!'
+			}).then((result) => {
+			  // Fired if yes
+			  if (result.isConfirmed) {
+				this.setState({ selectOptions: newOptions })
+				axios.delete('/backend/produk/kategori/'+id)
+					.then(res => console.log(res.data));
+				Swal.fire(
+				  'Deleted!',
+				  'Data telah telah terhapus.',
+				  'success'
+				);
+			  }
+			})
+		}
 		this.setState({ kategoriId: newValue });
 	};
 	

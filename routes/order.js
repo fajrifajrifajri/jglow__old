@@ -2,7 +2,21 @@ const router = require('express').Router();
 let Order = require('../models/order.model');
 
 router.route('/').get((req, res) => {
-	Order.find()
+	Order.aggregate([
+	{
+		$lookup: {
+		   from: 'produks',
+		   localField: 'orderProduct',
+		   foreignField: '_id',
+		   as: 'produk'
+		}
+	},
+	{
+		$addFields: {
+          "orderProduct": "$produk.nama_produk"
+		}
+	}
+	])
 		.then(order => res.json(order))
 		.catch(err => res.status(400).json('Error: ' + err));
 });
@@ -14,7 +28,8 @@ router.post('/add', (req, res) => {
 	const alamat = req.body.alamat;
 	const noTelp = req.body.noTelp;
 	const noAgent = req.body.noAgent;
-	const orderProduct = req.body.orderProduct;
+	// const orderProduct = req.body.orderProduct.value; (isMulti)
+	const orderProduct = req.body.orderProduct.value;
 	const jumlahOrder = Number(req.body.jumlahOrder);
 	const optionPengiriman = req.body.optionPengiriman;
 

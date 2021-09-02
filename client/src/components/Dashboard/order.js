@@ -53,7 +53,14 @@ class Order extends Component {
 		},
 		{
 			Header: 'Order Product',
-			accessor: 'orderProduct'
+			accessor: 'orderProduct',
+			/* (isMulti)
+			Cell: cell => (
+				<div>
+					<p>{cell.row.original.orderProduct.join(', ')}</p>
+				</div>
+			  )
+			*/
 		},
 		{
 			Header: 'Jumlah Order',

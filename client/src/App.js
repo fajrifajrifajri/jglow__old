@@ -23,7 +23,12 @@ import Order from './components/Dashboard/order';
 import BuatOrder from './components/Dashboard/Order/buatOrder';
 import KonsultasiKlien from './components/buatKonsultasi';
 import LaporanProduk from './components/Dashboard/Laporan/laporanProduk';
+import LaporanAgent from './components/Dashboard/Laporan/laporanAgent';
 import LaporanHarian from './components/Dashboard/Laporan/laporanHarian';
+import LaporanMingguan from './components/Dashboard/Laporan/laporanMingguan';
+import LaporanBulanan from './components/Dashboard/Laporan/laporanBulanan';
+import Laporan3Bulan from './components/Dashboard/Laporan/laporan3Bulan';
+import LaporanTahunan from './components/Dashboard/Laporan/laporanTahunan';
 
 // Auth
 import UserContext from './components/Auth/userContext';
@@ -115,7 +120,22 @@ function App() {
 				  <LaporanProduk />
 				</Route>
 				<Route exact path="/laporan-agent">
+				  <LaporanAgent />
+				</Route>
+				<Route exact path="/laporan-harian">
 				  <LaporanHarian />
+				</Route>
+				<Route exact path="/laporan-mingguan">
+				  <LaporanMingguan />
+				</Route>
+				<Route exact path="/laporan-bulanan">
+				  <LaporanBulanan />
+				</Route>
+				<Route exact path="/laporan-3bulan">
+				  <Laporan3Bulan />
+				</Route>
+				<Route exact path="/laporan-tahunan">
+				  <LaporanTahunan />
 				</Route>
 				<Route exact path="/konsultasi">
 				  <Konsultasi />
