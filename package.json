@@ -17,9 +17,6 @@
   "license": "ISC",
   "dependencies": {
     "@craco/craco": "^6.2.0",
-    "@visx/gradient": "^2.1.0",
-    "@visx/responsive": "^2.1.0",
-    "@visx/text": "^2.1.0",
     "aws-sdk": "^2.970.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
