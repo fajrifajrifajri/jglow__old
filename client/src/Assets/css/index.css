@@ -118,7 +118,12 @@
 	background-image: linear-gradient(to right, rgba(255,255,255,0), white 90%);
 	width: 30%;
 }
-.custom__scrollbar {
-    scrollbar-color: #6969dd #e0e0e0;
-    scrollbar-width: thin;
+.custom__scrollbar::-webkit-scrollbar {
+    height: 12px;
+}
+.custom__scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+}
+.custom__scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-pink-dark rounded-full;
 }

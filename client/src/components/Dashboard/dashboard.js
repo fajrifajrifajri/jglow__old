@@ -85,7 +85,7 @@ class Dashboard extends Component {
 				<div className="pb-4 px-12">
 					 <h1 className="text-pink-dark text-4xl font-bold mb-8">Menu Aplikasi</h1>
 					 <div className={`relative font-xs pb-4 ${role === "klinik" ? 'x-scroll' : ''}`}>
-						<div className="relative flex overflow-x-auto space-x-6 whitespace-nowrap custom__scrollbar pb-2">
+						<div className="relative flex overflow-x-auto space-x-6 whitespace-nowrap custom__scrollbar pb-4">
 							<Link to="/konsultasi" className="inline-flex flex-col text-white border-4 border-yellow-500 rounded shadow-lg transform hover:translate-y-0.5">
 								<div className="flex pattern--konsultasi p-20">
 									<FaAssistiveListeningSystems size={40} className="m-auto"/>
