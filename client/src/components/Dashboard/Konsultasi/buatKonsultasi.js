@@ -151,25 +151,28 @@ export default class CreateKonsultasi extends Component {
 		
 		const formData = new FormData();
 		
-		const nama = this.state.namaDepan + ' ' + this.state.namaBelakang;
+		const { namaDepan, namaBelakang, tanggalLahir, selectedKelamin, alamat, noTelp, jenisKulit,
+		kulitSensitif, mudahIritasi, hamilDanMenyusui, riwayatSkincare, kondisiKeluhan, penggunaanKe, noAgent } =
+		this.state;
 		
-		formData.append('nama',nama);
-		formData.append('tanggalLahir',this.state.tanggalLahir);
-		formData.append('selectedKelamin',this.state.selectedKelamin);
-		formData.append('alamat',this.state.alamat);
-		formData.append('noTelp',this.state.noTelp);
-		formData.append('jenisKulit',this.state.jenisKulit);
-		formData.append('kulitSensitif',this.state.kulitSensitif);
-		formData.append('mudahIritasi',this.state.mudahIritasi);
-		formData.append('hamilDanMenyusui',this.state.hamilDanMenyusui);
-		formData.append('riwayatSkincare',this.state.riwayatSkincare);
-		formData.append('kondisiKeluhan',this.state.kondisiKeluhan);
-		formData.append('penggunaanKe',this.state.penggunaanKe);
-		formData.append('fotoAgent',this.fotoAgent.current.files[0]);
-		formData.append('fotoKulitWajahDepan',this.fotoKulitWajahDepan.current.files[0]);
-		formData.append('fotoKulitWajahKiri',this.fotoKulitWajahKiri.current.files[0]);
-		formData.append('fotoKulitWajahKanan',this.fotoKulitWajahKanan.current.files[0]);
-		formData.append('noAgent',this.state.noAgent);
+		formData.append('namaDepan', namaDepan);
+		formData.append('namaBelakang', namaBelakang);
+		formData.append('tanggalLahir', tanggalLahir);
+		formData.append('selectedKelamin', selectedKelamin);
+		formData.append('alamat', alamat);
+		formData.append('noTelp', noTelp);
+		formData.append('jenisKulit', jenisKulit);
+		formData.append('kulitSensitif', kulitSensitif);
+		formData.append('mudahIritasi', mudahIritasi);
+		formData.append('hamilDanMenyusui', hamilDanMenyusui);
+		formData.append('riwayatSkincare', riwayatSkincare);
+		formData.append('kondisiKeluhan', kondisiKeluhan);
+		formData.append('penggunaanKe', penggunaanKe);
+		formData.append('noAgent', noAgent);
+		formData.append('fotoAgent', this.fotoAgent.current.files[0]);
+		formData.append('fotoKulitWajahDepan', this.fotoKulitWajahDepan.current.files[0]);
+		formData.append('fotoKulitWajahKiri', this.fotoKulitWajahKiri.current.files[0]);
+		formData.append('fotoKulitWajahKanan', this.fotoKulitWajahKanan.current.files[0]);
 		
 		const config = {
 			headers: {
@@ -191,7 +194,7 @@ export default class CreateKonsultasi extends Component {
 			console.log(err.response.data.message);
 		});
 		
-		console.log(formData.get("nama"));
+		console.log(formData.get("namaDepan")+formData.get("namaBelakang"));
 	}
 	
 	render() {

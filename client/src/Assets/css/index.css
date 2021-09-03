@@ -80,6 +80,9 @@
 .body__form__container {
 	@apply body__second__container p-20;
 }
+.body__modal__container {
+	@apply bg-white min-h-screen p-10;
+}
 .form__group {
 	@apply pb-5;
 }

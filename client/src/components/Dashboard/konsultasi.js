@@ -10,6 +10,7 @@ import axios from 'axios';
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
 import { Table } from './_Main Components/table';
+import EditKonsultasi from './Konsultasi/editKonsultasi';
 
 // Icons
 import { FaChevronLeft, FaPlusSquare, FaTimes, FaPencilAlt, FaTruck } from 'react-icons/fa';
@@ -43,7 +44,8 @@ class Konsultasi extends Component {
 			orderCount: 0,
 			
 			loadingData: true,
-			openPopup: false
+			openPopup: false,
+			idKonsultasi: ''
 		}
 		
 		this.editData = this.editData.bind(this);
@@ -62,6 +64,9 @@ class Konsultasi extends Component {
 		{
 			Header: 'Nama',
 			accessor: 'nama',
+			Cell: cell => (
+				<p>{cell.row.original.nama_depan} {cell.row.original.nama_belakang}</p>
+			),
 			maxWidth: 100
 		},
 		{
@@ -71,59 +76,59 @@ class Konsultasi extends Component {
 		},
 		{
 			Header: 'No Telp & No Agent',
-			accessor: 'noTelp',
+			accessor: 'no_telp',
 			maxWidth: 100,
 			Cell: cell => (
 				<div>
-					<p className="truncate">{cell.row.original.noTelp}</p>
-					<p className="truncate font-bold">[{cell.row.original.noAgent}]</p>
-					<a className="block" href={`https://wa.me/62${cell.row.original.noTelp.substring(1)}`}> <RiWhatsappFill size={20} className="text-green-400"/> </a>
+					<p className="truncate">{cell.row.original.no_telp}</p>
+					<p className="truncate font-bold">[{cell.row.original.no_agent}]</p>
+					<a className="block" href={`https://wa.me/62${(cell.row.original.no_telp ? cell.row.original.no_telp.substring(1) : '')}`}> <RiWhatsappFill size={20} className="text-green-400"/> </a>
 				</div>
 			  )
 		},
 		{
 			Header: 'Spesifikasi Kulit',
-			accessor: 'jenisKulit',
+			accessor: 'jenis_kulit',
 			minWidth: 200,
 			Cell: cell => (
 				<div>
-					<p><span className="font-bold">Jenis Kulit: </span>{cell.row.original.jenisKulit}</p>
-					<p><span className="font-bold">Kulit Sensitif: </span>{cell.row.original.kulitSensitif}</p>
-					<p><span className="font-bold">Mudah Iritasi? </span>{cell.row.original.mudahIritasi}</p>
-					<p><span className="font-bold">Pasien dalam keadaan Hamil/ Menyusui? </span>{cell.row.original.hamilDanMenyusui}</p>
-					<p><span className="font-bold">Riwayat Skincare: </span>{cell.row.original.riwayatSkincare}</p>
+					<p><span className="font-bold">Jenis Kulit: </span>{cell.row.original.jenis_kulit}</p>
+					<p><span className="font-bold">Kulit Sensitif: </span>{cell.row.original.kulit_sensitif}</p>
+					<p><span className="font-bold">Mudah Iritasi? </span>{cell.row.original.mudah_iritasi}</p>
+					<p><span className="font-bold">Pasien dalam keadaan Hamil/ Menyusui? </span>{cell.row.original.hamil_dan_menyusui}</p>
+					<p><span className="font-bold">Riwayat Skincare: </span>{cell.row.original.riwayat_skincare}</p>
 				</div>
 			  )
 		},
 		{
 			Header: 'Kondisi',
-			accessor: 'kondisiKeluhan',
+			accessor: 'kondisi_keluhan',
 			Cell: ({ cell }) => (
 				<div>
-					<p><span className="font-bold">Kondisi dan Keluhan: </span>{cell.row.original.kondisiKeluhan}</p>
-					<p><span className="font-bold">Pengunaan ke- </span>{cell.row.original.penggunaanKe}</p>
+					<p><span className="font-bold">Kondisi dan Keluhan: </span>{cell.row.original.kondisi_keluhan}</p>
+					<p><span className="font-bold">Pengunaan ke- </span>{cell.row.original.penggunaan_ke}</p>
 				</div>
 			  ),
 		},
 		{
 			Header: 'Foto Agent',
-			accessor: 'fotoAgent',
+			accessor: 'foto_agent',
 			maxWidth: 80,
 			custom: true,
 			Cell: ({ cell }) => (
-				<img src={`${this.serverBaseURI}/${cell.row.original.fotoAgent}`} alt={cell.row.original.fotoAgent}/>
+				<img src={`${this.serverBaseURI}/${cell.row.original.foto_agent}`} alt={cell.row.original.foto_agent}/>
 			  )
 		  },
 		  {
 			Header: 'Foto Kulit',
-			accessor: 'fotoKulitWajahDepan',
+			accessor: 'foto_kulit_wajah_depan',
 			maxWidth: 80,
 			custom: true,
 			Cell: ({ cell }) => (
 				<>
-					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahDepan}`} alt={cell.row.original.fotoKulitWajahDepan} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahKiri}`} alt={cell.row.original.fotoKulitWajahKiri} className='mb-2'/>
-					<img src={`${this.serverBaseURI}/${cell.row.original.fotoKulitWajahKanan}`} alt={cell.row.original.fotoKulitWajahKanan} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.foto_kulit_wajah_depan}`} alt={cell.row.original.foto_kulit_wajah_depan} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.foto_kulit_wajah_kiri}`} alt={cell.row.original.foto_kulit_wajah_kiri} className='mb-2'/>
+					<img src={`${this.serverBaseURI}/${cell.row.original.foto_kulit_wajah_kanan}`} alt={cell.row.original.foto_kulit_wajah_kanan} className='mb-2'/>
 				</>
 			  )
 		},
@@ -145,8 +150,10 @@ class Konsultasi extends Component {
 	}
 	
 	editData = (id) => { 
+		console.log(id);
 		this.setState({
-			openPopup: true
+			openPopup: true,
+			idKonsultasi: id
 		})
 	}
 	
@@ -227,7 +234,7 @@ class Konsultasi extends Component {
 	
 	
   render() {
-	let { openPopup } = this.state;
+	let { openPopup, idKonsultasi } = this.state;
     return (
     <div className="all__container">
 		<div className="sidebar__container">
@@ -266,20 +273,12 @@ class Konsultasi extends Component {
 				<div className="form__popup">
 					<Modal
 						isOpen={openPopup}
-						onAfterOpen={this.editData}
 						onRequestClose={this.onCloseModal}
-						contentLabel="Example Modal"
 					  >
-						<h2>Hello</h2>
-						<button onClick={this.onCloseModal}>close</button>
-						<div>I am a modal</div>
-						<form>
-						  <input />
-						  <button>tab navigation</button>
-						  <button>stays</button>
-						  <button>inside</button>
-						  <button>the modal</button>
-						</form>
+						<button onClick={this.onCloseModal} className="float-right"> X </button>
+						{ openPopup ?
+							<EditKonsultasi idKonsultasi={idKonsultasi} onCloseModal={this.onCloseModal}/> : '' 
+						}
 					  </Modal>
 				</div>
 			</div>
