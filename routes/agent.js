@@ -11,13 +11,15 @@ router.post('/add', (req, res) => {
 	console.log(req.body)
 	
 	const _id = req.body.kodeAgent;
-	const nama = req.body.nama;
+	const nama_depan = req.body.namaDepan;
+	const nama_belakang = req.body.namaBelakang;
 	const alamat = req.body.alamat;
 	const no_telp = req.body.noTelp;
 
 	const newAgent = new Agent({
 		_id,
-		nama,
+		nama_depan,
+		nama_belakang,
 		alamat,
 		no_telp
 	});
@@ -42,10 +44,8 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
 	Agent.findById(req.params.id)
 	.then(agent => {
-		agent.nama_agent = req.body.namaAgent;
-		agent.harga = Number(req.body.harga);
-		agent.stok = Number(req.body.stok);
-		agent.kategori_id = req.body.kategori_id;
+		agent.nama_depan = req.body.namaDepan;
+		agent.nama_belakang = req.body.namaBelakang;
 		
 	agent.save()
 		.then(() => res.json('Agent telah diupdate!'))

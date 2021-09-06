@@ -171,7 +171,7 @@ class Sidebar extends Component {
 				<FaUserCircle size={70}/>
 			</div>
 			<div className="m-auto ml-1 col-span-9">
-				<p className="font-bold text-xl leading-5">JGLow {role}</p>
+				<Link to="/profile" className="font-bold text-xl leading-5">JGLow {role}</Link>
 				<p className="font-light font-italic text-sm">{email}</p>
 			</div>
 		</div>

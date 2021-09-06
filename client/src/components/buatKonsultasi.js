@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-	Link
+	Link,
+	withRouter
 } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-
+import Select from 'react-select';
 
 // Assets & Components include
 import '../Assets/css/index.css';
@@ -17,7 +18,7 @@ import { FaChevronLeft } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
 
-export default class CreateKonsultasi extends Component {
+class CreateKonsultasi extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -34,7 +35,7 @@ export default class CreateKonsultasi extends Component {
 		this.onChangeRiwayatSkincare = this.onChangeRiwayatSkincare.bind(this);
 		this.onChangeKondisiKeluhan = this.onChangeKondisiKeluhan.bind(this);
 		this.onChangePenggunaanKe = this.onChangePenggunaanKe.bind(this);
-		this.onChangeNoAgent = this.onChangeNoAgent.bind(this);
+		this.onChangeAgentSelected = this.onChangeAgentSelected.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		
 		// Foto
@@ -57,7 +58,8 @@ export default class CreateKonsultasi extends Component {
 			riwayatSkincare: '',
 			kondisiKeluhan: '',
 			penggunaanKe: '',
-			noAgent: '',
+			agents: undefined,
+			agentSelected: undefined
 		}
 		
 		
@@ -65,6 +67,38 @@ export default class CreateKonsultasi extends Component {
 		this.baseState = this.state 
 	}
 	
+	
+	componentDidMount() {
+		this.getAgents();
+		
+		// From copy link form 'Agent Profile'
+		const kodeAgent = this.props.match.params.kodeAgent;
+		console.log(kodeAgent);
+		if(kodeAgent) {
+			this.setState({
+				agentSelected: {
+					label: kodeAgent + ' - AGENT',
+					value: kodeAgent
+				}
+			})
+		}
+	}
+	
+	async getAgents() {
+		
+		const res = await axios.get('/backend/agent');
+		const data = res.data;
+		
+		const agents = data.map(d => ({
+			label: d._id + ' - ' + d.nama_depan + ' ' +  d.nama_belakang,
+			value: d._id
+		}))
+		
+		console.log(agents);
+		
+		this.setState({ agents: agents })
+		console.log(this.state.agents);
+	}
 	
 	onChangeNamaDepan(e) {
 		this.setState({
@@ -144,9 +178,10 @@ export default class CreateKonsultasi extends Component {
 		});
 	}
 	
-	onChangeNoAgent(e) {
+	onChangeAgentSelected = (option) => {
+		console.log(option);
 		this.setState({
-			noAgent: e.target.value
+			agentSelected: option
 		});
 	}
 	
@@ -155,25 +190,28 @@ export default class CreateKonsultasi extends Component {
 		
 		const formData = new FormData();
 		
-		const nama = this.state.namaDepan + ' ' + this.state.namaBelakang;
+		const { namaDepan, namaBelakang, tanggalLahir, selectedKelamin, alamat, noTelp, jenisKulit,
+		kulitSensitif, mudahIritasi, hamilDanMenyusui, riwayatSkincare, kondisiKeluhan, penggunaanKe, agentSelected } =
+		this.state;
 		
-		formData.append('nama',nama);
-		formData.append('tanggalLahir',this.state.tanggalLahir);
-		formData.append('selectedKelamin',this.state.selectedKelamin);
-		formData.append('alamat',this.state.alamat);
-		formData.append('noTelp',this.state.noTelp);
-		formData.append('jenisKulit',this.state.jenisKulit);
-		formData.append('kulitSensitif',this.state.kulitSensitif);
-		formData.append('mudahIritasi',this.state.mudahIritasi);
-		formData.append('hamilDanMenyusui',this.state.hamilDanMenyusui);
-		formData.append('riwayatSkincare',this.state.riwayatSkincare);
-		formData.append('kondisiKeluhan',this.state.kondisiKeluhan);
-		formData.append('penggunaanKe',this.state.penggunaanKe);
-		formData.append('fotoAgent',this.fotoAgent.current.files[0]);
-		formData.append('fotoKulitWajahDepan',this.fotoKulitWajahDepan.current.files[0]);
-		formData.append('fotoKulitWajahKiri',this.fotoKulitWajahKiri.current.files[0]);
-		formData.append('fotoKulitWajahKanan',this.fotoKulitWajahKanan.current.files[0]);
-		formData.append('noAgent',this.state.noAgent);
+		formData.append('namaDepan', namaDepan);
+		formData.append('namaBelakang', namaBelakang);
+		formData.append('tanggalLahir', tanggalLahir);
+		formData.append('selectedKelamin', selectedKelamin);
+		formData.append('alamat', alamat);
+		formData.append('noTelp', noTelp);
+		formData.append('jenisKulit', jenisKulit);
+		formData.append('kulitSensitif', kulitSensitif);
+		formData.append('mudahIritasi', mudahIritasi);
+		formData.append('hamilDanMenyusui', hamilDanMenyusui);
+		formData.append('riwayatSkincare', riwayatSkincare);
+		formData.append('kondisiKeluhan', kondisiKeluhan);
+		formData.append('penggunaanKe', penggunaanKe);
+		formData.append('fotoAgent', this.fotoAgent.current.files[0]);
+		formData.append('fotoKulitWajahDepan', this.fotoKulitWajahDepan.current.files[0]);
+		formData.append('fotoKulitWajahKiri', this.fotoKulitWajahKiri.current.files[0]);
+		formData.append('fotoKulitWajahKanan', this.fotoKulitWajahKanan.current.files[0]);
+		formData.append('kodeAgent', agentSelected.value);
 		
 		const config = {
 			headers: {
@@ -187,8 +225,8 @@ export default class CreateKonsultasi extends Component {
 			console.log(res.data);
 		
 			MySwal.fire(  
-			'Konsultasi telah dibuat!',
-			'Tinggal, tunggu distributor memproses ya!',
+			'Konsultasi telah diterima!',
+			'Mohon tunggu respon dari kami...',
 			'success'
 			);
 			
@@ -199,7 +237,7 @@ export default class CreateKonsultasi extends Component {
 			console.log(err.response.data.message);
 		});
 		
-		console.log(formData.get("nama"));
+		console.log(formData.get("namaDepan")+formData.get("namaBelakang"));
 	}
 	
 	render() {
@@ -452,9 +490,15 @@ export default class CreateKonsultasi extends Component {
 					</div>
 					
 					<div className="form__group">
-						<label className="block mb-2">No Agent: </label>
-						<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+						<label className="block mb-2">Kode Agent: </label>
+						<Select
+						  className={`my-4 rounded-t text-sm w-full border`}
+						  onChange={this.onChangeAgentSelected}
+						  options={this.state.agents}
+						  value={this.state.agentSelected}
+						/>
 					</div>
+					
 					<div className="form__group">
 						<input type="submit" value="Buat konsultasi" className="hover:bg-green-700 bg-green-300 text-white w-full py-4 cursor-pointer duration-500"/>
 					</div>
@@ -464,3 +508,5 @@ export default class CreateKonsultasi extends Component {
 		)
 	}
 }
+
+export default withRouter(CreateKonsultasi);

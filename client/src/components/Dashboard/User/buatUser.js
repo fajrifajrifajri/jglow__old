@@ -15,6 +15,7 @@ import Sidebar from '../_Main Components/sidebar';
 // Icons
 import { FaChevronLeft, FaLock, FaUnlock } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import { FiRefreshCcw } from 'react-icons/fi';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
@@ -29,6 +30,7 @@ export default class CreateUser extends Component {
 		this.onChangePassword = this.onChangePassword.bind(this);
 		this.onChangePasswordCheck = this.onChangePasswordCheck.bind(this);
 		this.onChangeRole = this.onChangeRole.bind(this);
+		this.onRefreshKodeAgent = this.onRefreshKodeAgent.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		this.clearError = this.clearError.bind(this);
 		
@@ -36,7 +38,10 @@ export default class CreateUser extends Component {
 			email: '',
 			password: '',
 			passwordCheck: '',
-			role: 'agent',
+			role: '',
+			kodeAgent: undefined,
+			agentToggle: false,
+			loadingSpin: false,
 			error: [],
 			
 			// Context states
@@ -64,9 +69,39 @@ export default class CreateUser extends Component {
 	}
 	
 	onChangeRole(newValue: any) {
+			console.log(newValue);
+		if(newValue.value === 'agent') {
+			this.setState({
+				agentToggle: true
+			});
+			console.log('1');
+		} else {
+			this.setState({
+				agentToggle: false,
+				kodeAgent: undefined,
+			});
+		}
 		this.setState({
 			role: newValue
 		});
+	}
+	
+	onRefreshKodeAgent(e) {
+		e.preventDefault();
+		
+		this.setState({
+			loadingSpin: true
+		})
+		
+		const Random5DigitString = Math.random().toString(36).substr(2, 5).toUpperCase();
+		const _this = this;
+		
+		setTimeout(() => {
+			_this.setState({ 
+				loadingSpin: false, 
+				kodeAgent: Random5DigitString 
+			})
+        }, 500)
 	}
 	
 	onSubmit(e) {
@@ -77,6 +112,7 @@ export default class CreateUser extends Component {
 			password: this.state.password,
 			passwordCheck: this.state.passwordCheck,
 			role: this.state.role.value,
+			kodeAgent: this.state.kodeAgent
 		};
 		
 		console.log(newUser);
@@ -144,6 +180,8 @@ export default class CreateUser extends Component {
 				padding: 0
 			})
 		};
+		
+		const { kodeAgent, loadingSpin, agentToggle } = this.state;
 	
 		return (
 		<div className="all__container">
@@ -183,14 +221,31 @@ export default class CreateUser extends Component {
 					{passwordCheckRequired && <ErrorNotice message={"Password Re-enter Must be Filled"} clearError={() => this.clearError(false)} />}
 					{passwordMismatch && <ErrorNotice message={"Password Doesn't Match"} clearError={() => this.clearError(false)} />}
 					
-					<Select
-					  className={`my-4 rounded-t text-sm w-full`}
-					  styles={customStyles}
-					  onChange={this.onChangeRole}
-					  defaultValue={roles[0]}
-					  name="role"
-					  options={roles}
-					/>
+					<div className="flex bg-gray-100 my-4 rounded-t text-sm">
+						<FaUnlock size={42} className="text-gray-400 p-3" />
+						<Select
+						  className="rounded-t text-sm w-full"
+						  styles={customStyles}
+						  onChange={this.onChangeRole}
+						  options={roles}
+						  placeholder="Role"
+						/>
+					</div>
+					
+					{ agentToggle ? (
+						<div className="form__group">
+							<div className="grid grid-cols-12">
+								<div className="col-span-8">
+									<input type="text" className="py-4 bg-gray-100 pl-2 w-full" value={this.state.kodeAgent} placeholder={`${kodeAgent}`} placeholder="..." disabled/>
+								</div>
+								<div className="col-span-4">
+									<button className="form__control text-white bg-pink-700 transform focus:translate-y-0.5" onClick={this.onRefreshKodeAgent}>
+										<FiRefreshCcw className={`inline-block ${loadingSpin ? 'animate-spin' : ''}`} size={16}/> Generate Kode Agent
+									</button>
+								</div>
+							</div>
+						</div>
+					) : '' }
 					
 					<div className="form-group">
 						<input type="submit" value="Buat produk" className="button"/>

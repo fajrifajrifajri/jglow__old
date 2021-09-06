@@ -18,7 +18,7 @@ import { AiOutlineSketch } from 'react-icons/ai';
 
 class Dashboard extends Component {
 	// React.useContext
-	 static contextType = UserContext;
+	static contextType = UserContext;
 	 
 	 constructor(props) {
 		super(props);
@@ -44,6 +44,8 @@ class Dashboard extends Component {
 	
 	componentDidUpdate() {
 		 const user = this.context.userData.user;
+		 
+		 console.log(user)
 		 const { email } = this.state;
 		 
 		 if(!this.state.loading) {

@@ -16,7 +16,7 @@ const konsultasiSchema = new Schema({
 	riwayat_skincare: { type: String, required: true },
 	kondisi_keluhan: { type: String, required: true },
 	penggunaan_ke: { type: String, required: true },
-	no_agent: { type: String, required: true },
+	kode_agent: { type: String, required: true },
 	foto_agent: { type: String },
 	foto_kulit_wajah_depan: { type: String},
 	foto_kulit_wajah_kiri: { type: String },

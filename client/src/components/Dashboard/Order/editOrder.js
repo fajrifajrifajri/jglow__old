@@ -225,7 +225,7 @@ export default class EditKonsultasi extends Component {
 		formData.append('riwayatSkincare', riwayatSkincare);
 		formData.append('kondisiKeluhan', kondisiKeluhan);
 		formData.append('penggunaanKe', penggunaanKe);
-		formData.append('kodeAgent', agentSelected.value);
+		formData.append('agentSelected', agentSelected.value);
 		formData.append('fotoAgent', this.fotoAgent.current.files[0]);
 		formData.append('fotoKulitWajahDepan', this.fotoKulitWajahDepan.current.files[0]);
 		formData.append('fotoKulitWajahKiri', this.fotoKulitWajahKiri.current.files[0]);
@@ -510,7 +510,7 @@ export default class EditKonsultasi extends Component {
 				</div>
 					
 				<div className="form__group">
-					<input type="submit" value="Ubah konsultasi" className="button"/>
+					<input type="submit" value="Buat konsultasi" className="button"/>
 				</div>
 			</form>
 		</div>

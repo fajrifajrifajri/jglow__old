@@ -32,7 +32,10 @@ class Konsultasi extends Component {
 		this.columns = [
 		{
 			Header: 'Nama',
-			accessor: 'nama'
+			accessor: 'nama',
+			Cell: cell => (
+				<p>{cell.row.original.nama_depan} {cell.row.original.nama_belakang}</p>
+			),
 		},
 		{
 			Header: 'Alamat',
@@ -51,10 +54,10 @@ class Konsultasi extends Component {
 		  Header: "Cancel (Tolak)",
 		  Cell: ({ cell }) => (
 		  <>
-			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-green-400 rounded-full">
+			<button onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-green-400 rounded-full">
 			  <FaPencilAlt />
 			</button>
-			<button key={cell.row.values._id} onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
+			<button onClick={ () => { this.deleteData(cell.row.values._id) }} className="p-2 px-3 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-red-400 rounded-full">
 			  <FaTimes />
 			</button>
 		  </>

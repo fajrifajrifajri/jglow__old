@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const agentSchema = new Schema({
 	_id: { type: String },
-	nama: { type: String, required: true },
+	nama_depan: { type: String, required: true },
+	nama_belakang: { type: String },
 	alamat: { type: String, required: true },
 	no_telp: { type: String, required: true },
 }, 

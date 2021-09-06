@@ -5,7 +5,7 @@ import {
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
-
+import Select from 'react-select';
 
 // Assets & Components include
 import '../../../Assets/css/index.css';
@@ -17,6 +17,10 @@ import { FaChevronLeft } from 'react-icons/fa';
 // SweetAlert 2
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content'
+
+// Set Axios Default URL
+// var port = 5000;
+// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 export default class CreateKonsultasi extends Component {
 	constructor(props) {
@@ -35,7 +39,7 @@ export default class CreateKonsultasi extends Component {
 		this.onChangeRiwayatSkincare = this.onChangeRiwayatSkincare.bind(this);
 		this.onChangeKondisiKeluhan = this.onChangeKondisiKeluhan.bind(this);
 		this.onChangePenggunaanKe = this.onChangePenggunaanKe.bind(this);
-		this.onChangeNoAgent = this.onChangeNoAgent.bind(this);
+		this.onChangeAgentSelected = this.onChangeAgentSelected.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		
 		// Foto
@@ -58,8 +62,29 @@ export default class CreateKonsultasi extends Component {
 			riwayatSkincare: '',
 			kondisiKeluhan: '',
 			penggunaanKe: '',
-			noAgent: '',
+			agents: undefined,
+			agentSelected: undefined
 		}
+	}
+	
+	componentDidMount() {
+		this.getAgents();
+	}
+	
+	async getAgents() {
+		
+		const res = await axios.get('/backend/agent');
+		const data = res.data;
+		
+		const agents = data.map(d => ({
+			label: d._id + ' - ' + d.nama_depan + ' ' +  d.nama_belakang,
+			value: d._id
+		}))
+		
+		console.log(agents);
+		
+		this.setState({ agents: agents })
+		console.log(this.state.agents);
 	}
 	
 	onChangeNamaDepan(e) {
@@ -140,9 +165,9 @@ export default class CreateKonsultasi extends Component {
 		});
 	}
 	
-	onChangeNoAgent(e) {
+	onChangeAgentSelected = (option) => {
 		this.setState({
-			noAgent: e.target.value
+			agentSelected: option
 		});
 	}
 	
@@ -152,7 +177,7 @@ export default class CreateKonsultasi extends Component {
 		const formData = new FormData();
 		
 		const { namaDepan, namaBelakang, tanggalLahir, selectedKelamin, alamat, noTelp, jenisKulit,
-		kulitSensitif, mudahIritasi, hamilDanMenyusui, riwayatSkincare, kondisiKeluhan, penggunaanKe, noAgent } =
+		kulitSensitif, mudahIritasi, hamilDanMenyusui, riwayatSkincare, kondisiKeluhan, penggunaanKe, agentSelected } =
 		this.state;
 		
 		formData.append('namaDepan', namaDepan);
@@ -168,11 +193,11 @@ export default class CreateKonsultasi extends Component {
 		formData.append('riwayatSkincare', riwayatSkincare);
 		formData.append('kondisiKeluhan', kondisiKeluhan);
 		formData.append('penggunaanKe', penggunaanKe);
-		formData.append('noAgent', noAgent);
 		formData.append('fotoAgent', this.fotoAgent.current.files[0]);
 		formData.append('fotoKulitWajahDepan', this.fotoKulitWajahDepan.current.files[0]);
 		formData.append('fotoKulitWajahKiri', this.fotoKulitWajahKiri.current.files[0]);
 		formData.append('fotoKulitWajahKanan', this.fotoKulitWajahKanan.current.files[0]);
+		formData.append('kodeAgent', agentSelected.value);
 		
 		const config = {
 			headers: {
@@ -450,9 +475,15 @@ export default class CreateKonsultasi extends Component {
 					</div>
 					
 					<div className="form__group">
-						<label className="block mb-2">No Agent: </label>
-						<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+						<label className="block mb-2">Kode Agent: </label>
+						<Select
+						  className={`my-4 rounded-t text-sm w-full border`}
+						  onChange={this.onChangeAgentSelected}
+						  options={this.state.agents}
+						  placeholder="Search..."
+						/>
 					</div>
+					
 					<div className="form__group">
 						<input type="submit" value="Buat konsultasi" className="button"/>
 					</div>

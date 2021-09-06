@@ -61,6 +61,8 @@ router.post('/add', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 	//console.log("Request ---", req.body);
 	console.log("Request file ---", req.files);//Here you get file.
 	
+	console.log("Request body ---", req.body);
+	
 	const nama_depan = req.body.namaDepan;
 	const nama_belakang = req.body.namaBelakang;
 	const tanggal_lahir = Date.parse(req.body.tanggalLahir);
@@ -74,7 +76,7 @@ router.post('/add', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 	const riwayat_skincare = req.body.riwayatSkincare;
 	const kondisi_keluhan = req.body.kondisiKeluhan;
 	const penggunaan_ke = req.body.penggunaanKe;
-	const no_agent = req.body.noAgent;
+	const kode_agent = req.body.kodeAgent;
 	const foto_agent = req.files.fotoAgent[0].key;
 	const foto_kulit_wajah_depan = req.files.fotoKulitWajahDepan[0].key;
 	const foto_kulit_wajah_kiri = req.files.fotoKulitWajahKiri[0].key;
@@ -96,7 +98,7 @@ router.post('/add', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 		riwayat_skincare,
 		kondisi_keluhan,
 		penggunaan_ke,
-		no_agent,
+		kode_agent,
 		foto_agent,
 		foto_kulit_wajah_depan,
 		foto_kulit_wajah_kiri,
@@ -111,6 +113,16 @@ router.post('/add', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { nam
 router.route('/:id').get((req, res) => {
 	console.log(req.params.id);
 	Konsultasi.findById(req.params.id)
+	.then(konsultasi => {
+		res.json(konsultasi); 
+		console.log(konsultasi)
+	})
+	.catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/agent/:kodeAgent').get((req, res) => {
+	console.log(req.params.kodeAgent);
+	Konsultasi.find( { kode_agent: req.params.kodeAgent } )
 	.then(konsultasi => {
 		res.json(konsultasi); 
 		console.log(konsultasi)
@@ -136,7 +148,7 @@ router.post('/update/:id', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }
 		konsultasi.riwayat_skincare = req.body.riwayatSkincare;
 		konsultasi.kondisi_keluhan = req.body.kondisiKeluhan;
 		konsultasi.penggunaan_ke = req.body.penggunaanKe;
-		konsultasi.no_agent = req.body.noAgent;
+		konsultasi.kode_agent = req.body.kodeAgent;
 		konsultasi.foto_agent = req.files.fotoAgent[0].key;
 		konsultasi.foto_kulit_wajah_depan = req.files.fotoKulitWajahDepan[0].key;
 		konsultasi.foto_kulit_wajah_kiri = req.files.fotoKulitWajahKiri[0].key;

@@ -4,11 +4,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 // Buat JWT Token (jwt.sign)
-const createJWT = (email, userId, role, duration) => {
+const createJWT = (email, userId, role, kodeAgent, duration) => {
    const payload = {
       email,
       userId,
 	  role,
+	  kodeAgent,
       duration
    };
    return jwt.sign(payload, process.env.TOKEN_SECRET, {
@@ -89,6 +90,7 @@ router.route('/masuk').post((req, res) => {
 				 user.email,
 				 user._id,
 				 user.role,
+				 user.kode_agent,
 				 3600
 			   );
 			   jwt.verify(access_token, process.env.TOKEN_SECRET, (err, decoded) => {
@@ -117,8 +119,9 @@ router.route('/masuk').post((req, res) => {
 const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 router.route('/daftar').post((req, res) => {
-	let { email, password, passwordCheck, role } = req.body;
+	let { email, password, passwordCheck, role, kodeAgent } = req.body;
 	
+	console.log(req.body);
 	let errors = [];
 	if (!email) {
 		errors.push({ email: "required" });
@@ -150,7 +153,8 @@ router.route('/daftar').post((req, res) => {
 		 const user = new User({
 		   email: email,
 		   password: password,
-		   role: role
+		   role: role,
+		   kode_agent: kodeAgent
 		 });
 		 bcrypt.genSalt(10, function(err, salt) { bcrypt.hash(password, salt, function(err, hash) {
 		 if (err) throw err;
@@ -189,7 +193,8 @@ router.get("/", cekToken, async (req, res) => {
 	res.json({
 		email: user.email,
 		id: user._id,
-		role: user.role
+		role: user.role,
+		kodeAgent: user.kode_agent
 	});
 });
 

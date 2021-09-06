@@ -11,6 +11,7 @@ import {
 import Login from './components/Auth/login';
 import Register from './components/Auth/register';
 import Dashboard from './components/Dashboard/dashboard';
+import Profile from './components/Dashboard/profile';
 import Produk from './components/Dashboard/produk';
 import BuatProduk from './components/Dashboard/Produk/buatProduk';
 import Agent from './components/Dashboard/agent';
@@ -98,6 +99,9 @@ function App() {
 				<Route path="/beranda">
 				  <Dashboard />
 				</Route>
+				<Route path="/profile">
+				  <Profile />
+				</Route>
 				<Route exact path="/produk">
 				  <Produk />
 				</Route>
@@ -152,6 +156,7 @@ function App() {
 				<Route path="/konsultasi-konsumer">
 				  <KonsultasiKlien />
 				</Route>
+				<Route path={"/formulir-konsultasi/:kodeAgent"} component={KonsultasiKlien}></Route>
 			</Switch>
 		</UserContext.Provider>
     </Router>

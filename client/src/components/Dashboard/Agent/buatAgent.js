@@ -22,7 +22,8 @@ export default class CreateAgent extends Component {
 	constructor(props) {
 		super(props);
 		
-		this.onChangeNama = this.onChangeNama.bind(this);
+		this.onChangeNamaDepan = this.onChangeNamaDepan.bind(this);
+		this.onChangeNamaBelakang = this.onChangeNamaBelakang.bind(this);
 		this.onChangeAlamat = this.onChangeAlamat.bind(this);
 		this.onChangeNoTelp = this.onChangeNoTelp.bind(this);
 		this.onRefreshKodeAgent = this.onRefreshKodeAgent.bind(this);
@@ -32,7 +33,8 @@ export default class CreateAgent extends Component {
 		this.onSubmit = this.onSubmit.bind(this);
 		
 		this.state = {
-			nama: '',
+			namaDepan: '',
+			namaBelakang: '',
 			alamat: '',
 			noTelp: '',
 			kodeAgent: '',
@@ -53,9 +55,15 @@ export default class CreateAgent extends Component {
 		});
 	}
 	
-	onChangeNama(e) {
+	onChangeNamaDepan(e) {
 		this.setState({
-			nama: e.target.value
+			namaDepan: e.target.value
+		});
+	}
+	
+	onChangeNamaBelakang(e) {
+		this.setState({
+			namaBelakang: e.target.value
 		});
 	}
 	
@@ -111,7 +119,8 @@ export default class CreateAgent extends Component {
 		e.preventDefault();
 		
 		const agent = {
-			nama: this.state.nama,
+			namaDepan: this.state.namaDepan,
+			namaBelakang: this.state.namaBelakang,
 			alamat: this.state.alamat,
 			noTelp: this.state.noTelp,
 			kodeAgent: this.state.kodeAgent,
@@ -121,25 +130,28 @@ export default class CreateAgent extends Component {
 			email: this.state.email,
 			password: this.state.password,
 			passwordCheck: this.state.passwordCheck,
-			role: 'agent'
+			role: 'agent',
+			kodeAgent: this.state.kodeAgent
 		}
 		
 		const MySwal = withReactContent(Swal);
 		
-		axios.all([
-		  axios
-			.post("/backend/agent/add", agent),
-		  axios
-			.post("/backend/users/daftar", user)
-		  ]).then(axios.spread((res1, res2) => {
-			  console.log(res1.data);
-		
-			  MySwal.fire(  
-				'Agent telah ditambahkan!',
-				'Tinggal, tunggu distributor memproses ya!',
-				'success'
-				);		
-			})).catch((err) => {
+		axios.post("/backend/agent/add", agent)
+		  .then(res1 => {
+			  
+			  // console.log(res1.data); 
+			  
+			  axios.post("/backend/users/daftar", user)
+				.then(res2 => {
+				  MySwal.fire(  
+					'Agent telah ditambahkan!',
+					'Tinggal, tunggu distributor memproses ya!',
+					'success'
+				  );
+				}).catch(err => {
+					console.log(err.response);
+				});
+			}).catch(err => {
 				console.log(err.response);
 			});
 	}
@@ -163,10 +175,17 @@ export default class CreateAgent extends Component {
 					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH AGENT (MANUAL)</h1>
 				</div>
 				<form className="mt-10" onSubmit={this.onSubmit} autoComplete="off">
-					<div className="form__group">
-						<label className="block mb-2">Nama Lengkap: </label>
-						<input type="text" className="form__control" value={this.state.nama} onChange={this.onChangeNama} placeholder="Nama Lengkap"/>
-						<small>Nama Lengkap</small>
+					<label className="block mb-2">Nama Lengkap: </label>
+					<div className="form__group grid grid-cols-12 gap-2">
+						<div className="col-span-6">
+							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
+							placeholder="Nama Depan"/>
+							<small>Nama Depan</small>
+						</div>
+						<div className="col-span-6">
+							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
+							<small>Nama Belakang</small>
+						</div>
 					</div>
 					<div className="form__group"> 
 						<label className="block mb-2">Alamat: </label>

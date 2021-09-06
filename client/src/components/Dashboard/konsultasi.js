@@ -20,6 +20,9 @@ import { BsInfo } from 'react-icons/bs';
 // SweetAlert 2
 import Swal from 'sweetalert2';
 
+// Auth
+import UserContext from "../Auth/userContext";
+
 // React-modal
 const customStyles = {
   content: {
@@ -35,6 +38,9 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 class Konsultasi extends Component {
+	// React.useContext
+	static contextType = UserContext;
+	 
 	constructor(props) {
 		super(props);
 		
@@ -81,7 +87,7 @@ class Konsultasi extends Component {
 			Cell: cell => (
 				<div>
 					<p className="truncate">{cell.row.original.no_telp}</p>
-					<p className="truncate font-bold">[{cell.row.original.no_agent}]</p>
+					<p className="truncate font-bold">[{cell.row.original.kode_agent}]</p>
 					<a className="block" href={`https://wa.me/62${(cell.row.original.no_telp ? cell.row.original.no_telp.substring(1) : '')}`}> <RiWhatsappFill size={20} className="text-green-400"/> </a>
 				</div>
 			  )
@@ -189,36 +195,78 @@ class Konsultasi extends Component {
 	
 	// Load table data
 	async getData(prevState) {
+		const user = this.context.userData.user;
 		
-			try {
-			  await axios.all([
-			  axios
-				.get("/backend/konsultasi/"),
-			  axios
-				.get("/backend/order/")
-			  ])
-			  .then(axios.spread((res1, res2) => {
-				  // check if there's any update or data empty
-				  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-				  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
-					  console.log(this.state.data);
-					  console.log(res1.data);
-					  // count how many data
-					  const konsultasiCount = Object.keys(res1.data).length;
-					  const orderCount = Object.keys(res2.data).length;
-					  this.setState({ 
-						data: res1.data,
-						konsultasiCount: konsultasiCount,
-						orderCount: orderCount,
-					  });
-				  }
-				  
-				  // data is loaded
-				  this.setState({ loadingData: false });
-			  }));
-			} catch (err) {
-				console.log(err);
+		if(user) {
+			if(user.role === 'agent') {
+				const kodeAgent = this.context.userData.user.kodeAgent;
+				try {
+				  await axios.all([
+				  axios
+					.get("/backend/konsultasi/agent/"+kodeAgent),
+				  axios
+					.get("/backend/order/agent/"+kodeAgent)
+				  ])
+				  .then(axios.spread((res1, res2) => {
+					  // check if there's any update or data empty
+					  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
+					  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+						  
+						  console.log(this.state.data);
+						  console.log(res1.data);
+						  // count how many data
+						  const konsultasiCount = Object.keys(res1.data).length;
+						  const orderCount = Object.keys(res2.data).length;
+						  this.setState({ 
+							data: res1.data,
+							konsultasiCount: konsultasiCount,
+							orderCount: orderCount,
+						  });
+					  }
+					  
+					  // data is loaded
+					  this.setState({ loadingData: false });
+				  })).catch(err => {
+						console.log(err.response.data);
+					});
+				} catch (err) {
+					console.log(err);
+				}
+			} else {
+				try {
+				  await axios.all([
+				  axios
+					.get("/backend/konsultasi/"),
+				  axios
+					.get("/backend/order/")
+				  ])
+				  .then(axios.spread((res1, res2) => {
+					  // check if there's any update or data empty
+					  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
+					  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+						  
+						  console.log(this.state.data);
+						  console.log(res1.data);
+						  // count how many data
+						  const konsultasiCount = Object.keys(res1.data).length;
+						  const orderCount = Object.keys(res2.data).length;
+						  this.setState({ 
+							data: res1.data,
+							konsultasiCount: konsultasiCount,
+							orderCount: orderCount,
+						  });
+					  }
+					  
+					  // data is loaded
+					  this.setState({ loadingData: false });
+				  })).catch(err => {
+						console.log(err.response.data);
+					});
+				} catch (err) {
+					console.log(err);
+				}
 			}
+		}
 	}
 	
 	componentDidMount () {

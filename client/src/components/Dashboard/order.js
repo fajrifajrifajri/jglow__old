@@ -47,7 +47,7 @@ class Order extends Component {
 			Cell: cell => (
 				<div>
 					<p>{cell.row.original.noTelp}</p>
-					<p className="font-bold">[{cell.row.original.noAgent}]</p>
+					<p className="font-bold">[{cell.row.original.kodeAgent}]</p>
 				</div>
 			  )
 		},

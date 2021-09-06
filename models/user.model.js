@@ -15,6 +15,9 @@ const userSchema = new Schema({
 	role: {
       type: String,
       required: true
+   },
+	kode_agent: {
+      type: String
    }
 },
 	{

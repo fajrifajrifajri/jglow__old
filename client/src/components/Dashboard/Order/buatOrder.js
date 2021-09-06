@@ -23,10 +23,10 @@ export default class CreateOrder extends Component {
 		this.onChangeNamaBelakang = this.onChangeNamaBelakang.bind(this);
 		this.onChangeAlamat = this.onChangeAlamat.bind(this);
 		this.onChangeNoTelp = this.onChangeNoTelp.bind(this);
-		this.onChangeNoAgent = this.onChangeNoAgent.bind(this);
 		this.onChangeOrderProduct = this.onChangeOrderProduct.bind(this);
 		this.onChangeJumlahOrder = this.onChangeJumlahOrder.bind(this);
 		this.onChangeOptionPengiriman = this.onChangeOptionPengiriman.bind(this);
+		this.onChangeAgentSelected = this.onChangeAgentSelected.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
 		
 		this.state = {
@@ -34,16 +34,18 @@ export default class CreateOrder extends Component {
 			namaBelakang: '',
 			alamat: '',
 			noTelp: '',
-			noAgent: '',
 			products: undefined,
 			orderProduct: undefined,
 			jumlahOrder: 0,
 			optionPengiriman: '',
+			agents: undefined,
+			agentSelected: undefined
 		}
 	}
 	
 	componentDidMount() {
 		this.getProducts();
+		this.getAgents();
 	}
 	
 	async getProducts() {
@@ -60,6 +62,22 @@ export default class CreateOrder extends Component {
 		
 		this.setState({ products: products })
 		console.log(this.state.products);
+	}
+	
+	async getAgents() {
+		
+		const res = await axios.get('/backend/agent');
+		const data = res.data;
+		
+		const agents = data.map(d => ({
+			label: d._id + ' - ' + d.nama_depan + ' ' +  d.nama_belakang,
+			value: d._id
+		}))
+		
+		console.log(agents);
+		
+		this.setState({ agents: agents })
+		console.log(this.state.agents);
 	}
 	
 	onChangeNamaDepan(e) {
@@ -86,12 +104,6 @@ export default class CreateOrder extends Component {
 		});
 	}
 	
-	onChangeNoAgent(e) {
-		this.setState({
-			noAgent: e.target.value
-		});
-	}
-	
 	onChangeOrderProduct = (option) => {
 		// isMulti
 		// const idProduct = option.map(a => a.value);
@@ -112,6 +124,12 @@ export default class CreateOrder extends Component {
 		});
 	}
 	
+	onChangeAgentSelected = (option) => {
+		this.setState({
+			agentSelected: option
+		});
+	}
+	
 	onSubmit(e) {
 		e.preventDefault();
 		
@@ -124,7 +142,7 @@ export default class CreateOrder extends Component {
 			orderProduct: this.state.orderProduct,
 			jumlahOrder: this.state.jumlahOrder,
 			optionPengiriman: this.state.optionPengiriman,
-			noAgent: this.state.noAgent,
+			kodeAgent: this.state.agentSelected.value,
 		}
 		
 		axios.post('/backend/order/add', order).then((res)  => { 
@@ -207,8 +225,13 @@ export default class CreateOrder extends Component {
 						</div>
 						
 						<div className="form__group">
-							<label className="block mb-2">No Agent: </label>
-							<input type="text" className="form__control" value={this.state.noAgent} onChange={this.onChangeNoAgent}/>
+							<label className="block mb-2">Kode Agent: </label>
+							<Select
+							  className={`my-4 rounded-t text-sm w-full border`}
+							  onChange={this.onChangeAgentSelected}
+							  options={this.state.agents}
+							  placeholder="Search..."
+							/>
 						</div>
 						
 						<div className="form__group">

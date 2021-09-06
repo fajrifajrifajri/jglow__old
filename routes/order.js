@@ -21,13 +21,36 @@ router.route('/').get((req, res) => {
 		.catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/agent/:kodeAgent').get((req, res) => {
+	Order.aggregate([
+	{
+		$match: { 'kodeAgent': req.params.kodeAgent }
+	},
+	{
+		$lookup: {
+		   from: 'produks',
+		   localField: 'orderProduct',
+		   foreignField: '_id',
+		   as: 'produk'
+		}
+	},
+	{
+		$addFields: {
+          "orderProduct": "$produk.nama_produk"
+		}
+	}
+	])
+		.then(order => res.json(order))
+		.catch(err => res.status(400).json('Error: ' + err));
+});
+
 router.post('/add', (req, res) => {
 	console.log(req.body)
 	
 	const nama = req.body.nama;
 	const alamat = req.body.alamat;
 	const noTelp = req.body.noTelp;
-	const noAgent = req.body.noAgent;
+	const kodeAgent = req.body.kodeAgent;
 	// const orderProduct = req.body.orderProduct.value; (isMulti)
 	const orderProduct = req.body.orderProduct.value;
 	const jumlahOrder = Number(req.body.jumlahOrder);
@@ -37,7 +60,7 @@ router.post('/add', (req, res) => {
 		nama,
 		alamat,
 		noTelp,
-		noAgent,
+		kodeAgent,
 		orderProduct,
 		jumlahOrder,
 		optionPengiriman
