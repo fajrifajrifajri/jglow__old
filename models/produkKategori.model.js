@@ -3,10 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const produkKategoriSchema = new Schema({
-	nama_kategori: { type: String, required: true },
-}, 
-	{
-		timestamps: true,
+		nama_kategori: { type: String, required: true },
+	}, 
+	{ 
+		timestamps: { 
+			createdAt: 'created_at',
+			updatedAt: 'updated_at'
+		}
 	}
 );
 

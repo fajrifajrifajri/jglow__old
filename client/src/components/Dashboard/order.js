@@ -12,9 +12,14 @@ import { Table } from './_Main Components/table';
 
 // Icons
 import { FaChevronLeft, FaPlusSquare, FaTimes }  from 'react-icons/fa';
+import { Header } from './_Main Components/header';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
+
+// Set Axios Default URL
+var port = 5000;
+axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 class Order extends Component {
 	
@@ -35,7 +40,9 @@ class Order extends Component {
 		this.columns = [
 		{
 			Header: 'Nama',
-			accessor: 'nama'
+			Cell: cell => (
+				<p>{cell.row.original.nama_depan} {cell.row.original.nama_belakang}</p>
+			),
 		},
 		{
 			Header: 'Alamat',
@@ -43,17 +50,17 @@ class Order extends Component {
 		},
 		{
 			Header: 'No Telp & No Agent',
-			accessor: 'noTelp',
+			accessor: 'no_telp',
 			Cell: cell => (
 				<div>
-					<p>{cell.row.original.noTelp}</p>
-					<p className="font-bold">[{cell.row.original.kodeAgent}]</p>
+					<p>{cell.row.original.no_telp}</p>
+					<p className="font-bold">[{cell.row.original.kode_agent}]</p>
 				</div>
 			  )
 		},
 		{
-			Header: 'Order Product',
-			accessor: 'orderProduct',
+			Header: 'Order Produk',
+			accessor: 'nama_produk',
 			/* (isMulti)
 			Cell: cell => (
 				<div>
@@ -64,11 +71,11 @@ class Order extends Component {
 		},
 		{
 			Header: 'Jumlah Order',
-			accessor: 'jumlahOrder'
+			accessor: 'jumlah_order'
 		},
 		{
 			Header: 'Option Pengiriman',
-			accessor: 'optionPengiriman'
+			accessor: 'option_pengiriman'
 		},
 		{
 		  Header: "Delete",
@@ -94,14 +101,15 @@ class Order extends Component {
 		  confirmButtonText: 'Delete!'
 		}).then((result) => {
 		  if (result.isConfirmed) {
-			Swal.fire(
-			  'Deleted!',
-			  'Data telah telah terhapus.',
-			  'success'
-			)
-		
 			axios.delete('/backend/order/'+id)
-				.then(res => console.log(res.data));
+				.then(res => {
+					Swal.fire(
+					  'Deleted!',
+					  'Data telah telah terhapus.',
+					  'success'
+					)
+					console.log(res.data)
+				});
 		  }
 		})
 	}
@@ -118,7 +126,7 @@ class Order extends Component {
 			  .then(axios.spread((res1, res2) => {
 				  // check if there's any update or data empty
 				  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-				  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+				  if(JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
 					  console.log(this.state.data);
 					  console.log(res1.data);
 					  // count how many data
@@ -157,7 +165,8 @@ class Order extends Component {
 		<div className="sidebar__container">
 			<Sidebar/>
 		</div>
-		<div className="body__container">
+		<div className="body__container">	
+			<Header />
 			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
 					<div className="col-start-8 col-span-4 mb-4">

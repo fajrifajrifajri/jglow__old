@@ -107,19 +107,21 @@ class Login extends Component {
 				{emailUnregistered && <ErrorNotice message={"Email Unregistered"} clearError={() => this.clearError(false)} />}
 				<div className={`flex bg-gray-100 rounded text-sm ${emailError && 'border border-red-200'}`}>
 					<FaAt size={42} className="text-gray-400 p-3" />
-					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full input--text"/>
+					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="form__control__auth"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				{passwordWrong && <ErrorNotice message={"Password Wrong"} clearError={() => this.clearError(false)} />}
 				<div className={`flex bg-gray-100 rounded text-sm mt-2 ${passwordError && 'border border-red-200'}`}>
 					<FaLock size={42} className="text-gray-400 p-3" />
-					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full input--text"/>
+					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="form__control__auth"/>
 				</div>
 				
 				<input type="submit" value="Log in" className="button"/>
 			</form>
+			{/*
 			<Link to="/daftar" className="text-white ml-auto mt-3 font-semibold">Daftar Sebagai Agent<FaArrowRight className="inline-block ml-2" /></Link>
 			<Link to="/konsultasi-konsumer" className="text-white ml-auto mt-3 font-semibold">Form Konsultasi<FaArrowRight className="inline-block ml-2" /></Link>
+			*/}
 		</div>
 		
       <UserContext.Provider value={{

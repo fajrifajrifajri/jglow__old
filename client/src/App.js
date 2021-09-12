@@ -48,8 +48,8 @@ function App() {
 		if(!userStatus) {
 
 			// Set Axios Default URL
-			// var port = 5000;
-			// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+			var port = 5000;
+			axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 			  
 			const checkLoggedIn = async () => {
 				let token = localStorage.getItem("auth-token");
@@ -99,9 +99,7 @@ function App() {
 				<Route path="/beranda">
 				  <Dashboard />
 				</Route>
-				<Route path="/profile">
-				  <Profile />
-				</Route>
+				<Route path={"/profile"} component={Profile}></Route>
 				<Route exact path="/produk">
 				  <Produk />
 				</Route>

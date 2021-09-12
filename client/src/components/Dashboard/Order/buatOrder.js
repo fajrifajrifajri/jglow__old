@@ -133,13 +133,12 @@ export default class CreateOrder extends Component {
 	onSubmit(e) {
 		e.preventDefault();
 		
-		const nama = this.state.namaDepan + ' ' + this.state.namaBelakang;
-		
 		const order = {
-			nama: nama,
+			namaDepan: this.state.namaDepan,
+			namaBelakang: this.state.namaBelakang,
 			alamat: this.state.alamat,
 			noTelp: this.state.noTelp,
-			orderProduct: this.state.orderProduct,
+			kodeProduk: this.state.orderProduct,
 			jumlahOrder: this.state.jumlahOrder,
 			optionPengiriman: this.state.optionPengiriman,
 			kodeAgent: this.state.agentSelected.value,
@@ -193,14 +192,18 @@ export default class CreateOrder extends Component {
 			</div>
 			<div className="body__container">
 				<div className="body__form__container">
-					<div>
+					<div className="flex">
 						<Link to="/order" className="button--back">
 							<FaChevronLeft size={20} className="icon--header"/>
 							<span>
 								Tabel Order
 							</span>
 						</Link>
-						<h1 className="m-auto ml-4 inline-block text-4xl">FORMULIR ORDER PUSAT</h1>
+						<div className="button--input">
+							<span>
+								FORMULIR ORDER PUSAT
+							</span>
+						</div>
 					</div>
 					<form className="mt-10" onSubmit={this.onSubmit}>
 						<label className="block mb-2">Nama Lengkap: </label>

@@ -29,10 +29,6 @@
 .button--input {
 	@apply button--header bg-green-600 rounded-r;
 }
-.input--text {
-	@apply focus-within:ring-2 focus-within:ring-pink-dark outline-none cursor-pointer;
-	
-}
 .icon--header {
 	@apply inline-block m-auto mr-2;
 }
@@ -72,13 +68,13 @@
 	@apply bg-layout col-span-10 bg-gray-100;
 }
 .body__second__container {
-	@apply block bg-white min-h-screen rounded-tl-lg mt-24 ml-12;
+	@apply block bg-white min-h-screen rounded-tl-lg;
 }
 .body__table__container {
-	@apply body__second__container p-10 overflow-x-scroll;
+	@apply body__second__container py-24 px-12 overflow-x-scroll;
 }
 .body__form__container {
-	@apply body__second__container p-20;
+	@apply body__second__container py-24 pr-80 pl-12;
 }
 .body__modal__container {
 	@apply bg-white min-h-screen p-10;
@@ -87,10 +83,16 @@
 	@apply pb-5;
 }
 .form__group small {
-	@apply text-gray-300;
+	@apply text-gray-400;
+}
+.form__control--ring {
+	@apply focus-within:ring-2 focus-within:ring-pink-dark outline-none cursor-pointer;
+}
+.form__control__auth {
+	@apply form__control--ring focus:bg-gray-50 bg-gray-100 pl-2 w-full rounded-r;
 }
 .form__control {
-	@apply block w-full border p-3 shadow-sm;
+	@apply form__control--ring block w-full border p-3 shadow-sm rounded text-sm;
 }
 .form__upload {
 	@apply mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md;

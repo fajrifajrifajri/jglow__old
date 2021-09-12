@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const path = require("path");
 let Konsultasi = require('../models/konsultasi.model');
+let Order = require('../models/order.model');
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 // const fs = require('fs-extra');
@@ -128,6 +129,39 @@ router.route('/agent/:kodeAgent').get((req, res) => {
 		console.log(konsultasi)
 	})
 	.catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.post('/order/:id', (req, res) => {
+	console.log(req.params.id);
+	Konsultasi.findById(req.params.id)
+	.then(konsultasi => {
+		// Sudah order = true
+		konsultasi.sudah_order = true;
+		 
+		konsultasi.save()
+		.catch(err => res.status(400).json('Error: ' + err));
+		
+		// Input order
+		console.log(konsultasi);
+		
+		const nama_depan = konsultasi.nama_depan;
+		const nama_belakang = konsultasi.nama_belakang;
+		const alamat = konsultasi.alamat;
+		const no_telp = konsultasi.no_telp;
+		const kode_agent = konsultasi.kode_agent;
+
+		const newOrder = new Order({
+			nama_depan,
+			nama_belakang,
+			alamat,
+			no_telp,
+			kode_agent,
+		});
+	
+		newOrder.save()
+		.then(() => res.json('Order ditambahkan!'))
+		.catch(err => res.status(400).json('Error: ' + err));
+	})
 });
 
 router.post('/update/:id', uploadFile.fields([{ name: 'fotoAgent', maxCount: 1 }, { name: 'fotoKulitWajahDepan', maxCount:1 }, { name: 'fotoKulitWajahKiri', maxCount:1 }, { name: 'fotoKulitWajahKanan', maxCount:1 }]), (req, res) => {

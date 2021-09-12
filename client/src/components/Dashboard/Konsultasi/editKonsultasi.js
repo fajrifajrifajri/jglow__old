@@ -350,15 +350,15 @@ export default class EditKonsultasi extends Component {
 					<label className="block mb-1">
 						<input
 							name="kulitSensitif" 
-							type="radio" value="ya"
-							checked={this.state.kulitSensitif === "ya"}
+							type="radio" value="Ya"
+							checked={this.state.kulitSensitif === "Ya"}
 							onChange={this.onChangeKulitSensitif} /> Ya, kulit saya sensitif
 					</label>
 					<label className="block mb-1">
 						<input
 							name="kulitSensitif"
-							type="radio" value="tidak"
-							checked={this.state.kulitSensitif === "tidak"}
+							type="radio" value="Tidak"
+							checked={this.state.kulitSensitif === "Tidak"}
 							onChange={this.onChangeKulitSensitif} /> Tidak
 					</label>
 				</div>
@@ -369,15 +369,15 @@ export default class EditKonsultasi extends Component {
 					<label className="block mb-1">
 						<input
 							name="mudahIritasi"
-							type="radio" value="ya"
-							checked={this.state.mudahIritasi === "ya"}
+							type="radio" value="Ya"
+							checked={this.state.mudahIritasi === "Ya"}
 							onChange={this.onChangeMudahIritasi} /> Ya, kulit saya Mudah Iritasi
 					</label>
 					<label className="block mb-1">
 						<input
 							name="mudahIritasi"
-							type="radio" value="tidak"
-							checked={this.state.mudahIritasi === "tidak"}
+							type="radio" value="Tidak"
+							checked={this.state.mudahIritasi === "Tidak"}
 							onChange={this.onChangeMudahIritasi} /> Tidak
 					</label>
 				</div>
@@ -388,15 +388,15 @@ export default class EditKonsultasi extends Component {
 					<label className="block mb-1">
 						<input
 							name="hamilDanMenyusui"
-							type="radio" value="ya"
-							checked={this.state.hamilDanMenyusui === "ya"}
+							type="radio" value="Ya"
+							checked={this.state.hamilDanMenyusui === "Ya"}
 							onChange={this.onChangeHamilDanMenyusui} /> Ya, saya dalam keadaam Hamil dan Menyusui
 					</label>
 					<label className="block mb-1">
 						<input
 							name="hamilDanMenyusui"
-							type="radio" value="tidak"
-							checked={this.state.hamilDanMenyusui === "tidak"}
+							type="radio" value="Tidak"
+							checked={this.state.hamilDanMenyusui === "Tidak"}
 							onChange={this.onChangeHamilDanMenyusui} /> Tidak
 					</label>
 				</div>

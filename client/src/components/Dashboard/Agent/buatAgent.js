@@ -165,14 +165,18 @@ export default class CreateAgent extends Component {
 			</div>
 			<div className="body__container">
 				<div className="body__form__container">
-				<div>
+				<div className="flex">
 					<Link to="/agent" className="button--back">
 						<FaChevronLeft size={20} className="icon--header"/>
 						<span>
 							Tabel Agent
 						</span>
 					</Link>
-					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH AGENT (MANUAL)</h1>
+					<div className="button--input">
+						<span>
+							TAMBAH AGENT
+						</span>
+					</div>
 				</div>
 				<form className="mt-10" onSubmit={this.onSubmit} autoComplete="off">
 					<label className="block mb-2">Nama Lengkap: </label>

@@ -11,6 +11,7 @@ import UserContext from "../Auth/userContext";
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
+import { Header } from './_Main Components/header';
 
 // Icons
 import { FaAssistiveListeningSystems, FaTruck, FaUserSecret, FaUsersCog, FaBell, FaChartLine } from 'react-icons/fa';
@@ -67,23 +68,7 @@ class Dashboard extends Component {
 		</div>
 		<div className="col-span-10 bg-gray-100">
 			<div className="bg-layout min-h-screen rounded-tl-lg">
-				<div className="mb-10 bg-pink-dark grid grid-cols-10 text-white text-center pb-2 bg-gradient-to-b from-pink-400 to-pink-600">
-					<div className="col-span-2">
-						<Link to='/laporan-harian' className="inline-block text-xl font-bold border-b-4 rounded border-pink-700 pt-14 w-10/12  shadow transform hover:translate-y-0.5">Tabel Harian</Link>
-					</div>
-					<div className="col-span-2">
-						<Link to='/laporan-mingguan'  className="inline-block text-xl font-bold border-b-4 rounded border-pink-700 pt-14 w-10/12  shadow transform hover:translate-y-0.5">Tabel Mingguan</Link>
-					</div>
-					<div className="col-span-2">
-						<Link to='/laporan-bulanan'  className="inline-block text-xl font-bold border-b-4 rounded border-pink-700 pt-14 w-10/12  shadow transform hover:translate-y-0.5">Tabel Bulanan</Link>
-					</div>
-					<div className="col-span-2">
-						<Link to='/laporan-3bulan'  className="inline-block text-xl font-bold border-b-4 rounded border-pink-700 pt-14 w-10/12  shadow transform hover:translate-y-0.5">Laporan 3 Bulan</Link>
-					</div>
-					<div className="col-span-2">
-						<Link to='/laporan-tahunan'  className="inline-block text-xl font-bold border-b-4 rounded border-pink-700 pt-14 w-10/12  shadow transform hover:translate-y-0.5">Tabel Tahunan</Link>
-					</div>
-				</div>
+				<Header />
 				<div className="pb-4 px-12">
 					 <h1 className="text-pink-dark text-4xl font-bold mb-8">Menu Aplikasi</h1>
 					 <div className={`relative font-xs pb-4 ${role === "klinik" ? 'x-scroll' : ''}`}>
@@ -154,12 +139,14 @@ class Dashboard extends Component {
 								</div>
 								<div className="bg-pink-dark py-4 text-md font-bold text-center">Laporan Agent</div>
 							</Link>
+							{/*
 							<Link to="/laporan-distributor" className="inline-flex flex-col text-white border-4 border-pink-dark rounded shadow-lg transform hover:translate-y-0.5">
 								<div className="flex pattern--laporan p-20">
 									<FaChartLine size={40} className="m-auto"/>
 								</div>
 								<div className="bg-pink-dark py-4 text-md font-bold text-center">Laporan Distributor</div>
 							</Link>
+							*/}
 						 </div>
 					</div>
 				</>

@@ -10,23 +10,23 @@ const startOfMonth = dayjs().startOf('month').$d;
 router.route('/minggu').get((req, res) => {
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: startOfWeek } } },
+		{ $match: { created_at: { $gt: startOfWeek } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk",
-			   hari: { $dayOfWeek: "$createdAt" }
+			   namaProduk: "$produk.nama_produk",
+			   hari: { $dayOfWeek: "$created_at" }
 			}
 		},
 		// Change '0' to Sunday, '1' to Monday, ...
 		{ $project: {
-			   orderProduct: "$orderProduct",
+			   namaProduk: "$kodeProduk",
 			   hariNumber: "$hari", // for sorting purpose
 			   hari: { "$switch": {
 					  "branches": [
@@ -69,7 +69,7 @@ router.route('/minggu').get((req, res) => {
 		// First pipeline
 		{ $group: {
 				_id: { 
-					produk: "$orderProduct",
+					produk: "$namaProduk",
 					hari: "$hari",
 					hariNumber: "$hariNumber"
 				},
@@ -114,23 +114,23 @@ router.route('/minggu').get((req, res) => {
 router.route('/minggu-lalu').get((req, res) => {
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: lastWeek, $lt: startOfWeek } } },
+		{ $match: { created_at: { $gt: lastWeek, $lt: startOfWeek } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk",
-			   hari: { $dayOfWeek: "$createdAt" }
+			   kodeProduk: "$produk.nama_produk",
+			   hari: { $dayOfWeek: "$created_at" }
 			}
 		},
 		// Change '0' to Sunday, '1' to Monday, ...
 		{ $project: {
-			   orderProduct: "$orderProduct",
+			   kodeProduk: "$kodeProduk",
 			   hari: { "$switch": {
 					  "branches": [
 						{
@@ -172,7 +172,7 @@ router.route('/minggu-lalu').get((req, res) => {
 		// First pipeline
 		{ $group: {
 				_id: { 
-					produk: "$orderProduct",
+					produk: "$kodeProduk",
 					hari: "$hari"
 				},
 				count:{$sum:1}
@@ -217,18 +217,18 @@ router.route('/minggu-lalu').get((req, res) => {
 router.route('/bulan').get((req, res) => {
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: startOfMonth } } },
+		{ $match: { created_at: { $gt: startOfMonth } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk",
-			   hari: { $dayOfMonth: "$createdAt" }
+			   kodeProduk: "$produk.nama_produk",
+			   hari: { $dayOfMonth: "$created_at" }
 			}
 		},	
 		// Count each product for each day
@@ -236,7 +236,7 @@ router.route('/bulan').get((req, res) => {
 		// First pipeline
 		{ $group: {
 				_id: { 
-					produk: "$orderProduct",
+					produk: "$kodeProduk",
 					hari: "$hari"
 				},
 				count:{$sum:1}
@@ -280,24 +280,24 @@ router.route('/kategori-minggu').get((req, res) => {
 	
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: startOfWeek } } },
+		{ $match: { created_at: { $gt: startOfWeek } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk"
+			   kodeProduk: "$produk.nama_produk"
 			}
 		},
 		// Count each product for each day
 		// https://stackoverflow.com/questions/25666187/mongodb-nested-group
 		// First pipeline
 		{ $group: {
-			_id: "$orderProduct",
+			_id: "$kodeProduk",
 			count:{$sum:1}
 			}
 		},
@@ -329,24 +329,24 @@ router.route('/kategori-minggu-lalu').get((req, res) => {
 	
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: lastWeek, $lt: startOfWeek } } },
+		{ $match: { created_at: { $gt: lastWeek, $lt: startOfWeek } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk"
+			   kodeProduk: "$produk.nama_produk"
 			}
 		},
 		// Count each product for each day
 		// https://stackoverflow.com/questions/25666187/mongodb-nested-group
 		// First pipeline
 		{ $group: {
-			_id: "$orderProduct",
+			_id: "$kodeProduk",
 			count:{$sum:1}
 			}
 		},
@@ -378,24 +378,24 @@ router.route('/kategori-bulan').get((req, res) => {
 	
 	Order.aggregate([
 		// Greater than start of the week (Sunday)
-		{ $match: { createdAt: { $gt: startOfMonth } } },
+		{ $match: { created_at: { $gt: startOfMonth } } },
 		// Relational database, looking for 'nama_produk'
 		{ $lookup: {
 			   from: 'produks',
-			   localField: 'orderProduct',
+			   localField: 'kode_produk',
 			   foreignField: '_id',
 			   as: 'produk'
 			}
 		},
 		{ $project: {
-			   orderProduct: "$produk.nama_produk"
+			   kodeProduk: "$produk.nama_produk"
 			}
 		},
 		// Count each product for each day
 		// https://stackoverflow.com/questions/25666187/mongodb-nested-group
 		// First pipeline
 		{ $group: {
-			_id: "$orderProduct",
+			_id: "$kodeProduk",
 			count:{$sum:1}
 			}
 		},

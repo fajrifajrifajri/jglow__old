@@ -230,24 +230,28 @@ export default class CreateKonsultasi extends Component {
 		</div>
 		<div className="body__container">
 			<div className="body__form__container">
-				<div>
+				<div className="flex">
 					<Link to="/konsultasi" className="button--back">
 						<FaChevronLeft size={20} className="icon--header"/>
 						<span>
 							Tabel Konsultasi
 						</span>
 					</Link>
+					<div className="button--input">
+						<span>
+							FORMULIR KONSULTASI PUSAT
+						</span>
+					</div>
 				</div>
 				<form className="mt-10" onSubmit={this.onSubmit}>
 					<label className="block mb-2">Nama Lengkap: </label>
 					<div className="form__group grid grid-cols-12 gap-2">
 						<div className="col-span-6">
-							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}
-							placeholder="Nama Depan"/>
+							<input type="text" className="form__control" value={this.state.namaDepan} onChange={this.onChangeNamaDepan}/>
 							<small>Nama Depan</small>
 						</div>
 						<div className="col-span-6">
-							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang} placeholder="Nama Belakang"/>
+							<input type="text" className="form__control" value={this.state.namaBelakang} onChange={this.onChangeNamaBelakang}/>
 							<small>Nama Belakang</small>
 						</div>
 					</div>
@@ -255,6 +259,7 @@ export default class CreateKonsultasi extends Component {
 						<label className="block mb-2">Tanggal Lahir: </label>
 						<DatePicker
 							className="form__control text-gray-400"
+							placeholderText="MM/DD/YYYY"
 							selected={this.state.tanggalLahir}
 							onChange={this.onChangeTanggalLahir}
 							peekNextMonth
@@ -262,6 +267,7 @@ export default class CreateKonsultasi extends Component {
 							showYearDropdown
 							dropdownMode="select"
 						/>
+						<small className="block">Bulan-Tanggal-Tahun</small>
 					</div>
 					<div className="form__group"> 
 						<label className="block mb-2">Kelamin </label>
@@ -326,15 +332,15 @@ export default class CreateKonsultasi extends Component {
 						<label className="block mb-1">
 							<input
 								name="kulitSensitif" 
-								type="radio" value="ya"
-								checked={this.state.kulitSensitif === "ya"}
+								type="radio" value="Ya"
+								checked={this.state.kulitSensitif === "Ya"}
 								onChange={this.onChangeKulitSensitif} /> Ya, kulit saya sensitif
 						</label>
 						<label className="block mb-1">
 							<input
 								name="kulitSensitif"
-								type="radio" value="tidak"
-								checked={this.state.kulitSensitif === "tidak"}
+								type="radio" value="Tidak"
+								checked={this.state.kulitSensitif === "Tidak"}
 								onChange={this.onChangeKulitSensitif} /> Tidak
 						</label>
 					</div>
@@ -345,15 +351,15 @@ export default class CreateKonsultasi extends Component {
 						<label className="block mb-1">
 							<input
 								name="mudahIritasi"
-								type="radio" value="ya"
-								checked={this.state.mudahIritasi === "ya"}
+								type="radio" value="Ya"
+								checked={this.state.mudahIritasi === "Ya"}
 								onChange={this.onChangeMudahIritasi} /> Ya, kulit saya Mudah Iritasi
 						</label>
 						<label className="block mb-1">
 							<input
 								name="mudahIritasi"
-								type="radio" value="tidak"
-								checked={this.state.mudahIritasi === "tidak"}
+								type="radio" value="Tidak"
+								checked={this.state.mudahIritasi === "Tidak"}
 								onChange={this.onChangeMudahIritasi} /> Tidak
 						</label>
 					</div>
@@ -364,29 +370,32 @@ export default class CreateKonsultasi extends Component {
 						<label className="block mb-1">
 							<input
 								name="hamilDanMenyusui"
-								type="radio" value="ya"
-								checked={this.state.hamilDanMenyusui === "ya"}
+								type="radio" value="Ya"
+								checked={this.state.hamilDanMenyusui === "Ya"}
 								onChange={this.onChangeHamilDanMenyusui} /> Ya, saya dalam keadaam Hamil dan Menyusui
 						</label>
 						<label className="block mb-1">
 							<input
 								name="hamilDanMenyusui"
-								type="radio" value="tidak"
-								checked={this.state.hamilDanMenyusui === "tidak"}
+								type="radio" value="Tidak"
+								checked={this.state.hamilDanMenyusui === "Tidak"}
 								onChange={this.onChangeHamilDanMenyusui} /> Tidak
 						</label>
 					</div>
 					<div className="form__group">
 						<label className="block mb-2">Riwayat Skincare : </label>
 						<textarea className="form__control" value={this.state.riwayatSkincare} onChange={this.onChangeRiwayatSkincare}/>
+						<small>Merek, Bulan terakhir penggunaan dan durasi penggunaan skincare tersebut.</small>
 					</div>
 					<div className="form__group">
 						<label className="block mb-2">Kondisi dan keluhan saat ini : </label>
 						<textarea className="form__control" value={this.state.kondisiKeluhan} onChange={this.onChangeKondisiKeluhan}/>
+						<small>*Contoh: Kulit perih, Muka kusam, Muka berjerawat dll.</small>
 					</div>
 					<div className="form__group">
 						<label className="block mb-2">Penggunaan produk J Glow ke-: </label>
-						<input className="form__control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe}/>
+						<input className="form__control" value={this.state.penggunaanKe} onChange={this.onChangePenggunaanKe} placeholder="ex: 23"/>
+						<small>*jawab dengan angka</small>
 					</div>
 					
 					<div className="form__group">
@@ -408,6 +417,7 @@ export default class CreateKonsultasi extends Component {
 						  </p>
 						</div>
 					  </div>
+					  <small>*Percakapan harus terlihat jelas dan lengkap</small>
 					</div>
 					
 					
@@ -430,6 +440,7 @@ export default class CreateKonsultasi extends Component {
 						  </p>
 						</div>
 					  </div>
+					  <small>*Gunakan foto terbaru, tanpa filter dan editing.</small>
 					</div>
 					
 					<div className="form__group">
@@ -451,6 +462,7 @@ export default class CreateKonsultasi extends Component {
 						  </p>
 						</div>
 					  </div>
+					  <small>*Gunakan foto terbaru, tanpa filter dan editing.</small>
 					</div>
 					
 					<div className="form__group">
@@ -472,6 +484,7 @@ export default class CreateKonsultasi extends Component {
 						  </p>
 						</div>
 					  </div>
+					  <small>*Gunakan foto terbaru, tanpa filter dan editing.</small>
 					</div>
 					
 					<div className="form__group">

@@ -190,14 +190,18 @@ export default class CreateUser extends Component {
 			</div>
 			<div className="body__container">
 				<div className="body__form__container">
-				<div>
+				<div className="flex">
 					<Link to="/user" className="button--back">
 						<FaChevronLeft size={20} className="icon--header"/>
 						<span>
 							Tabel User
 						</span>
 					</Link>
-					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH USER</h1>
+					<div className="button--input">
+						<span>
+							TAMBAH USER
+						</span>
+					</div>
 				</div>
 				<form onSubmit={this.onSubmit}>
 					<div className={`flex bg-gray-100 mt-4 rounded-t text-sm ${(emailError || userError) && 'border border-red-200'}`}>

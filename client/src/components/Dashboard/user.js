@@ -93,7 +93,7 @@ class Konsultasi extends Component {
 			  .then((res) => {
 				  // check if there's any update or data empty
 				  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-				  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res.data)) {
+				  if(JSON.stringify(prevState.data) !== JSON.stringify(res.data)) {
 					  console.log(this.state.data);
 					  console.log(res.data);
 					  this.setState({ 

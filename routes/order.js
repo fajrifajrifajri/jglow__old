@@ -6,14 +6,14 @@ router.route('/').get((req, res) => {
 	{
 		$lookup: {
 		   from: 'produks',
-		   localField: 'orderProduct',
+		   localField: 'kode_produk',
 		   foreignField: '_id',
 		   as: 'produk'
 		}
 	},
 	{
 		$addFields: {
-          "orderProduct": "$produk.nama_produk"
+          "nama_produk": "$produk.nama_produk"
 		}
 	}
 	])
@@ -29,14 +29,14 @@ router.route('/agent/:kodeAgent').get((req, res) => {
 	{
 		$lookup: {
 		   from: 'produks',
-		   localField: 'orderProduct',
+		   localField: 'kode_produk',
 		   foreignField: '_id',
 		   as: 'produk'
 		}
 	},
 	{
 		$addFields: {
-          "orderProduct": "$produk.nama_produk"
+          "nama_produk": "$produk.nama_produk"
 		}
 	}
 	])
@@ -47,23 +47,25 @@ router.route('/agent/:kodeAgent').get((req, res) => {
 router.post('/add', (req, res) => {
 	console.log(req.body)
 	
-	const nama = req.body.nama;
+	const nama_depan = req.body.namaDepan;
+	const nama_belakang = req.body.namaBelakang;
 	const alamat = req.body.alamat;
-	const noTelp = req.body.noTelp;
-	const kodeAgent = req.body.kodeAgent;
-	// const orderProduct = req.body.orderProduct.value; (isMulti)
-	const orderProduct = req.body.orderProduct.value;
-	const jumlahOrder = Number(req.body.jumlahOrder);
-	const optionPengiriman = req.body.optionPengiriman;
+	const no_telp = req.body.noTelp;
+	const kode_agent = req.body.kodeAgent;
+	// const kode_produk = req.body.orderProduct.value; (isMulti)
+	const kode_produk = req.body.kodeProduk.value;
+	const jumlah_order = Number(req.body.jumlahOrder);
+	const option_pengiriman = req.body.optionPengiriman;
 
 	const newOrder = new Order({
-		nama,
+		nama_depan,
+		nama_belakang,
 		alamat,
-		noTelp,
-		kodeAgent,
-		orderProduct,
-		jumlahOrder,
-		optionPengiriman
+		no_telp,
+		kode_agent,
+		kode_produk,
+		jumlah_order,
+		option_pengiriman
 	});
 	
 	newOrder.save()

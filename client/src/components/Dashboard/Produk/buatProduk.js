@@ -198,14 +198,18 @@ export default class CreateProduk extends Component {
 			</div>
 			<div className="body__container">
 				<div className="body__form__container">
-				<div>
+				<div className="flex">
 					<Link to="/produk" className="button--back">
 						<FaChevronLeft size={20} className="icon--header"/>
 						<span>
 							Tabel Produk
 						</span>
 					</Link>
-					<h1 className="m-auto ml-4 inline-block text-4xl">TAMBAH PRODUK</h1>
+					<div className="button--input">
+						<span>
+							TAMBAH PRODUK
+						</span>
+					</div>
 				</div>
 				<form className="mt-10" onSubmit={this.onSubmit}>
 				

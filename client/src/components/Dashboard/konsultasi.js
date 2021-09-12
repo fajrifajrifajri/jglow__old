@@ -54,6 +54,7 @@ class Konsultasi extends Component {
 			idKonsultasi: ''
 		}
 		
+		this.formatTime = this.formatTime.bind(this);
 		this.editData = this.editData.bind(this);
 		this.onCloseModal = this.onCloseModal.bind(this);
 		this.deleteData = this.deleteData.bind(this);
@@ -64,7 +65,7 @@ class Konsultasi extends Component {
 		{
 			Header: '',
 			id: 'index',
-			accessor: (_row: any, i : number) => i + 1,
+			accessor: (_row: any, i : number) => i + 1 + '.',
 			maxWidth: 40
 		},
 		{
@@ -99,9 +100,24 @@ class Konsultasi extends Component {
 			Cell: cell => (
 				<div>
 					<p><span className="font-bold">Jenis Kulit: </span>{cell.row.original.jenis_kulit}</p>
-					<p><span className="font-bold">Kulit Sensitif: </span>{cell.row.original.kulit_sensitif}</p>
-					<p><span className="font-bold">Mudah Iritasi? </span>{cell.row.original.mudah_iritasi}</p>
-					<p><span className="font-bold">Pasien dalam keadaan Hamil/ Menyusui? </span>{cell.row.original.hamil_dan_menyusui}</p>
+					<p>
+						<span className="font-bold">Kulit Sensitif: </span>
+						<span className={`px-1 py-0.5 rounded-lg text-xs text-white ${cell.row.original.mudah_iritasi == 'Ya' ? 'bg-green-400' : 'bg-red-400'}`}>
+							{cell.row.original.kulit_sensitif}
+						</span>
+					</p>
+					<p>
+						<span className="font-bold">Mudah Iritasi? </span>
+						<span className={`px-1 py-0.5 rounded-lg text-xs text-white ${cell.row.original.mudah_iritasi == 'Ya' ? 'bg-green-400' : 'bg-red-400'}`}>
+							{cell.row.original.mudah_iritasi}
+						</span>
+					</p>
+					<p>
+						<span className="font-bold">Pasien dalam keadaan Hamil/ Menyusui? </span>
+						<span className={`px-1 py-0.5 rounded-lg text-xs text-white ${cell.row.original.hamil_dan_menyusui == 'Ya' ? 'bg-green-400' : 'bg-red-400'}`}>
+							{cell.row.original.hamil_dan_menyusui}
+						</span>
+					</p>
 					<p><span className="font-bold">Riwayat Skincare: </span>{cell.row.original.riwayat_skincare}</p>
 				</div>
 			  )
@@ -142,8 +158,15 @@ class Konsultasi extends Component {
 		  Header: "Aksi",
 		  accessor: "_id",
 		  maxWidth: 95,
+		  custom: true,
 		  Cell: ({ cell }) => (
 		  <>
+			<div className="inline-block bg-green-400 px-1 py-2 mb-4 rounded text-center text-white text-xs font-bold">
+				{this.formatTime(new Date(cell.row.original.created_at))}
+			</div>
+			<button onClick={ () => { this.orderData(cell.row.values._id) }} className="p-3 mb-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-yellow-400 rounded-full">
+			  <FaTruck />
+			</button>
 			<button onClick={ () => { this.editData(cell.row.values._id) }} className="p-3 mb-2 transform hover:translate-x-0.5 hover:translate-y-0.5 text-white bg-blue-400 rounded-full">
 			  <FaPencilAlt />
 			</button>
@@ -153,6 +176,41 @@ class Konsultasi extends Component {
 		  </>
 		  )
 		}];
+	}
+	
+	formatTime(date) {
+	  var hours = date.getHours();
+	  var minutes = date.getMinutes();
+	  var ampm = hours >= 12 ? 'PM' : 'AM';
+	  hours = hours % 12;
+	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	  var strTime = hours + ':' + minutes + ' ' + ampm;
+	  return strTime;
+	}
+	
+	orderData = (id) => { 
+		Swal.fire({
+		  title: 'Accept konsultasi ini?',
+		  text: "Data ini akan diforward ke order pusat.",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Accept!'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			axios.post('/backend/konsultasi/order/'+id)
+				.then(res => {
+					Swal.fire(
+					  'Accepted!',
+					  'Data telah telah diorder.',
+					  'success'
+					)
+					console.log(res.data)
+				});
+		  }
+		})
 	}
 	
 	editData = (id) => { 
@@ -170,7 +228,6 @@ class Konsultasi extends Component {
 	}
 	
 	deleteData = (id) => { 
-		
 		Swal.fire({
 		  title: 'Hapus data ini?',
 		  text: "Data akan terhapus.",
@@ -181,14 +238,16 @@ class Konsultasi extends Component {
 		  confirmButtonText: 'Delete!'
 		}).then((result) => {
 		  if (result.isConfirmed) {
-			Swal.fire(
-			  'Deleted!',
-			  'Data telah telah terhapus.',
-			  'success'
-			)
 		
 			axios.delete('/backend/konsultasi/'+id)
-				.then(res => console.log(res.data));
+				.then(res => {
+					Swal.fire(
+					  'Deleted!',
+					  'Data telah telah terhapus.',
+					  'success'
+					)
+					console.log(res.data)
+				});
 		  }
 		})
 	}
@@ -210,7 +269,7 @@ class Konsultasi extends Component {
 				  .then(axios.spread((res1, res2) => {
 					  // check if there's any update or data empty
 					  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-					  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+					  if(JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
 						  
 						  console.log(this.state.data);
 						  console.log(res1.data);
@@ -243,7 +302,7 @@ class Konsultasi extends Component {
 				  .then(axios.spread((res1, res2) => {
 					  // check if there's any update or data empty
 					  // Because of JavaScript stupidity of [] === [] is false, so I have to stringify first.
-					  if(JSON.stringify(this.state.data) === '[]' || JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
+					  if(JSON.stringify(prevState.data) !== JSON.stringify(res1.data)) {
 						  
 						  console.log(this.state.data);
 						  console.log(res1.data);
@@ -291,9 +350,6 @@ class Konsultasi extends Component {
 		<div className="body__container">
 			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
-					<div className="col-start-8 col-span-4 mb-4">
-						<h5 className="text-center">Konsultasi minggu ini</h5>
-					</div>
 					<div className="col-span-6">
 						<Link to="/beranda" className="button--back">
 							<FaChevronLeft size={20} className='icon--header' />
@@ -309,9 +365,9 @@ class Konsultasi extends Component {
 						</Link>
 					</div>
 					<div className="col-span-6 flex gap-x-1">
-						<button className="flex-1 bg-yellow-400 p-2 font-bold border-2 border-black">{this.state.konsultasiCount} KONSULTASI</button>
-						<button className="flex-1 bg-green-400 p-2 font-bold border-2 border-black">{this.state.orderCount} ORDER</button>
-						<button className="flex-1 bg-red-400 p-2 font-bold border-2 border-black">0 CANCELLED</button>
+						<button className="flex-1 bg-yellow-400 p-2 font-bold border-2 border-yellow-600 rounded text-white">{this.state.konsultasiCount} KONSULTASI</button>
+						<button className="flex-1 bg-green-400 p-2 font-bold border-2 border-green-600 rounded text-white">{this.state.orderCount} ORDER</button>
+						<button className="flex-1 bg-red-400 p-2 font-bold border-2 border-red-600 rounded text-white">0 CANCELLED</button>
 					</div>
 				</div>
 				<Table 

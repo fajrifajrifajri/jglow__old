@@ -126,7 +126,7 @@ class Register extends Component {
 				
 				<div className={`flex bg-gray-100 mt-2 rounded-t text-sm shadow ${(emailError || userError) && 'border border-red-200'}`}>
 					<FaAt size={42} className="text-gray-400 p-3" />
-					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
+					<input type="text" name="email" value={this.state.email} onChange={this.onChangeEmail} placeholder="E-mail" className="form__control__auth"/>
 				</div>
 				{userRegistered && <ErrorNotice message={"Email Has Been Registered"} clearError={() => this.clearError(false)} />}
 				{emailInvalid && <ErrorNotice message={"Email Invalid"} clearError={() => this.clearError(false)} />}
@@ -134,13 +134,13 @@ class Register extends Component {
 				
 				<div className={`flex bg-gray-100 mt-2 rounded-t text-sm shadow ${passwordError && 'border border-red-200'}`}>
 					<FaLock size={42} className="text-gray-400 p-3" />
-					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
+					<input type="password" name="password" value={this.state.password} onChange={this.onChangePassword} placeholder="Password" className="form__control__auth"/>
 				</div>
 				{passwordRequired && <ErrorNotice message={"Password Required"} clearError={() => this.clearError(false)} />}
 				
 				<div className={`flex bg-gray-100 my-2 rounded-t text-sm shadow ${passwordCheckError && 'border border-red-200'}`}>
 					<FaUnlock size={42} className="text-gray-400 p-3" />
-					<input type="password" name="passwordCheck" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password" className="bg-gray-100 pl-2 w-full rounded-r input--text"/>
+					<input type="password" name="passwordCheck" value={this.state.passwordCheck} onChange={this.onChangePasswordCheck} placeholder="Re-enter Password" className="form__control__auth"/>
 				</div>
 				{passwordCheckRequired && <ErrorNotice message={"Password Re-enter Must be Filled"} clearError={() => this.clearError(false)} />}
 				{passwordMismatch && <ErrorNotice message={"Password Doesn't Match"} clearError={() => this.clearError(false)} />}

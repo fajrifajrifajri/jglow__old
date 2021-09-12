@@ -33,7 +33,7 @@ export const Table = (props) => {
 				<tr {...headerGroup.getHeaderGroupProps()}>
 					{headerGroup.headers.map((column) => (
 						<th {...column.getHeaderProps ({
-							className: column.custom  ? 'border border-gray-100 p-2' : 'border border-gray-100 p-4',
+							className: column.custom  ? 'border border-collapse border-gray-100 p-2' : 'border border-collapse border-gray-100 p-4',
 						})}>{column.render('Header')}</th>
 					))}
 				</tr>
@@ -43,10 +43,12 @@ export const Table = (props) => {
 				{rows.map((row) => {
 					prepareRow(row)
 					return (
-						<tr {...row.getRowProps()}>
+						<tr {...row.getRowProps({
+							className: row.original.sudah_order === true  ? 'bg-green-200' : '',
+						})}>
 							{row.cells.map( (cell) => {
 								return <td {...cell.getCellProps({
-									className: cell.column.custom  ? 'border border-gray-100 p-2' : 'border border-gray-100 p-4',
+									className: cell.column.custom  ? 'border border-collapse border-gray-100 p-2 text-center' : 'border border-collapse border-gray-100 p-4',
 								})}>{cell.render('Cell')}</td>
 							})}
 						</tr>

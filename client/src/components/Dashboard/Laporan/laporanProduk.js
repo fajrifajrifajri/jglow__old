@@ -1,9 +1,5 @@
 // Import React & Required libs
 import { useEffect, useState } from 'react';
-import {
-	withRouter,
-	Link
-} from 'react-router-dom';
 import axios from 'axios';
 import { ResponsivePie } from '@nivo/pie'
 import { ResponsiveLine  } from '@nivo/line'
@@ -11,6 +7,10 @@ import { ResponsiveLine  } from '@nivo/line'
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
+
+// Set Axios Default URL
+var port = 5000;
+axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 const MyResponsivePie = (props) => (
 	<ResponsivePie
@@ -240,4 +240,4 @@ const LaporanProduk = (props) => {
   );
 }
 
-export default withRouter(LaporanProduk);
+export default LaporanProduk;
