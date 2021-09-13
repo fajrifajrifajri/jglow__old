@@ -68,13 +68,13 @@
 	@apply bg-layout col-span-10 bg-gray-100;
 }
 .body__second__container {
-	@apply block bg-white min-h-screen rounded-tl-lg;
+	@apply block bg-white min-h-screen;
 }
 .body__table__container {
-	@apply body__second__container py-24 px-12 overflow-x-scroll;
+	@apply body__second__container p-12 overflow-x-scroll;
 }
 .body__form__container {
-	@apply body__second__container py-24 pr-80 pl-12;
+	@apply body__second__container py-12 pr-80 pl-12;
 }
 .body__modal__container {
 	@apply bg-white min-h-screen p-10;

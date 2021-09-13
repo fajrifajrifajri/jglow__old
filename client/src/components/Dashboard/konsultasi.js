@@ -10,6 +10,7 @@ import axios from 'axios';
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
 import { Table } from './_Main Components/table';
+import { Header } from './_Main Components/header';
 import EditKonsultasi from './Konsultasi/editKonsultasi';
 
 // Icons
@@ -348,6 +349,7 @@ class Konsultasi extends Component {
 			<Sidebar/>
 		</div>
 		<div className="body__container">
+			<Header />
 			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
 					<div className="col-span-6">

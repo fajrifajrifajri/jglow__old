@@ -8,6 +8,7 @@ import Select from 'react-select';
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
+import { Header } from '../_Main Components/header';
 
 // Icons
 import { FaChevronLeft } from 'react-icons/fa';
@@ -191,6 +192,7 @@ export default class CreateOrder extends Component {
 				<Sidebar/>
 			</div>
 			<div className="body__container">
+			<Header />
 				<div className="body__form__container">
 					<div className="flex">
 						<Link to="/order" className="button--back">

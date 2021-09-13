@@ -55,12 +55,12 @@
 }
 
 .accordion__text li {
-  @apply bg-pink-200 py-2;
+  @apply bg-pink-300 py-2;
 }
 
 .accordion__text li:hover,
 .accordion__text li:active {
-  @apply bg-pink-300 text-white;
+  @apply bg-pink-400 text-white;
 }
 
 .accordion__text li a {

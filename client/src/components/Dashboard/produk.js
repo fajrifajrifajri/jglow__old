@@ -8,6 +8,7 @@ import axios from 'axios';
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
+import { Header } from './_Main Components/header';
 import { Table } from './_Main Components/table';
 
 // Icons
@@ -134,6 +135,7 @@ class Konsultasi extends Component {
 			<Sidebar/>
 		</div>
 		<div className="body__container">
+			<Header />
 			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
 					<div className="col-span-6">

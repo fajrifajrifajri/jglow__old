@@ -9,6 +9,7 @@ import axios from 'axios';
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
+import { Header } from '../_Main Components/header';
 
 // Icons
 import { FaChevronLeft } from 'react-icons/fa';
@@ -164,6 +165,7 @@ export default class CreateAgent extends Component {
 				<Sidebar/>
 			</div>
 			<div className="body__container">
+			<Header />
 				<div className="body__form__container">
 				<div className="flex">
 					<Link to="/agent" className="button--back">

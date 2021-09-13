@@ -11,6 +11,7 @@ import ErrorNotice from "../../Auth/errorNotice";
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
+import { Header } from '../_Main Components/header';
 
 // Icons
 import { FaChevronLeft, FaLock, FaUnlock } from 'react-icons/fa';
@@ -189,6 +190,7 @@ export default class CreateUser extends Component {
 				<Sidebar/>
 			</div>
 			<div className="body__container">
+			<Header />
 				<div className="body__form__container">
 				<div className="flex">
 					<Link to="/user" className="button--back">

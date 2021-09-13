@@ -50,7 +50,7 @@ class Profile extends Component {
 			</div>
 			<div className="col-span-10 bg-gray-100">
 				<Header />
-				<div className="bg-layout min-h-screen rounded-tl-lg px-32">
+				<div className="bg-layout min-h-screen rounded-tl-lg px-32 py-12">
 					<h1 className="text-center text-2xl font-bold mb-10">Profile Management</h1>
 					{user ?
 						user.role === "agent" &&

@@ -23,8 +23,8 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 // Set Axios Default URL
-var port = 5000;
-axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+// var port = 5000;
+// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 class LaporanBulanan extends Component {
 	constructor(props) {
@@ -227,7 +227,7 @@ class LaporanBulanan extends Component {
 			<div className="body__container">
 				<div className="bg-white min-h-screen">
 					<Header />
-					<div className="px-12">
+					<div className="p-12">
 						<div className="mb-12">
 							<h1 className="mb-12 text-3xl font-bold text-center">Laporan Harian Minggu ini</h1>
 							<Table 

@@ -7,10 +7,11 @@ import { ResponsiveLine  } from '@nivo/line'
 // Assets & Components include
 import '../../../Assets/css/index.css';
 import Sidebar from '../_Main Components/sidebar';
+import { Header } from '../_Main Components/header';
 
 // Set Axios Default URL
-var port = 5000;
-axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+// var port = 5000;
+// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 const MyResponsivePie = (props) => (
 	<ResponsivePie
@@ -195,6 +196,7 @@ const LaporanProduk = (props) => {
 			<Sidebar/>
 		</div>
 		<div className="body__container">
+			<Header />
 			<div className="bg-layout min-h-screen rounded-tl-lg">
 				<div className="grid grid-cols-12 py-12 gap-y-12 text-center text-pink-dark">
 					<div className="col-span-6">

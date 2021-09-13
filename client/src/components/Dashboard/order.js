@@ -8,18 +8,18 @@ import axios from 'axios';
 // Assets & Components include
 import '../../Assets/css/index.css';
 import Sidebar from './_Main Components/sidebar';
+import { Header } from './_Main Components/header';
 import { Table } from './_Main Components/table';
 
 // Icons
 import { FaChevronLeft, FaPlusSquare, FaTimes }  from 'react-icons/fa';
-import { Header } from './_Main Components/header';
 
 // SweetAlert 2
 import Swal from 'sweetalert2';
 
 // Set Axios Default URL
-var port = 5000;
-axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
+// var port = 5000;
+// axios.defaults.baseURL = window.location.protocol + '//' + window.location.hostname + ':' + port;  
 
 class Order extends Component {
 	
@@ -169,9 +169,6 @@ class Order extends Component {
 			<Header />
 			<div className="body__table__container">
 				<div className="grid grid-cols-12 mb-8">
-					<div className="col-start-8 col-span-4 mb-4">
-						<h5 className="text-center">Order minggu ini</h5>
-					</div>
 					<div className="col-span-6">
 						<Link to="/beranda" className="button--back">
 							<FaChevronLeft size={20} className='icon--header' />

@@ -51,7 +51,7 @@ class Dashboard extends Component {
 		 
 		 if(!this.state.loading) {
 			// console.log(user);
-			if(user !== undefined) {
+			if(user !== null) {
 				if(email === '') {
 					this.setState({ email: user.email, role: user.role })
 				}
@@ -67,9 +67,9 @@ class Dashboard extends Component {
 			<Sidebar/>
 		</div>
 		<div className="col-span-10 bg-gray-100">
-			<div className="bg-layout min-h-screen rounded-tl-lg">
-				<Header />
-				<div className="pb-4 px-12">
+			<Header />
+			<div className="bg-layout min-h-screen rounded-tl-lg p-12">
+				<div className="pb-4">
 					 <h1 className="text-pink-dark text-4xl font-bold mb-8">Menu Aplikasi</h1>
 					 <div className={`relative font-xs pb-4 ${role === "klinik" ? 'x-scroll' : ''}`}>
 						<div className="relative flex overflow-x-auto space-x-6 whitespace-nowrap custom__scrollbar pb-4">
@@ -124,7 +124,7 @@ class Dashboard extends Component {
 				</div>
 				{role === 'klinik'  ? (
 				<>
-					<div className="pb-4 px-12">
+					<div className="pb-4">
 						<h1 className="text-pink-dark text-4xl font-semibold my-4">Laporan</h1>
 						<div className="space-x-6 font-xs">
 							<Link to="/laporan-produk" className="inline-flex flex-col text-white border-4 border-pink-dark rounded shadow-lg transform hover:translate-y-0.5">
